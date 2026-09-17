@@ -1,0 +1,1 @@
+export default function Home(){return <main><header><small>PLAN · DO · SEE</small><h1>하루의 여백</h1><p>오늘 할 일을 적고, 보낸 시간을 남깁니다.</p></header><section><h2>개발 환경 준비 중</h2><p>승인된 02.24 시안을 React 화면으로 옮길 준비를 마쳤습니다.</p><p>이 화면은 아직 자료를 저장하지 않습니다. 기존 시안과 저장 자료는 그대로 보존되어 있습니다.</p></section></main>;}

@@ -41,3 +41,7 @@
 React + Next.js + TypeScript, Supabase PostgreSQL, Vercel 조합 승인. Git/GitHub 사용 추가 승인. web/ 개발 기반 설치 완료. 현재 제품 화면은 개발 준비 페이지만 있으며 02.24 전체 기능 포팅/DB/API/배포는 미완료입니다. 설치된 버전: Next.js 16.3.5, React 19.3.0. package-lock.json으로 고정합니다.
 
 DATA-CONTRACT-v1.md에 데이터 구조와 idempotency/동시 수정 트랜잭션 규칙을 정리했습니다. GIT-WORKFLOW.md는 버전 관리 기준입니다. GitHub 저장소 주소 또는 계정/이름은 사용자 답변 대기 중입니다.
+
+## 6. 첫 저장 구현 상태 (2026-09-17)
+
+위 개발 준비 상태는 후속 작업으로 갱신되었습니다. GitHub 공개 저장소 suminkim8203/haru-journal 연결 완료. 일반 계획/할 일 생성·완료, 저장 API와 첫 SQL 마이그레이션을 구현하고 로컬 검증했습니다. Supabase는 사용자 요청에 따라 새 프로젝트를 생성할 예정이며 원격 DB 적용·Vercel 배포는 아직입니다. 실제 최신 상태는 CURRENT_STATE.md를 우선합니다.

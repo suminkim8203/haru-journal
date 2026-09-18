@@ -1,22 +1,22 @@
 'use client';
 import {useState} from 'react';
-import type {Run,Task} from '@/lib/contracts';
+import type {Placement,Run,Task} from '@/lib/contracts';
 import {addDays,clockLabel,localInstant,manualSegments,seoulDate} from '@/lib/schedule';
 import {useJournal} from './journal-provider';
 import {DateField} from './date-field';
 import {TimeField} from './time-field';
-export function RunEditor({task,day,mode,run,onClose}:{task:Task;day:string;mode:'placement'|'run';run?:Run;onClose:()=>void}){
- const {data,locked,send}=useJournal();const [date,setDate]=useState(run?seoulDate(new Date(run.started_at)):day),[endDate,setEndDate]=useState(run&&run.ended_at?seoulDate(new Date(run.ended_at)):day);
- const [start,setStart]=useState(run?clockLabel(run.started_at):'09:00'),[end,setEnd]=useState(run?.ended_at?clockLabel(run.ended_at):'10:00'),[reason,setReason]=useState(run?.blocked_reason||''),[error,setError]=useState(''),[allowOverlap,setAllowOverlap]=useState(false);
+export function RunEditor({task,day,mode,run,placement,onClose}:{task:Task;day:string;mode:'placement'|'run';run?:Run;placement?:Placement;onClose:()=>void}){
+ const initial=run||placement; const {data,locked,send}=useJournal();const [date,setDate]=useState(initial?seoulDate(new Date(initial.started_at)):day),[endDate,setEndDate]=useState(initial?.ended_at?seoulDate(new Date(initial.ended_at)):day);
+ const [start,setStart]=useState(initial?clockLabel(initial.started_at):'09:00'),[end,setEnd]=useState(initial?.ended_at?clockLabel(initial.ended_at):'10:00'),[reason,setReason]=useState(run?.blocked_reason||''),[error,setError]=useState(''),[allowOverlap,setAllowOverlap]=useState(false);
  const [pauses,setPauses]=useState((run?.segments.filter(s=>s.kind!=='work'&&s.ended_at).map(s=>({kind:s.kind==='break'?'break' as const:'interrupt' as const,start:clockLabel(s.started_at),end:clockLabel(s.ended_at!),startDate:seoulDate(new Date(s.started_at)),endDate:seoulDate(new Date(s.ended_at!))}))||[]));
  function quickEnd(n:number){try{const value=new Date(Date.parse(localInstant(date,start))+n*60000);setEndDate(seoulDate(value));setEnd(clockLabel(+value));}catch{setError('시작 시간을 먼저 입력해 주세요.');}}
  return <form className="editor" onSubmit={async e=>{e.preventDefault();setError('');try{
   const startedAt=localInstant(date,start),endedAt=localInstant(endDate,end);if(Date.parse(endedAt)<=Date.parse(startedAt))throw Error('종료 시각은 시작 시각 이후여야 합니다. 다음 날 종료라면 종료일을 변경해 주세요.');
   const payload={allowOverlap,taskId:task.id,startedAt,endedAt,...(mode==='run'?{blockedReason:reason,segments:manualSegments(startedAt,endedAt,pauses.map(p=>({kind:p.kind,start:localInstant(p.startDate,p.start),end:localInstant(p.endDate,p.end)})))}:{})};
-  if(mode==='placement'&&!allowOverlap&&data?.placements.some(p=>Date.parse(p.started_at)<Date.parse(endedAt)&&Date.parse(p.ended_at)>Date.parse(startedAt)))throw Error('예정 시간이 기존 배치와 겹칩니다. 시간을 바꾸거나 겹침 확인을 선택해 주세요.');
-  const result=await send(mode==='placement'?'create_placement':run?'update_run':'create_run',{...payload,...(run?{runId:run.id}:{})});if(result)onClose();
+  if(mode==='placement'&&!allowOverlap&&data?.placements.some(p=>p.id!==placement?.id&&Date.parse(p.started_at)<Date.parse(endedAt)&&Date.parse(p.ended_at)>Date.parse(startedAt)))throw Error('예정 시간이 기존 배치와 겹칩니다. 시간을 바꾸거나 겹침 확인을 선택해 주세요.');
+  const result=await send(mode==='placement'?(placement?'update_placement':'create_placement'):run?'update_run':'create_run',{...payload,...(run?{runId:run.id}:{}),...(placement?{placementId:placement.id}:{})});if(result)onClose();
  }catch(e){setError(e instanceof Error?e.message:'시간을 확인해 주세요.');}}}>
-  <div className="section-heading"><h3>{mode==='placement'?'계획 배치':run?'실행 기록 수정':'실행 기록 입력'}</h3><button type="button" className="text-button" aria-label="입력 닫기" onClick={onClose}>×</button></div><p className="task-title">{task.title}</p><fieldset disabled={locked}>
+  <div className="section-heading"><h3>{mode==='placement'?(placement?'계획 배치 수정':'계획 배치'):run?'실행 기록 수정':'실행 기록 입력'}</h3><button type="button" className="text-button" aria-label="입력 닫기" onClick={onClose}>×</button></div><p className="task-title">{task.title}</p><fieldset disabled={locked}>
   <div className="form-grid"><DateField label="시작일" required value={date} onChange={setDate}/><TimeField label="시작 시간" value={start} onChange={setStart}/><DateField label="종료일" required value={endDate} onChange={setEndDate}/><TimeField label="종료 시간" value={end} onChange={setEnd}/></div>
   <div className="quick-times"><span>종료 시간</span>{[5,10,15].map(n=><button type="button" key={n} onClick={()=>quickEnd(n)}>+{n}분</button>)}<button type="button" onClick={()=>setEndDate(addDays(date,1))}>다음 날</button></div>
   {mode==='placement'&&<label className="complete-control"><input type="checkbox" checked={allowOverlap} onChange={e=>setAllowOverlap(e.target.checked)}/>예정 시간이 겹치는 것을 확인했으며 그대로 배치</label>}

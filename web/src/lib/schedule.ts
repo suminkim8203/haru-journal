@@ -11,7 +11,7 @@ export function runWork(run:Run,from=-8640000000000000,to=8640000000000000,now=D
 export function dayItems(data:Snapshot,day:string,now=Date.now()){
  const placements=data.placements.filter(p=>overlaps(p.started_at,p.ended_at,day,now));
  const runs=data.runs.filter(r=>overlaps(r.started_at,r.ended_at,day,now));
- const tasks=data.tasks.filter(t=>t.due_date===day||placements.some(p=>p.task_id===t.id)||runs.some(r=>r.task_id===t.id));
+ const tasks=[...data.tasks,...(data.retainedTasks||[])].filter(t=>data.thoughts.some(h=>h.task_id===t.id&&h.local_date===day)||(!t.cancelled_at&&(!t.routine_id||t.occurrence_date===day)&&data.tasks.some(a=>a.id===t.id)&&t.due_date===day)||placements.some(p=>p.task_id===t.id)||runs.some(r=>r.task_id===t.id));
  return {placements,runs,tasks};
 }
 export type PauseDraft={kind:'break'|'interrupt';start:string;end:string};

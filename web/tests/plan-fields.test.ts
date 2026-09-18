@@ -31,7 +31,7 @@ test('follow-up migration preserves existing IDs, values and history; supplies d
     await command(db, 3, 2, 'set_task_complete', { taskId: t.entityId, complete: true });
     await db.exec(followup); await db.exec(schedule);await db.exec(records);
     const s = await snapshot(db);
-    assert.equal(compatibleSnapshot(s), true); assert.equal(s.revision, 3); assert.equal(s.plans[0].id, p.entityId); assert.equal(s.plans[0].estimated_minutes, 120);
+    assert.equal(compatibleSnapshot(s), false); // Historical schema 4 is not the current retained-history contract. assert.equal(s.revision, 3); assert.equal(s.plans[0].id, p.entityId); assert.equal(s.plans[0].estimated_minutes, 120);
     assert.equal(s.plans[0].priority, 'normal'); assert.equal(s.tasks[0].id, t.entityId);
     assert.equal(s.tasks[0].complete, true); assert.deepEqual(s.tasks[0].tags, []);
     assert.equal((await db.query<{ n: number }>('select count(*)::int n from journal.revisions')).rows[0].n, 1);
@@ -122,7 +122,7 @@ test('API validates priorities/tag types and normalizes tags without changing th
 test('old or unrecognized storage versions are not accepted as the updated contract', () => {
   const base = { diaryId: DIARY_ID, timezone: 'Asia/Seoul', revision: 0, plans: [], tasks: [], placements: [], runs: [], thoughts: [], reflections: [], closures: [], improvements: [], trash: [] };
   assert.equal(compatibleSnapshot(base), false);
-  assert.equal(compatibleSnapshot({ ...base, schemaVersion: 4 }), true);
+  assert.equal(compatibleSnapshot({ ...base, schemaVersion: 6 }), true);
   assert.equal(compatibleSnapshot({ ...base, schemaVersion: 4, revision: -1 }), false);
 });
 test('origin checks accept local browser Host or fixed HTTPS origin and reject cross-site/forwarded spoofing', () => {

@@ -6,3 +6,7 @@ coverage/
 *.tsbuildinfo
 .DS_Store
 *.log
+
+# Separate static release build; compiled files are never source.
+.next-static/
+out/

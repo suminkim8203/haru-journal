@@ -13,25 +13,26 @@ export interface Plan {
 export interface Task {
   id: string; plan_id: string; title: string; description: string;
   due_date: string | null; estimated_minutes: number; priority: Priority;
-  complete: boolean; tags: Tag[];
+  complete: boolean; tags: Tag[]; routine_id?:string|null;occurrence_date?:string|null;routine_exception?:boolean;skipped?:boolean;cancelled_at?:string|null;
 }
 export interface Placement { id:string; task_id:string; started_at:string; ended_at:string }
 export interface Segment { id:string; kind:'work'|'pause'|'break'|'interrupt'; started_at:string; ended_at:string|null }
-export interface Run { id:string; task_id:string; started_at:string; ended_at:string|null; source:'live'|'manual'; blocked_reason:string; work_seconds:number|null; segments:Segment[] }
+export interface Run { task_title?:string;plan_title?:string;id:string; task_id:string; started_at:string; ended_at:string|null; source:'live'|'manual'; blocked_reason:string; work_seconds:number|null; segments:Segment[] }
 export interface Thought {id:string;task_id:string;local_date:string;body:string}
 export interface Reflection {id:string;local_date:string;body:string;bookmarked:boolean;imported_thoughts:{id:string;body:string}[]}
 export interface Improvement {id:string;source_plan_id:string;target_plan_id:string;source_text:string}
-export interface TrashEntry {id:string;entity_type:'plan'|'task'|'run'|'placement'|'reflection';entity_id:string;title:string;deleted_at:string}
-export interface Snapshot { schemaVersion: 4; thoughts:Thought[]; reflections:Reflection[]; closures:{local_date:string;closed_at:string}[]; improvements:Improvement[]; trash:TrashEntry[]; placements:Placement[]; runs:Run[]; diaryId: string; timezone: string; revision: number; plans: Plan[]; tasks: Task[] }
+export interface TrashEntry {id:string;entity_type:'plan'|'task'|'run'|'placement'|'reflection'|'routine';entity_id:string;title:string;deleted_at:string;placement_conflict?:boolean}
+export interface Routine {id:string;plan_id:string;title:string;description:string;start_date:string;end_date:string;estimated_minutes:number;priority:Priority;tags:string[];timing:'flex'|'fixed';start_time:string|null;stopped_from:string|null;occurrences:{id:string;date:string;reason:string}[]}
+export interface Snapshot { schemaVersion: 6; routines?:Routine[]; retainedTasks?:Task[]; thoughts:Thought[]; reflections:Reflection[]; closures:{local_date:string;closed_at:string}[]; improvements:Improvement[]; trash:TrashEntry[]; placements:Placement[]; runs:Run[]; diaryId: string; timezone: string; revision: number; plans: Plan[]; tasks: Task[] }
 export interface Command {
   requestId: string; expectedRevision: number;
-  command: 'create_plan' | 'update_plan' | 'create_task' | 'update_task' | 'set_task_complete' | 'create_placement' | 'update_placement' | 'start_run' | 'switch_segment' | 'stop_run' | 'create_run' | 'update_run' | 'save_thought' | 'save_reflection' | 'close_day' | 'bookmark_reflection' | 'send_improvement' | 'delete_entity' | 'restore_entity';
+  command: 'create_routine'|'update_routine'|'skip_occurrence'|'stop_routine'|'create_plan' | 'update_plan' | 'create_task' | 'update_task' | 'set_task_complete' | 'create_placement' | 'update_placement' | 'start_run' | 'switch_segment' | 'stop_run' | 'create_run' | 'update_run' | 'save_thought' | 'save_reflection' | 'close_day' | 'bookmark_reflection' | 'send_improvement' | 'delete_entity' | 'restore_entity';
   payload: Record<string, unknown>;
 }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 function object(x: unknown): x is Record<string, unknown> { return !!x && typeof x === 'object' && !Array.isArray(x) }
 export function compatibleSnapshot(input: unknown): input is Snapshot {
-  return object(input) && input.schemaVersion === 4 && input.diaryId === DIARY_ID
+  return object(input) && input.schemaVersion === 6 && input.diaryId === DIARY_ID
     && input.timezone === 'Asia/Seoul' && Number.isSafeInteger(input.revision) && Number(input.revision) >= 0
     && Array.isArray(input.plans) && Array.isArray(input.tasks) && Array.isArray(input.placements) && Array.isArray(input.runs) && Array.isArray(input.thoughts) && Array.isArray(input.reflections) && Array.isArray(input.closures) && Array.isArray(input.improvements) && Array.isArray(input.trash);
 }
@@ -64,7 +65,16 @@ export function parseCommand(input: unknown): Command {
   const instant = (key: string) => {
     if (typeof p[key] !== 'string' || !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}(?:\.\d{3})?Z$/.test(p[key] as string) || !Number.isFinite(Date.parse(p[key] as string))) throw Error('시간을 확인해 주세요.');
   };
-  if (c === 'save_thought' || c === 'save_reflection' || c === 'close_day') {
+  if(c==='create_routine'||c==='update_routine') {
+    id(c==='create_routine'?'planId':'routineId');text('title',120,true);text('description',4000);priority();estimate(10080);
+    if(!validDate(p.startDate)||!validDate(p.endDate)||p.startDate>p.endDate||!Number.isInteger(p.estimatedMinutes)||Number(p.estimatedMinutes)<1||!['flex','fixed'].includes(String(p.timing)))throw Error('반복 기간과 예상 시간을 확인해 주세요.');
+    if(p.timing==='fixed'&&(typeof p.time!=='string'||!/^([01][0-9]|2[0-3]):[0-5][0-9]$/.test(p.time)))throw Error('매일 시작 시각을 확인해 주세요.');
+    if(p.allowOverlap!==undefined&&typeof p.allowOverlap!=='boolean')throw Error('시간 겹침 확인을 다시 선택해 주세요.');
+    if(p.tags!==undefined&&(!Array.isArray(p.tags)||p.tags.length>20||p.tags.some(v=>typeof v!=='string'||!v.trim()||v.trim().length>30)))throw Error('태그는 30자 이내로, 최대 20개까지 입력해 주세요.');
+    if(Array.isArray(p.tags))p.tags=[...new Set(p.tags.map(v=>(v as string).trim()))];
+  } else if(c==='skip_occurrence'||c==='stop_routine') {
+    id(c==='skip_occurrence'?'taskId':'routineId');if(c==='stop_routine'&&!validDate(p.fromDate))throw Error('중단할 기준 날짜를 확인해 주세요.');
+  } else if (c === 'save_thought' || c === 'save_reflection' || c === 'close_day') {
     if (!validDate(p.date)) throw Error('기록 날짜를 확인해 주세요.');
     text('body',c==='save_thought'?4000:4000,c!=='close_day'); if(c==='save_thought')id('taskId');
     if(p.imports!==undefined && (!Array.isArray(p.imports) || p.imports.length>500 || p.imports.some(x=>!object(x)||typeof x.id!=='string'||!uuid.test(x.id)||typeof x.body!=='string'||x.body.length>4000))) throw Error('가져올 단상을 확인해 주세요.');
@@ -75,7 +85,7 @@ export function parseCommand(input: unknown): Command {
   } else if(c==='delete_entity') {
     id('entityId');if(!['plan','task','run','placement','reflection'].includes(String(p.entityType)))throw Error('삭제할 항목을 확인해 주세요.');if(p.at!==undefined)instant('at');
   } else if(c==='restore_entity') {
-    id('trashId');
+    id('trashId');if(p.allowOverlap!==undefined&&typeof p.allowOverlap!=='boolean')throw Error('시간 겹침 확인을 다시 선택해 주세요.');
   } else if (c === 'create_placement' || c === 'update_placement' || c === 'create_run' || c === 'update_run') {
     if(p.allowOverlap!==undefined&&typeof p.allowOverlap!=='boolean')throw Error('시간 겹침 확인을 다시 선택해 주세요.');
     id(c === 'update_run' ? 'runId' : 'taskId'); if (c === 'update_placement') id('placementId');
@@ -99,7 +109,7 @@ export function parseCommand(input: unknown): Command {
   } else if (c === 'create_plan' || c === 'update_plan') {
     text('title', 120, true); text('successText', 4000); estimate(525600); priority();
     if(c==='create_plan' && p.sourcePlanId!==undefined){id('sourcePlanId');text('improvementText',500,true);}
-    if ((c === 'create_plan' && p.kind !== 'general') || !validDate(p.startDate)
+    if ((c === 'create_plan' && !['general','routine'].includes(String(p.kind))) || !validDate(p.startDate)
       || !validDate(p.endDate) || p.startDate > p.endDate) throw Error('계획 시작일과 종료일을 확인해 주세요.');
     if (c === 'update_plan') id('planId');
   } else if (c === 'create_task' || c === 'update_task') {

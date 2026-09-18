@@ -1,0 +1,24 @@
+services:
+  haru-web:
+    image: nginx:1.30.4-alpine
+    restart: unless-stopped
+    read_only: true
+    tmpfs:
+      - /var/cache/nginx
+      - /var/run
+    volumes:
+      - "${HARU_WEB_RELEASE:?Set the reviewed static release directory}:/usr/share/nginx/html:ro"
+      - ./nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    expose:
+      - "8080"
+    healthcheck:
+      test: ["CMD-SHELL", "wget -q -O - http://127.0.0.1:8080/healthz || exit 1"]
+      interval: 15s
+      timeout: 3s
+      retries: 3
+    networks:
+      - supabase
+networks:
+  supabase:
+    external: true
+    name: supabase_default

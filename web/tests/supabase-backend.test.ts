@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
-const migrations=['0001_core.sql','0002_plan_priority_task_tags.sql','0003_schedule_runs.sql','0004_records_archive.sql','0005_export.sql','0006_supabase_backend.sql','0007_deferred_segment_validation.sql'];
+const migrations=['0001_core.sql','0002_plan_priority_task_tags.sql','0003_schedule_runs.sql','0004_records_archive.sql','0005_export.sql','0006_supabase_backend.sql','0007_deferred_segment_validation.sql','0008_retained_history.sql','0009_daily_routines.sql'];
 const id=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 async function setup(){const db=new PGlite();await db.exec('create role anon;create role authenticated;create role service_role;');for(const f of migrations)await db.exec(await readFile(new URL('../supabase/migrations/'+f,import.meta.url),'utf8'));return db;}
 async function call(db:PGlite,n:number,rev:number,c:string,p:unknown){return (await db.query<{v:{entityId:string;revision:number}}>('select public.haru_command($1,$2,$3,$4::jsonb) v',[id(n),rev,c,JSON.stringify(p)])).rows[0].v;}

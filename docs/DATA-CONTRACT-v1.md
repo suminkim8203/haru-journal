@@ -76,7 +76,7 @@ blocked_reason은 선택 입력이며 실행 저장/변경 저장/기록 종료�
 
 내보내기는 schemaVersion/exportedAt/timezone, 사용자 자료/휴지통/수정 이력 포함, 비밀값·command receipt 제외. 기존 시안 자료 자동 업로드 없음. 이식 시 원문 보존·ID/날짜 충돌·고아 관계·구형 스냅샷 대응부터 검증합니다.
 
-최종 contracts/pds-schema-v2.json은 실제 구현 스키마와 일치해 작성해야 하며 아직 없습니다. 이 Markdown은 제출 JSON을 대체하지 않습니다. 최소 계획 1개/소속 할 일 5개/종료 실행 3개와 실제 DB 저장/복원·정상 집계를 검증해야 합니다.
+contracts/pds-schema-v2.json은 실제 NAS 컬럼·제약·인덱스·트리거를 조회해 작성했습니다. contractVersion 2와 snapshotSchemaVersion 6을 구분합니다. 이 Markdown은 제출 JSON을 대체하지 않습니다. 최소 계획 1개/소속 할 일 5개/종료 실행 3개와 실제 DB 저장/복원·정상 집계를 검증해야 합니다.
 
 [현재 구현](CURRENT_STATE.md) · [다음 작업](implementation/NEXT-STEPS.md) · [정리 전 계약 이력](archive/current-before-consolidation-2026-09-18/docs/DATA-CONTRACT-v1.md)
 
@@ -91,3 +91,7 @@ snapshot schemaVersion=2와 서버 쓰기 전 버전 검사를 추가해 구형 
 ## 2026-09-18 — 현재 물리 구현과 연결
 
 NAS 0001~0007 적용: diaries/plans/tasks/tags/task_tags/command_receipts/revisions/placements/runs/segments/thoughts/reflections/day_closures/improvements/trash. snapshot schemaVersion 4. 공개 앱 함수는 고정 diary 경계를 사용하며 내부 SQL에서 입력을 검증한다. 상기의 승인 루틴 계약은 후속으로 남아 있고 아직 테이블·API 구현이 아니다. [실제 검증 및 한계](implementation/SUPABASE-BACKEND-2026-09-18.md).
+
+## 2026-09-18 실제 물리 구현 갱신 — 루틴/보존
+
+앞 절의 미적용/루틴 후속은 당시 상태다. 현재 NAS 0001~0009, 테이블 16개, snapshot 6. routine_rules와 tasks의 routine_id/occurrence_date/routine_exception/skipped/cancelled_at을 구현했다. 일별 발생은 tasks를 사용하며 별도 중복 occurrence 테이블을 만들지 않는다. 규칙/날짜 unique 인덱스·같은 부모 FK·날짜 일치 CHECK, 이후 변경 보호/예정 겹침 확인·부모 확장 이력을 구현했다. 계획/할 일 삭제는 실제 실행/단상/회고를 보존하며 retainedTasks 읽기 모델로 삭제 출처의 실제 기록 날짜를 확인한다. 정확한 현재 범위/한계는 [이번 검증](implementation/ROUTINES-AND-HISTORY-2026-09-18.md), 물리 구조는 [스키마 JSON](../contracts/pds-schema-v2.json)이다.

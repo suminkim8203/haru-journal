@@ -17,4 +17,7 @@ HTML 시안·이미지·압축 아카이브·작업용 코드와 실제 환경 �
 
 ## 최신 구현 상태 — 2026-09-18
 
-백엔드는 기존 NAS Supabase를 사용하며 앱은 공개 anon으로 제한된 DB 함수를 직접 호출한다. 관리 비밀키를 앱에 설정하는 이전 방식은 취소했다. NAS 0001~0007 적용과 실제 조회/롤백 검사를 완료했다. 사용자 승인 공개 예시의 NAS 영속 저장·새 SDK 재접속·앱 새로고침·집계/근거·내보내기를 검증했다. 루틴·일부 UI·공개 웹 배포는 아직이다. [현재 상태](docs/CURRENT_STATE.md), [구현과 검증](docs/implementation/SUPABASE-BACKEND-2026-09-18.md).
+백엔드는 기존 NAS Supabase를 사용하며 앱은 공개 anon으로 제한된 DB 함수를 직접 호출한다. 관리 비밀키를 앱에 설정하는 이전 방식은 취소했다. NAS 0001~0009 적용(16개 테이블, 스냅샷 버전 6)과 실제 조회/롤백 검사를 완료했다. 사용자 승인 공개 예시의 NAS 영속 저장·새 SDK 재접속·앱 새로고침·집계/근거·내보내기를 검증했다. 루틴 생성·예외·중단·복원과 삭제된 계획의 실행 이력 보존을 구현했다. 48개 테스트와 정적 빌드/제공 검사를 통과했다. 최신 구현은 [codex/plan-task-fields](https://github.com/suminkim8203/haru-journal/tree/codex/plan-task-fields/web)에 있다. 공개 웹 배포와 main 통합은 아직이다. [현재 상태](docs/CURRENT_STATE.md), [구현과 검증](docs/implementation/SUPABASE-BACKEND-2026-09-18.md).
+
+- [루틴·이력 구현 및 검증](docs/implementation/ROUTINES-AND-HISTORY-2026-09-18.md)
+- [공개 웹 배포 검토안](docs/deployment/WEB-RELEASE-REVIEW-2026-09-18.md)

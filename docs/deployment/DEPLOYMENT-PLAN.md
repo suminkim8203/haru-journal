@@ -35,3 +35,7 @@ T06 제출은 로그인 없이 열리는 제품 URL입니다. Tailscale 내부 �
 ## 2026-09-18 연결 방식 갱신
 
 백엔드는 NAS Supabase 테이블·DB 함수/접근 정책이다. 앱에는 공개 연결 변수 NEXT_PUBLIC_SUPABASE_URL/NEXT_PUBLIC_SUPABASE_ANON_KEY만 설정하며 기존 서버 전용 키 이전 계획은 취소했다. Next 저장 API를 제거해 현재 화면은 정적 렌더링 가능하다. 실제 공개 웹 호스팅 형태·배포 승인·Studio/API 경로 보존·복구 시험은 아직이며 이번 작업이 웹 배포 완료를 의미하지 않는다. [적용/검사 기록](../implementation/SUPABASE-BACKEND-2026-09-18.md).
+
+## 2026-09-18 최신 상태 — 공개 배포 파일 준비
+
+앞 절의 첫 저장/미적용 상태는 당시 기록이다. 현재 NAS 0001~0009/16테이블/snapshot 6, 핵심 앱과 루틴 구현·실제 자료 검증·프로젝트 백업 복구를 확인했다. 브라우저 직접 Supabase 연결이라 Next 서버 없이 정적 파일을 제공할 수 있으며 선택적 정적 export와 내부 NGINX 배포 파일을 준비했다. 기존 일반 Next 개발/실행도 유지한다. [실제 검증](../implementation/ROUTINES-AND-HISTORY-2026-09-18.md), [사용자 확인 대상과 구체 공개 배포안](WEB-RELEASE-REVIEW-2026-09-18.md)을 최신 기준으로 읽는다. 아직 공개 웹 앱 배포·별도 기기·정기 백업/재부팅 복원·전체 플랫폼 복구는 완료하지 않았다.

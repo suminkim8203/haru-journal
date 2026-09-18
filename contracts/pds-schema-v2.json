@@ -1,0 +1,1523 @@
+{
+  "schema": "journal",
+  "tables": [
+    {
+      "name": "command_receipts",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "request_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "jsonb",
+          "name": "request",
+          "type": "jsonb",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "jsonb",
+          "name": "result",
+          "type": "jsonb",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "command_receipts_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "command_receipts_pkey",
+          "definition": "PRIMARY KEY (diary_id, request_id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "command_receipts_pkey",
+          "table": "command_receipts",
+          "definition": "CREATE UNIQUE INDEX command_receipts_pkey ON journal.command_receipts USING btree (diary_id, request_id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "day_closures",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "date",
+          "name": "local_date",
+          "type": "date",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "closed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "day_closures_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "day_closures_pkey",
+          "definition": "PRIMARY KEY (diary_id, local_date)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "day_closures_pkey",
+          "table": "day_closures",
+          "definition": "CREATE UNIQUE INDEX day_closures_pkey ON journal.day_closures USING btree (diary_id, local_date)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "diaries",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "timezone",
+          "type": "text",
+          "default": "'Asia/Seoul'::text",
+          "nullable": false
+        },
+        {
+          "udt": "int8",
+          "name": "revision",
+          "type": "bigint",
+          "default": "0",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "diaries_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "diaries_revision_check",
+          "definition": "CHECK ((revision >= 0))"
+        },
+        {
+          "name": "diaries_timezone_check",
+          "definition": "CHECK ((timezone = 'Asia/Seoul'::text))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "diaries_pkey",
+          "table": "diaries",
+          "definition": "CREATE UNIQUE INDEX diaries_pkey ON journal.diaries USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "improvements",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "source_plan_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "target_plan_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "source_plan_title",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "source_text",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "improvements_check",
+          "definition": "CHECK ((source_plan_id <> target_plan_id))"
+        },
+        {
+          "name": "improvements_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "improvements_diary_id_source_plan_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, source_plan_id) REFERENCES journal.plans(diary_id, id)"
+        },
+        {
+          "name": "improvements_diary_id_source_plan_id_target_plan_id_source__key",
+          "definition": "UNIQUE (diary_id, source_plan_id, target_plan_id, source_text)"
+        },
+        {
+          "name": "improvements_diary_id_target_plan_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, target_plan_id) REFERENCES journal.plans(diary_id, id)"
+        },
+        {
+          "name": "improvements_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "improvements_source_text_check",
+          "definition": "CHECK (((length(btrim(source_text)) >= 1) AND (length(btrim(source_text)) <= 500)))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "improvements_diary_id_source_plan_id_target_plan_id_source__key",
+          "table": "improvements",
+          "definition": "CREATE UNIQUE INDEX improvements_diary_id_source_plan_id_target_plan_id_source__key ON journal.improvements USING btree (diary_id, source_plan_id, target_plan_id, source_text)"
+        },
+        {
+          "name": "improvements_pkey",
+          "table": "improvements",
+          "definition": "CREATE UNIQUE INDEX improvements_pkey ON journal.improvements USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "placements",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "task_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "placements_check",
+          "definition": "CHECK ((ended_at > started_at))"
+        },
+        {
+          "name": "placements_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "placements_diary_id_id_key",
+          "definition": "UNIQUE (diary_id, id)"
+        },
+        {
+          "name": "placements_diary_id_task_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, task_id) REFERENCES journal.tasks(diary_id, id)"
+        },
+        {
+          "name": "placements_pkey",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "placements_diary_id_id_key",
+          "table": "placements",
+          "definition": "CREATE UNIQUE INDEX placements_diary_id_id_key ON journal.placements USING btree (diary_id, id)"
+        },
+        {
+          "name": "placements_pkey",
+          "table": "placements",
+          "definition": "CREATE UNIQUE INDEX placements_pkey ON journal.placements USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "plans",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "kind",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "date",
+          "name": "start_date",
+          "type": "date",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "date",
+          "name": "end_date",
+          "type": "date",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "text",
+          "name": "success_text",
+          "type": "text",
+          "default": "''::text",
+          "nullable": false
+        },
+        {
+          "udt": "int4",
+          "name": "estimated_minutes",
+          "type": "integer",
+          "default": "0",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "text",
+          "name": "priority",
+          "type": "text",
+          "default": "'normal'::text",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "plans_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "plans_diary_id_id_key",
+          "definition": "UNIQUE (diary_id, id)"
+        },
+        {
+          "name": "plans_estimated_minutes_check",
+          "definition": "CHECK (((estimated_minutes >= 0) AND (estimated_minutes <= 525600)))"
+        },
+        {
+          "name": "plans_kind_check",
+          "definition": "CHECK ((kind = ANY (ARRAY['general'::text, 'routine'::text])))"
+        },
+        {
+          "name": "plans_period_required",
+          "definition": "CHECK (((start_date IS NOT NULL) AND (end_date IS NOT NULL) AND (end_date >= start_date)))"
+        },
+        {
+          "name": "plans_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "plans_priority_check",
+          "definition": "CHECK ((priority = ANY (ARRAY['high'::text, 'normal'::text, 'low'::text])))"
+        },
+        {
+          "name": "plans_success_text_check",
+          "definition": "CHECK ((length(success_text) <= 4000))"
+        },
+        {
+          "name": "plans_title_check",
+          "definition": "CHECK (((length(btrim(title)) >= 1) AND (length(btrim(title)) <= 120)))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "plans_diary_id_id_key",
+          "table": "plans",
+          "definition": "CREATE UNIQUE INDEX plans_diary_id_id_key ON journal.plans USING btree (diary_id, id)"
+        },
+        {
+          "name": "plans_pkey",
+          "table": "plans",
+          "definition": "CREATE UNIQUE INDEX plans_pkey ON journal.plans USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "reflections",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "date",
+          "name": "local_date",
+          "type": "date",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "body",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "bool",
+          "name": "bookmarked",
+          "type": "boolean",
+          "default": "false",
+          "nullable": false
+        },
+        {
+          "udt": "jsonb",
+          "name": "imported_thoughts",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "reflections_body_check",
+          "definition": "CHECK (((length(btrim(body)) >= 1) AND (length(btrim(body)) <= 4000)))"
+        },
+        {
+          "name": "reflections_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "reflections_diary_id_local_date_key",
+          "definition": "UNIQUE (diary_id, local_date)"
+        },
+        {
+          "name": "reflections_imported_thoughts_check",
+          "definition": "CHECK ((jsonb_typeof(imported_thoughts) = 'array'::text))"
+        },
+        {
+          "name": "reflections_pkey",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "reflections_diary_id_local_date_key",
+          "table": "reflections",
+          "definition": "CREATE UNIQUE INDEX reflections_diary_id_local_date_key ON journal.reflections USING btree (diary_id, local_date)"
+        },
+        {
+          "name": "reflections_pkey",
+          "table": "reflections",
+          "definition": "CREATE UNIQUE INDEX reflections_pkey ON journal.reflections USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "revisions",
+      "columns": [
+        {
+          "udt": "int8",
+          "name": "id",
+          "type": "bigint",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "entity_type",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "entity_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "jsonb",
+          "name": "previous_value",
+          "type": "jsonb",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "changed_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "revisions_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "revisions_pkey",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "revisions_pkey",
+          "table": "revisions",
+          "definition": "CREATE UNIQUE INDEX revisions_pkey ON journal.revisions USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "routine_rules",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "plan_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "description",
+          "type": "text",
+          "default": "''::text",
+          "nullable": false
+        },
+        {
+          "udt": "date",
+          "name": "start_date",
+          "type": "date",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "date",
+          "name": "end_date",
+          "type": "date",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "int4",
+          "name": "estimated_minutes",
+          "type": "integer",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "priority",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "jsonb",
+          "name": "tags",
+          "type": "jsonb",
+          "default": "'[]'::jsonb",
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "timing",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "time",
+          "name": "start_time",
+          "type": "time without time zone",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "date",
+          "name": "stopped_from",
+          "type": "date",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "timestamptz",
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "routine_rules_check",
+          "definition": "CHECK ((end_date >= start_date))"
+        },
+        {
+          "name": "routine_rules_check1",
+          "definition": "CHECK ((((timing = 'flex'::text) AND (start_time IS NULL)) OR ((timing = 'fixed'::text) AND (start_time IS NOT NULL))))"
+        },
+        {
+          "name": "routine_rules_description_check",
+          "definition": "CHECK ((length(description) <= 4000))"
+        },
+        {
+          "name": "routine_rules_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "routine_rules_diary_id_id_key",
+          "definition": "UNIQUE (diary_id, id)"
+        },
+        {
+          "name": "routine_rules_diary_id_id_plan_id_key",
+          "definition": "UNIQUE (diary_id, id, plan_id)"
+        },
+        {
+          "name": "routine_rules_diary_id_plan_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, plan_id) REFERENCES journal.plans(diary_id, id)"
+        },
+        {
+          "name": "routine_rules_estimated_minutes_check",
+          "definition": "CHECK (((estimated_minutes >= 1) AND (estimated_minutes <= 10080)))"
+        },
+        {
+          "name": "routine_rules_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "routine_rules_priority_check",
+          "definition": "CHECK ((priority = ANY (ARRAY['high'::text, 'normal'::text, 'low'::text])))"
+        },
+        {
+          "name": "routine_rules_tags_check",
+          "definition": "CHECK ((jsonb_typeof(tags) = 'array'::text))"
+        },
+        {
+          "name": "routine_rules_timing_check",
+          "definition": "CHECK ((timing = ANY (ARRAY['flex'::text, 'fixed'::text])))"
+        },
+        {
+          "name": "routine_rules_title_check",
+          "definition": "CHECK (((length(btrim(title)) >= 1) AND (length(btrim(title)) <= 120)))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "routine_rules_diary_id_id_key",
+          "table": "routine_rules",
+          "definition": "CREATE UNIQUE INDEX routine_rules_diary_id_id_key ON journal.routine_rules USING btree (diary_id, id)"
+        },
+        {
+          "name": "routine_rules_diary_id_id_plan_id_key",
+          "table": "routine_rules",
+          "definition": "CREATE UNIQUE INDEX routine_rules_diary_id_id_plan_id_key ON journal.routine_rules USING btree (diary_id, id, plan_id)"
+        },
+        {
+          "name": "routine_rules_pkey",
+          "table": "routine_rules",
+          "definition": "CREATE UNIQUE INDEX routine_rules_pkey ON journal.routine_rules USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "runs",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "task_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "text",
+          "name": "source",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "blocked_reason",
+          "type": "text",
+          "default": "''::text",
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "task_title",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "plan_title",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "run_segments_complete",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "runs_blocked_reason_check",
+          "definition": "CHECK ((length(blocked_reason) <= 2000))"
+        },
+        {
+          "name": "runs_check",
+          "definition": "CHECK (((ended_at IS NULL) OR (ended_at > started_at)))"
+        },
+        {
+          "name": "runs_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "runs_diary_id_id_key",
+          "definition": "UNIQUE (diary_id, id)"
+        },
+        {
+          "name": "runs_diary_id_task_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, task_id) REFERENCES journal.tasks(diary_id, id)"
+        },
+        {
+          "name": "runs_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "runs_source_check",
+          "definition": "CHECK ((source = ANY (ARRAY['live'::text, 'manual'::text])))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "diary_one_open_run",
+          "table": "runs",
+          "definition": "CREATE UNIQUE INDEX diary_one_open_run ON journal.runs USING btree (diary_id) WHERE ((ended_at IS NULL) AND (deleted_at IS NULL))"
+        },
+        {
+          "name": "runs_diary_id_id_key",
+          "table": "runs",
+          "definition": "CREATE UNIQUE INDEX runs_diary_id_id_key ON journal.runs USING btree (diary_id, id)"
+        },
+        {
+          "name": "runs_pkey",
+          "table": "runs",
+          "definition": "CREATE UNIQUE INDEX runs_pkey ON journal.runs USING btree (id)"
+        }
+      ],
+      "triggers": [
+        {
+          "name": "run_segments_complete",
+          "table": "runs",
+          "definition": "CREATE CONSTRAINT TRIGGER run_segments_complete AFTER INSERT OR UPDATE ON journal.runs DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION journal.check_run_segments()"
+        }
+      ]
+    },
+    {
+      "name": "segments",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "run_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "kind",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "started_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "ended_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "segment_ranges_complete",
+          "definition": "TRIGGER DEFERRABLE INITIALLY DEFERRED"
+        },
+        {
+          "name": "segments_check",
+          "definition": "CHECK (((ended_at IS NULL) OR (ended_at >= started_at)))"
+        },
+        {
+          "name": "segments_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "segments_diary_id_run_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, run_id) REFERENCES journal.runs(diary_id, id)"
+        },
+        {
+          "name": "segments_kind_check",
+          "definition": "CHECK ((kind = ANY (ARRAY['work'::text, 'pause'::text, 'break'::text, 'interrupt'::text])))"
+        },
+        {
+          "name": "segments_pkey",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "run_one_open_segment",
+          "table": "segments",
+          "definition": "CREATE UNIQUE INDEX run_one_open_segment ON journal.segments USING btree (diary_id, run_id) WHERE (ended_at IS NULL)"
+        },
+        {
+          "name": "segments_pkey",
+          "table": "segments",
+          "definition": "CREATE UNIQUE INDEX segments_pkey ON journal.segments USING btree (id)"
+        }
+      ],
+      "triggers": [
+        {
+          "name": "segment_ranges_complete",
+          "table": "segments",
+          "definition": "CREATE CONSTRAINT TRIGGER segment_ranges_complete AFTER INSERT OR DELETE OR UPDATE ON journal.segments DEFERRABLE INITIALLY DEFERRED FOR EACH ROW EXECUTE FUNCTION journal.check_run_segments()"
+        }
+      ]
+    },
+    {
+      "name": "tags",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "name",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "tags_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "tags_diary_id_id_key",
+          "definition": "UNIQUE (diary_id, id)"
+        },
+        {
+          "name": "tags_diary_id_name_key",
+          "definition": "UNIQUE (diary_id, name)"
+        },
+        {
+          "name": "tags_name_check",
+          "definition": "CHECK (((name = btrim(name)) AND ((length(name) >= 1) AND (length(name) <= 30))))"
+        },
+        {
+          "name": "tags_pkey",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "tags_diary_id_id_key",
+          "table": "tags",
+          "definition": "CREATE UNIQUE INDEX tags_diary_id_id_key ON journal.tags USING btree (diary_id, id)"
+        },
+        {
+          "name": "tags_diary_id_name_key",
+          "table": "tags",
+          "definition": "CREATE UNIQUE INDEX tags_diary_id_name_key ON journal.tags USING btree (diary_id, name)"
+        },
+        {
+          "name": "tags_pkey",
+          "table": "tags",
+          "definition": "CREATE UNIQUE INDEX tags_pkey ON journal.tags USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "task_tags",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "task_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "tag_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "task_tags_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "task_tags_diary_id_tag_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, tag_id) REFERENCES journal.tags(diary_id, id)"
+        },
+        {
+          "name": "task_tags_diary_id_task_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, task_id) REFERENCES journal.tasks(diary_id, id)"
+        },
+        {
+          "name": "task_tags_pkey",
+          "definition": "PRIMARY KEY (diary_id, task_id, tag_id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "task_tags_pkey",
+          "table": "task_tags",
+          "definition": "CREATE UNIQUE INDEX task_tags_pkey ON journal.task_tags USING btree (diary_id, task_id, tag_id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "tasks",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "plan_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "description",
+          "type": "text",
+          "default": "''::text",
+          "nullable": false
+        },
+        {
+          "udt": "date",
+          "name": "due_date",
+          "type": "date",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "int4",
+          "name": "estimated_minutes",
+          "type": "integer",
+          "default": "0",
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "priority",
+          "type": "text",
+          "default": "'normal'::text",
+          "nullable": false
+        },
+        {
+          "udt": "bool",
+          "name": "complete",
+          "type": "boolean",
+          "default": "false",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "completed_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "timestamptz",
+          "name": "created_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "uuid",
+          "name": "routine_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "date",
+          "name": "occurrence_date",
+          "type": "date",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "bool",
+          "name": "routine_exception",
+          "type": "boolean",
+          "default": "false",
+          "nullable": false
+        },
+        {
+          "udt": "bool",
+          "name": "skipped",
+          "type": "boolean",
+          "default": "false",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "cancelled_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        }
+      ],
+      "constraints": [
+        {
+          "name": "tasks_check",
+          "definition": "CHECK ((complete = (completed_at IS NOT NULL)))"
+        },
+        {
+          "name": "tasks_description_check",
+          "definition": "CHECK ((length(description) <= 4000))"
+        },
+        {
+          "name": "tasks_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "tasks_diary_id_id_key",
+          "definition": "UNIQUE (diary_id, id)"
+        },
+        {
+          "name": "tasks_diary_id_plan_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, plan_id) REFERENCES journal.plans(diary_id, id)"
+        },
+        {
+          "name": "tasks_estimated_minutes_check",
+          "definition": "CHECK (((estimated_minutes >= 0) AND (estimated_minutes <= 10080)))"
+        },
+        {
+          "name": "tasks_occurrence_pair",
+          "definition": "CHECK ((((routine_id IS NULL) AND (occurrence_date IS NULL)) OR ((routine_id IS NOT NULL) AND (occurrence_date IS NOT NULL) AND (due_date IS NOT NULL) AND (due_date = occurrence_date))))"
+        },
+        {
+          "name": "tasks_pkey",
+          "definition": "PRIMARY KEY (id)"
+        },
+        {
+          "name": "tasks_priority_check",
+          "definition": "CHECK ((priority = ANY (ARRAY['high'::text, 'normal'::text, 'low'::text])))"
+        },
+        {
+          "name": "tasks_routine_fk",
+          "definition": "FOREIGN KEY (diary_id, routine_id, plan_id) REFERENCES journal.routine_rules(diary_id, id, plan_id)"
+        },
+        {
+          "name": "tasks_title_check",
+          "definition": "CHECK (((length(btrim(title)) >= 1) AND (length(btrim(title)) <= 120)))"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "routine_occurrence_unique",
+          "table": "tasks",
+          "definition": "CREATE UNIQUE INDEX routine_occurrence_unique ON journal.tasks USING btree (diary_id, routine_id, occurrence_date) WHERE (routine_id IS NOT NULL)"
+        },
+        {
+          "name": "tasks_diary_id_id_key",
+          "table": "tasks",
+          "definition": "CREATE UNIQUE INDEX tasks_diary_id_id_key ON journal.tasks USING btree (diary_id, id)"
+        },
+        {
+          "name": "tasks_pkey",
+          "table": "tasks",
+          "definition": "CREATE UNIQUE INDEX tasks_pkey ON journal.tasks USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "thoughts",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "task_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "date",
+          "name": "local_date",
+          "type": "date",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "body",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "thoughts_body_check",
+          "definition": "CHECK (((length(btrim(body)) >= 1) AND (length(btrim(body)) <= 4000)))"
+        },
+        {
+          "name": "thoughts_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "thoughts_diary_id_task_id_fkey",
+          "definition": "FOREIGN KEY (diary_id, task_id) REFERENCES journal.tasks(diary_id, id)"
+        },
+        {
+          "name": "thoughts_diary_id_task_id_local_date_key",
+          "definition": "UNIQUE (diary_id, task_id, local_date)"
+        },
+        {
+          "name": "thoughts_pkey",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "thoughts_diary_id_task_id_local_date_key",
+          "table": "thoughts",
+          "definition": "CREATE UNIQUE INDEX thoughts_diary_id_task_id_local_date_key ON journal.thoughts USING btree (diary_id, task_id, local_date)"
+        },
+        {
+          "name": "thoughts_pkey",
+          "table": "thoughts",
+          "definition": "CREATE UNIQUE INDEX thoughts_pkey ON journal.thoughts USING btree (id)"
+        }
+      ],
+      "triggers": []
+    },
+    {
+      "name": "trash",
+      "columns": [
+        {
+          "udt": "uuid",
+          "name": "id",
+          "type": "uuid",
+          "default": "gen_random_uuid()",
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "diary_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "entity_type",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "uuid",
+          "name": "entity_id",
+          "type": "uuid",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "title",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "deleted_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "restored_at",
+          "type": "timestamp with time zone",
+          "default": null,
+          "nullable": true
+        },
+        {
+          "udt": "jsonb",
+          "name": "batch",
+          "type": "jsonb",
+          "default": "'{}'::jsonb",
+          "nullable": false
+        }
+      ],
+      "constraints": [
+        {
+          "name": "trash_diary_id_fkey",
+          "definition": "FOREIGN KEY (diary_id) REFERENCES journal.diaries(id)"
+        },
+        {
+          "name": "trash_entity_type_check",
+          "definition": "CHECK ((entity_type = ANY (ARRAY['plan'::text, 'task'::text, 'run'::text, 'placement'::text, 'reflection'::text, 'routine'::text])))"
+        },
+        {
+          "name": "trash_pkey",
+          "definition": "PRIMARY KEY (id)"
+        }
+      ],
+      "indexes": [
+        {
+          "name": "trash_pkey",
+          "table": "trash",
+          "definition": "CREATE UNIQUE INDEX trash_pkey ON journal.trash USING btree (id)"
+        }
+      ],
+      "triggers": []
+    }
+  ],
+  "service": "HaruLeaf",
+  "database": "PostgreSQL",
+  "timezone": "Asia/Seoul",
+  "contractVersion": 2,
+  "publicFunctions": [
+    "haru_snapshot",
+    "haru_command",
+    "haru_export"
+  ],
+  "snapshotSchemaVersion": 6
+}

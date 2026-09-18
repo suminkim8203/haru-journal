@@ -1,1 +1,5 @@
-export default function Home(){return <main><header><small>PLAN · DO · SEE</small><h1>하루의 여백</h1><p>오늘 할 일을 적고, 보낸 시간을 남깁니다.</p></header><section><h2>개발 환경 준비 중</h2><p>승인된 02.24 시안을 React 화면으로 옮길 준비를 마쳤습니다.</p><p>이 화면은 아직 자료를 저장하지 않습니다. 기존 시안과 저장 자료는 그대로 보존되어 있습니다.</p></section></main>;}
+import {Plans} from '@/components/plans';
+import {snapshot,storageConfigured} from '@/lib/storage.server';
+import type {Snapshot} from '@/lib/contracts';
+export const dynamic='force-dynamic';
+export default async function Home(){let initial:Snapshot|null=null,issue:string|null=null;if(storageConfigured()){try{initial=await snapshot()}catch{issue='저장소에 연결하지 못했습니다. 잠시 후 다시 확인해 주세요.';}}return <main><header><div className="mast-meta"><span>PLAN · DO · SEE</span><span>DAILY JOURNAL</span></div><div className="mast-title"><p>오늘 할 일을 적고<br/>보낸 시간을 남깁니다.</p><div><h1>HaruLeaf</h1><small>PLAN · DO · SEE JOURNAL</small></div><p>생각을 적고<br/>하루를 돌아봅니다.</p></div><p className="public-notice">지금은 로그인이 없어 링크를 아는 사람은 누구나 볼 수 있습니다. 남이 봐도 괜찮은 내용만 넣으세요.</p></header><div className="main-content"><Plans initial={initial} issue={issue}/></div><footer className="site-footer">계획과 실제 시간, 단상과 회고</footer></main>}

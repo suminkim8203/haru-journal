@@ -1,0 +1,18 @@
+# 문서 정리·저장소 반영 기록
+
+요약: 사용자 요청으로 기본 폴더 haru-journal의 공개 문서를 정리합니다. 코드·DB·서버 배포 변경은 이번 범위에 포함하지 않습니다.
+
+- 기준일: 2026-09-18
+- 원본: 기존 T06-palndosee 작업 문서 및 시안 변경 기록
+- 대상: 기본 폴더 D:/workspace/haru-journal
+- 브랜치: codex/project-documentation (main 기반 문서 전용)
+- 보존: 79개 기존 Markdown 문서, 과제 원문 사본/원문 텍스트, 최초 이전 확인 목록, 공개 NAS 요약
+- 추가: 주제별 목차, 최신 상태/승인 디자인, 전체 문서/자료 목록
+- 검사: Markdown 96개 상대 링크 검사 통과(앱 개발 안내는 기존 대상 web/README.md), 공개 문서의 비밀값/개인 접속정보 패턴 검사 통과, 과제 원문 텍스트 바이트 일치 확인. 서버 원격 상태/시안 실제 렌더링/앱 기능 검증은 이번 문서 작업에서 수행하지 않음
+- GitHub 반영 완료 여부는 최종 Git 푸시 결과 및 원격 commit 확인으로 별도 판정
+
+기존 로컬 원문은 변경/삭제하지 않습니다. 환경 설정, HTML/이미지/ZIP 원본, 작업용 코드, 개인 NAS 접속정보는 자동 업로드하지 않습니다.
+
+## GitHub 반영 확인
+
+2026-09-18 문서 브랜치 codex/project-documentation 업로드 성공, 최초 commit 652a23b. [문서 전용 PR #2](https://github.com/suminkim8203/haru-journal/pull/2)를 main 통합 경로로 생성했습니다. 앱 기능 코드의 별도 feat/persistent-plans 브랜치를 합치는 PR이 아닙니다. 최종 통합 상태는 PR 및 Git 이력으로 확인합니다.

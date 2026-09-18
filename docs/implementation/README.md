@@ -13,3 +13,5 @@
 [문서 시작점](../README.md)
 
 - [Supabase 백엔드 전환과 일정/기록 구현](SUPABASE-BACKEND-2026-09-18.md) — 실제 NAS 적용·검증·남은 범위.
+
+- [승인 공개 예시 실제 NAS 검증](PUBLIC-NAS-VERIFICATION-2026-09-18.md)

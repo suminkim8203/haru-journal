@@ -72,7 +72,7 @@ blocked_reason은 선택 입력이며 실행 저장/변경 저장/기록 종료�
 
 ## API·내보내기·완료 증거
 
-첫 저장 브랜치에는 GET /api/diary, POST /api/commands가 있습니다. GET /api/export와 전체 명령은 후속입니다. Supabase 비밀키는 서버 전용, 브라우저/NEXT_PUBLIC/Git/문서 금지. 직접 테이블 쓰기 대신 검증 서버 경로 사용. 이것이 T06의 사용자별 접근 제한을 의미하지 않습니다.
+현재 앱은 브라우저 Supabase SDK에서 public.haru_snapshot()/haru_command()/haru_export()를 호출합니다. Next 저장 API는 제거했고 서버용 비밀키는 사용하지 않습니다. 공개 anon 키로 고정 다이어리의 제한된 함수를 실행하며, 내부 테이블·핵심 함수 직접 접근은 차단합니다. 이것이 T06의 사용자별 접근 제한을 의미하지 않습니다.
 
 내보내기는 schemaVersion/exportedAt/timezone, 사용자 자료/휴지통/수정 이력 포함, 비밀값·command receipt 제외. 기존 시안 자료 자동 업로드 없음. 이식 시 원문 보존·ID/날짜 충돌·고아 관계·구형 스냅샷 대응부터 검증합니다.
 
@@ -90,4 +90,4 @@ snapshot schemaVersion=2와 서버 쓰기 전 버전 검사를 추가해 구형 
 
 ## 2026-09-18 — 현재 물리 구현과 연결
 
-NAS 0001~0006 적용: diaries/plans/tasks/tags/task_tags/command_receipts/revisions/placements/runs/segments/thoughts/reflections/day_closures/improvements/trash. snapshot schemaVersion 4. 공개 앱 함수는 고정 diary 경계를 사용하며 내부 SQL에서 입력을 검증한다. 상기의 승인 루틴 계약은 후속으로 남아 있고 아직 테이블·API 구현이 아니다. [실제 검증 및 한계](implementation/SUPABASE-BACKEND-2026-09-18.md).
+NAS 0001~0007 적용: diaries/plans/tasks/tags/task_tags/command_receipts/revisions/placements/runs/segments/thoughts/reflections/day_closures/improvements/trash. snapshot schemaVersion 4. 공개 앱 함수는 고정 diary 경계를 사용하며 내부 SQL에서 입력을 검증한다. 상기의 승인 루틴 계약은 후속으로 남아 있고 아직 테이블·API 구현이 아니다. [실제 검증 및 한계](implementation/SUPABASE-BACKEND-2026-09-18.md).

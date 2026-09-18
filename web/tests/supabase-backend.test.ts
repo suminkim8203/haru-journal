@@ -2,7 +2,7 @@ import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
-const migrations=['0001_core.sql','0002_plan_priority_task_tags.sql','0003_schedule_runs.sql','0004_records_archive.sql','0005_export.sql','0006_supabase_backend.sql'];
+const migrations=['0001_core.sql','0002_plan_priority_task_tags.sql','0003_schedule_runs.sql','0004_records_archive.sql','0005_export.sql','0006_supabase_backend.sql','0007_deferred_segment_validation.sql'];
 const id=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 async function setup(){const db=new PGlite();await db.exec('create role anon;create role authenticated;create role service_role;');for(const f of migrations)await db.exec(await readFile(new URL('../supabase/migrations/'+f,import.meta.url),'utf8'));return db;}
 async function call(db:PGlite,n:number,rev:number,c:string,p:unknown){return (await db.query<{v:{entityId:string;revision:number}}>('select public.haru_command($1,$2,$3,$4::jsonb) v',[id(n),rev,c,JSON.stringify(p)])).rows[0].v;}
@@ -36,4 +36,12 @@ test('public RPC preserves atomic completion, exact retries and manual time boun
  await assert.rejects(call(db,5,4,'start_run',{taskId:t.entityId,at:'2026-09-18T01:00:00.000Z'}));
  await assert.rejects(call(db,6,4,'create_run',{taskId:t.entityId,startedAt:'2026-09-18T01:00:00.000Z',endedAt:'2026-09-18T01:30:00.000Z',segments:[{kind:'break',startedAt:'2026-09-18T01:00:00.000Z',endedAt:'2026-09-18T02:00:00.000Z'}]}));
  const s=(await db.query<{v:{revision:number;runs:{work_seconds:number;ended_at:string}[]}}>('select public.haru_snapshot() v')).rows[0].v;assert.equal(s.revision,4);assert.equal(s.runs.length,1);assert.equal(s.runs[0].work_seconds,1800);assert.ok(s.runs[0].ended_at);
+ }finally{await db.close()}});
+
+test('deferred segment validation commits as anon without exposing private access',async()=>{const db=await setup();try{
+ const metadata=(await db.query<{definer:boolean}>('select prosecdef as definer from pg_proc where oid=\'journal.check_run_segments()\'::regprocedure')).rows[0];assert.equal(metadata.definer,true);
+ await db.exec('begin;set local role anon');const p=await call(db,1,0,'create_plan',plan),t=await call(db,2,1,'create_task',{planId:p.entityId,title:'수기 실행'});
+ await call(db,3,2,'create_run',{taskId:t.entityId,startedAt:'2026-09-18T00:00:00.000Z',endedAt:'2026-09-18T00:25:00.000Z',segments:[{kind:'work',startedAt:'2026-09-18T00:00:00.000Z',endedAt:'2026-09-18T00:25:00.000Z'}]});await db.exec('commit');
+ await db.exec('set role anon');const s=(await db.query<{v:{revision:number;runs:{work_seconds:number}[]}}>('select public.haru_snapshot() v')).rows[0].v;assert.equal(s.revision,3);assert.equal(s.runs[0].work_seconds,1500);
+ await assert.rejects(db.query('select * from journal.runs'),/permission denied/);await assert.rejects(db.query('select journal.check_run_segments()'),/permission denied/);
  }finally{await db.close()}});

@@ -48,3 +48,7 @@
 Supabase Auth/Realtime/Storage/Edge Functions는 현재 앱 기능으로 사용하지 않는다. 가입·초대·이메일 확인·계정 활성화·최초 비밀번호 설정·변경·재설정은 앱 흐름에 없다. 관리자 로그인과 앱 사용자 인증은 별개다.
 
 참고: [Supabase DB 함수](https://supabase.com/docs/guides/database/functions), [API 키 역할](https://supabase.com/docs/guides/getting-started/api-keys).
+
+## 후속 — 승인 예시 영속 저장 및 지연 검사 보정
+
+0007을 실제 NAS에 추가 적용하고 공개 예시 자료 저장·새 SDK 연결·앱 새로고침·집계/근거·내보내기를 검증했다. 위의 비어 있는 DB/revision 0 기록은 예시 저장 전 상태다. 최신 결과와 발견한 권한 문제는 [후속 검증](PUBLIC-NAS-VERIFICATION-2026-09-18.md)을 따른다.

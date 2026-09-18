@@ -12,3 +12,7 @@
 - GitHub 반영 완료 여부는 최종 Git 푸시 결과 및 원격 commit 확인으로 별도 판정
 
 기존 로컬 원문은 변경/삭제하지 않습니다. 환경 설정, HTML/이미지/ZIP 원본, 작업용 코드, 개인 NAS 접속정보는 자동 업로드하지 않습니다.
+
+## GitHub 반영 확인
+
+2026-09-18 문서 브랜치 codex/project-documentation 업로드 성공, 최초 commit 652a23b. [문서 전용 PR #2](https://github.com/suminkim8203/haru-journal/pull/2)를 main 통합 경로로 생성했습니다. 앱 기능 코드의 별도 feat/persistent-plans 브랜치를 합치는 PR이 아닙니다. 최종 통합 상태는 PR 및 Git 이력으로 확인합니다.

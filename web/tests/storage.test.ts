@@ -1,11 +1,13 @@
+const records=await readFile(new URL('../supabase/migrations/0004_records_archive.sql',import.meta.url),'utf8');
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import {readFile} from 'node:fs/promises';
 import {PGlite} from '@electric-sql/pglite';
 import {DIARY_ID,parseCommand,validDate} from '../src/lib/contracts.ts';
 const sql=await readFile(new URL('../supabase/migrations/0001_core.sql',import.meta.url),'utf8');
+const schedule=await readFile(new URL('../supabase/migrations/0003_schedule_runs.sql',import.meta.url),'utf8');
 const followup=await readFile(new URL('../supabase/migrations/0002_plan_priority_task_tags.sql',import.meta.url),'utf8');
-async function setup(){const db=new PGlite();await db.exec('create role anon; create role authenticated; create role service_role;');await db.exec(sql);await db.exec(followup);return db;}
+async function setup(){const db=new PGlite();await db.exec('create role anon; create role authenticated; create role service_role;');await db.exec(sql);await db.exec(followup);await db.exec(schedule);await db.exec(records);return db;}
 const req=(n:number)=>`00000000-0000-4000-8000-${String(n).padStart(12,'0')}`;
 const plan={kind:'general',title:'검증 계획',startDate:'2026-09-17',endDate:'2026-09-30'};
 async function command(db:PGlite,n:number,revision:number,name:string,payload:unknown){const r=await db.query<{result:{revision:number;entityId:string}}>('select public.journal_command($1,$2,$3,$4,$5::jsonb) result',[DIARY_ID,req(n),revision,name,JSON.stringify(payload)]);return r.rows[0].result;}

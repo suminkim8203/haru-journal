@@ -1,3 +1,4 @@
+const records=await readFile(new URL('../supabase/migrations/0004_records_archive.sql',import.meta.url),'utf8');
 import test from 'node:test';
 import assert from 'node:assert/strict';
 import { readFile } from 'node:fs/promises';
@@ -6,12 +7,13 @@ import { DIARY_ID, parseCommand, compatibleSnapshot, type Snapshot } from '../sr
 import { visibleTasks, type TaskView } from '../src/lib/task-view.ts';
 import { sameSiteRequest } from '../src/lib/request-origin.ts';
 const core = await readFile(new URL('../supabase/migrations/0001_core.sql', import.meta.url), 'utf8');
+const schedule = await readFile(new URL('../supabase/migrations/0003_schedule_runs.sql',import.meta.url),'utf8');
 const followup = await readFile(new URL('../supabase/migrations/0002_plan_priority_task_tags.sql', import.meta.url), 'utf8');
 const id = (n: number) => `00000000-0000-4000-8000-${String(n).padStart(12, '0')}`;
 const plan = { kind: 'general', title: '검증 계획', startDate: '2026-09-18', endDate: '2026-09-30', estimatedMinutes: 120, priority: 'high', successText: '저장 확인' };
 async function setup(upgrade = true) {
   const db = new PGlite(); await db.exec('create role anon;create role authenticated;create role service_role;');
-  await db.exec(core); if (upgrade) await db.exec(followup); return db;
+  await db.exec(core); if (upgrade) { await db.exec(followup); await db.exec(schedule);await db.exec(records); } return db;
 }
 async function command(db: PGlite, n: number, revision: number, name: string, payload: unknown) {
   const result = await db.query<{ result: { entityId: string; revision: number } }>(
@@ -27,7 +29,7 @@ test('follow-up migration preserves existing IDs, values and history; supplies d
     const p = await command(db, 1, 0, 'create_plan', plan);
     const t = await command(db, 2, 1, 'create_task', { planId: p.entityId, title: '기존 할 일', estimatedMinutes: 25 });
     await command(db, 3, 2, 'set_task_complete', { taskId: t.entityId, complete: true });
-    await db.exec(followup);
+    await db.exec(followup); await db.exec(schedule);await db.exec(records);
     const s = await snapshot(db);
     assert.equal(compatibleSnapshot(s), true); assert.equal(s.revision, 3); assert.equal(s.plans[0].id, p.entityId); assert.equal(s.plans[0].estimated_minutes, 120);
     assert.equal(s.plans[0].priority, 'normal'); assert.equal(s.tasks[0].id, t.entityId);
@@ -118,10 +120,10 @@ test('API validates priorities/tag types and normalizes tags without changing th
   assert.throws(() => parseCommand({ ...envelope, command: 'update_plan', payload: { ...plan, planId: 'missing' } }));
 });
 test('old or unrecognized storage versions are not accepted as the updated contract', () => {
-  const base = { diaryId: DIARY_ID, timezone: 'Asia/Seoul', revision: 0, plans: [], tasks: [] };
+  const base = { diaryId: DIARY_ID, timezone: 'Asia/Seoul', revision: 0, plans: [], tasks: [], placements: [], runs: [], thoughts: [], reflections: [], closures: [], improvements: [], trash: [] };
   assert.equal(compatibleSnapshot(base), false);
-  assert.equal(compatibleSnapshot({ ...base, schemaVersion: 2 }), true);
-  assert.equal(compatibleSnapshot({ ...base, schemaVersion: 2, revision: -1 }), false);
+  assert.equal(compatibleSnapshot({ ...base, schemaVersion: 4 }), true);
+  assert.equal(compatibleSnapshot({ ...base, schemaVersion: 4, revision: -1 }), false);
 });
 test('origin checks accept local browser Host or fixed HTTPS origin and reject cross-site/forwarded spoofing', () => {
   const request = (origin: string, extra = {}) => new Request('http://localhost:3100/api/commands', { headers: { Origin: origin, Host: '127.0.0.1:3100', ...extra } });

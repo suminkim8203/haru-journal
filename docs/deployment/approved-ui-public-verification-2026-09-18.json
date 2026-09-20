@@ -1,0 +1,21 @@
+{
+  "url": "https://haruleaf.com/",
+  "releaseId": "approved-bf7699862b88",
+  "checkedAt": "2026-09-18T10:13:12.157Z",
+  "allStaticFilesMatched": true,
+  "staticFiles": 23,
+  "protectedPathsPassed": true,
+  "exportAvailable": true,
+  "schemaVersion": 6,
+  "revision": 27,
+  "counts": {
+    "plans": 2,
+    "tasks": 6,
+    "placements": 2,
+    "runs": 5,
+    "thoughts": 1,
+    "reflections": 1
+  },
+  "readOnly": true,
+  "databaseMigrationApplied": false
+}

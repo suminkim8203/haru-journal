@@ -9,6 +9,7 @@
 3. [제품·디자인 제약](PRODUCT-DESIGN-CONSTRAINTS.md) — 승인 범위와 기록 관계
 4. [데이터 계약](DATA-CONTRACT-v1.md) — 저장·시간·완료·삭제·복원 규칙
 5. [승인 디자인 기준](design/DESIGN-BASELINE.md) — 시안 05와 최신 서체 역할
+6. [Supabase·NAS 개발 인계](deployment/SUPABASE-DEVELOPMENT-HANDOFF.md) — 도메인·DB 연결·웹 배포·운영 설정 및 후속 검증
 
 ## 주제별 목차
 

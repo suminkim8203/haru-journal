@@ -1,0 +1,88 @@
+{
+  "source": "http://127.0.0.1:3217/",
+  "date": "2026-09-18",
+  "presentation": [
+    {
+      "path": "web/src/app/page.tsx",
+      "sha256": "563c3c9f843c01364acebff8dd762c8e42a1fec061c1f429187e62ab17831df6"
+    },
+    {
+      "path": "web/src/app/globals.css",
+      "sha256": "87e003c954776e3340ac7f1f4389b973c1253854ad44f74825095015023919eb"
+    },
+    {
+      "path": "web/src/app/approved-design.css",
+      "sha256": "76fba067293b9209fb7615cdcd32e6d35b81ec52113c2bef5a79797c2b4e2a79"
+    }
+  ],
+  "components": [
+    {
+      "path": "web/src/components/date-field.tsx",
+      "sha256": "43e44390b10d469ac2a91690a3db7896fcf7dc5c5682b6641977610d94a8483b"
+    },
+    {
+      "path": "web/src/components/edition-date.tsx",
+      "sha256": "f84d99baa6e996d22e3fe026c4049217df627d10421cae6a14f97d7fad3421f5"
+    },
+    {
+      "path": "web/src/components/export-button.tsx",
+      "sha256": "11058a6bce76cb726a80ae53d7df27fd1e401b83275403329cc88f380399bfca"
+    },
+    {
+      "path": "web/src/components/forms.tsx",
+      "sha256": "0504addcdec9bc18d2f97028b1fd1de2507917aa6a5e16f8a3da7217194f6782"
+    },
+    {
+      "path": "web/src/components/icons.tsx",
+      "sha256": "e109a7a73d5d5390be13ced3ce3fac35f59363656731f10e9fcf37cbfd8c5fd3"
+    },
+    {
+      "path": "web/src/components/journal-app.tsx",
+      "sha256": "7f144a7287da3f3b9386f4d52a126b004eeae104b26e69597a78c437df6415e6"
+    },
+    {
+      "path": "web/src/components/journal-provider.tsx",
+      "sha256": "b74d11fea1fbb4a18f20045ec27c69bab2633dc1bc20b26981473789a95ae000"
+    },
+    {
+      "path": "web/src/components/picker-dialog.tsx",
+      "sha256": "2a7ac4966a3e2a20414f7e8cd062c40b394edc61a30e372dccf05d3dcbd39243"
+    },
+    {
+      "path": "web/src/components/plans.tsx",
+      "sha256": "0e7a85108b16d25a606d2be42635682d5f556438ee21124f720641810b154518"
+    },
+    {
+      "path": "web/src/components/presentation.ts",
+      "sha256": "c6d5005852536f8f56c6de5acf04f9c5a38eb17dbe7b200ef53abb634f490fbd"
+    },
+    {
+      "path": "web/src/components/recording-panel.tsx",
+      "sha256": "3bde7c08eca6f563b49981c2450aee929b5d8b645cfc2d674e303d6999fd5f0c"
+    },
+    {
+      "path": "web/src/components/records.tsx",
+      "sha256": "551e8c1bcbf7e5d355cb18036a8806148542afa46c039f671610c96f207af049"
+    },
+    {
+      "path": "web/src/components/review.tsx",
+      "sha256": "be5930bf3b1ba84ea25134c7d696e7acf83cb38c049154d73d93938a81d411ad"
+    },
+    {
+      "path": "web/src/components/routines.tsx",
+      "sha256": "5d2b606367beb93ecae16861a03303927362f3f7778d63d84db53b228b728eff"
+    },
+    {
+      "path": "web/src/components/run-editor.tsx",
+      "sha256": "876f2eaa75404c124702d163d214de4a8d81ee1250a75c6e3377842935ac9019"
+    },
+    {
+      "path": "web/src/components/schedule.tsx",
+      "sha256": "49479bee0adacda719609c184989b4ffd54110fc7232d713c56f4e5a2c465e33"
+    },
+    {
+      "path": "web/src/components/time-field.tsx",
+      "sha256": "4c28e1aa48ea42701b171a7aab5a175c8f66aa24d394b1f245312c0a74b80f8f"
+    }
+  ]
+}

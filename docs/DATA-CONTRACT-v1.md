@@ -1,5 +1,8 @@
 # 데이터 계약 v1 — 현행 승인 기준
 
+> 2026-09-21 현행 안내: 승인 앱 배포 완료, release approved-1cd31cf9a6ff, NAS SQL 0001–0010/snapshot 6. 공개 anon 직접 호출이며 서버 비밀키 이전은 취소됐다. 아래 날짜별 설치·미완료 문장은 당시 이력이다. 최신 완료/미확인은 [현재 상태](CURRENT_STATE.md)를 따른다.
+
+
 요약: 아래는 구현해야 할 제품·저장 규칙입니다. 첫 저장 브랜치의 제한된 SQL/API와 구분하며 전체 모델·NAS 저장 완료를 뜻하지 않습니다.
 
 ## 공통과 필수 필드
@@ -95,3 +98,14 @@ NAS 0001~0007 적용: diaries/plans/tasks/tags/task_tags/command_receipts/revisi
 ## 2026-09-18 실제 물리 구현 갱신 — 루틴/보존
 
 앞 절의 미적용/루틴 후속은 당시 상태다. 현재 NAS 0001~0009, 테이블 16개, snapshot 6. routine_rules와 tasks의 routine_id/occurrence_date/routine_exception/skipped/cancelled_at을 구현했다. 일별 발생은 tasks를 사용하며 별도 중복 occurrence 테이블을 만들지 않는다. 규칙/날짜 unique 인덱스·같은 부모 FK·날짜 일치 CHECK, 이후 변경 보호/예정 겹침 확인·부모 확장 이력을 구현했다. 계획/할 일 삭제는 실제 실행/단상/회고를 보존하며 retainedTasks 읽기 모델로 삭제 출처의 실제 기록 날짜를 확인한다. 정확한 현재 범위/한계는 [이번 검증](implementation/ROUTINES-AND-HISTORY-2026-09-18.md), 물리 구조는 [스키마 JSON](../contracts/pds-schema-v2.json)이다.
+
+
+## 2026-09-18 승인 시안 복원 및 실제 DB 보완
+
+요약: 최종 승인 Haru-design-study-05.html의 실제 스타일 13개와 화면 구획을 React에 복원했다. 로컬 후보는 http://127.0.0.1:3217/ 이며 공개 https://haruleaf.com/ 은 이전 87f1c7e 화면이다. 이번 후보를 공개 재배포하지 않았다.
+
+공식 Markdown 121개를 다시 읽고 차이를 기록했다. NAS에 0010_improvement_edits.sql까지 적용했다. snapshot 6·테이블 16개·공개 RPC 3개는 유지하며, 가져온 개선점의 독립 수정과 수정 이력을 복구했다. 수정 본문은 원본 문구·원본/대상 계획 연결·중복 판정 키를 바꾸지 않는다. snapshot의 improvementEditing=true로 실제 지원을 확인한다.
+
+적용 전 백업: NAS /opt/supabase/backups/approved-design-recovery-20260918/. 기존 snapshot을 새 선택 필드 제외 후 비교하여 동일함을 확인했고 revision은 15→15였다. anon 권한의 생성/수정 검증은 트랜잭션 rollback으로 영속 자료를 남기지 않았다. 비공개 함수 경계도 유지했다. SDK 읽기 재검증: 계획 1·할 일 5·실행 3·단상 1·회고 1·개선점 0. 관리자 키를 앱에 이전하지 않았다.
+
+타입·정적 빌드·50개 테스트를 통과했다. 데스크톱 1280px/모바일 390px에서 실제 화면과 완료 상태 제한 등을 확인했다. 원본 file URL 접근 제한 때문에 자동 픽셀 비교는 완료하지 못했다. 전체 폰트 로딩·별도 기기·활성 기록 드래그의 이번 브라우저 전수 검증은 완료로 기록하지 않는다.

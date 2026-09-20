@@ -202,9 +202,46 @@
           "type": "timestamp with time zone",
           "default": "now()",
           "nullable": false
+        },
+        {
+          "udt": "text",
+          "name": "body",
+          "type": "text",
+          "default": null,
+          "nullable": false
+        },
+        {
+          "udt": "timestamptz",
+          "name": "updated_at",
+          "type": "timestamp with time zone",
+          "default": "now()",
+          "nullable": false
+        }
+      ],
+      "indexes": [
+        {
+          "name": "improvements_diary_id_source_plan_id_target_plan_id_source__key",
+          "table": "improvements",
+          "definition": "CREATE UNIQUE INDEX improvements_diary_id_source_plan_id_target_plan_id_source__key ON journal.improvements USING btree (diary_id, source_plan_id, target_plan_id, source_text)"
+        },
+        {
+          "name": "improvements_pkey",
+          "table": "improvements",
+          "definition": "CREATE UNIQUE INDEX improvements_pkey ON journal.improvements USING btree (id)"
+        }
+      ],
+      "triggers": [
+        {
+          "name": "improvement_copy_guard",
+          "table": "improvements",
+          "definition": "CREATE TRIGGER improvement_copy_guard BEFORE INSERT OR UPDATE ON journal.improvements FOR EACH ROW EXECUTE FUNCTION journal.improvement_copy_guard()"
         }
       ],
       "constraints": [
+        {
+          "name": "improvement_body_length",
+          "definition": "CHECK (((length(btrim(body)) >= 1) AND (length(btrim(body)) <= 500)))"
+        },
         {
           "name": "improvements_check",
           "definition": "CHECK ((source_plan_id <> target_plan_id))"
@@ -233,20 +270,7 @@
           "name": "improvements_source_text_check",
           "definition": "CHECK (((length(btrim(source_text)) >= 1) AND (length(btrim(source_text)) <= 500)))"
         }
-      ],
-      "indexes": [
-        {
-          "name": "improvements_diary_id_source_plan_id_target_plan_id_source__key",
-          "table": "improvements",
-          "definition": "CREATE UNIQUE INDEX improvements_diary_id_source_plan_id_target_plan_id_source__key ON journal.improvements USING btree (diary_id, source_plan_id, target_plan_id, source_text)"
-        },
-        {
-          "name": "improvements_pkey",
-          "table": "improvements",
-          "definition": "CREATE UNIQUE INDEX improvements_pkey ON journal.improvements USING btree (id)"
-        }
-      ],
-      "triggers": []
+      ]
     },
     {
       "name": "placements",

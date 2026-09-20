@@ -1,7 +1,7 @@
-# 상태 요약
+# 현재 상태 요약
 
-요약: 최신 실제 상태는 [현재 상태](CURRENT_STATE.md)와 [루틴·기록 보존 검증](implementation/ROUTINES-AND-HISTORY-2026-09-18.md)을 따른다.
+요약: 승인한 일정 사용성 수정과 월간 간략 목록을 https://haruleaf.com/ 에 배포했다. release approved-1cd31cf9a6ff, 정적 파일 23개 해시 일치·53개 기능 검사·빌드·공개 조회/내보내기 검증을 통과했다.
 
-2026-09-18: 핵심 앱·루틴·배치/실행 편집·복원 UI 구현, NAS 0001~0009 적용, 테이블 16개/snapshot 6/공개 함수 3개. 공개 anon 직접 연결, 관리 키 이전 없음. 48개 회귀·타입·최종 정적 빌드/HTTP 검사, 실제 NAS anon rollback 검사와 격리 앱의 데스크톱/390px 화면 검사를 통과했다. 승인 공개 예시의 영속 자료를 유지했다. 실제 구조의 스키마 JSON을 작성하고 적용 전 프로젝트 백업 복구를 별도 DB에서 확인했다.
+NAS SQL 0001–0010·snapshot 6·공개 RPC 3개·실제 Supabase 저장 구조를 유지한다. 이번 배포는 웹 표시/이동만 변경했다. 기존 디자인을 기준으로 승인한 수정만 적용했다.
 
-공개 웹 배포·별도 기기·최종 제출 증거·main 통합·정기 백업/재부팅 복원·대량 자료/일부 브라우저 확인 경로는 남아 있다. 과거 인계/HTML/main을 현재 구현으로 판정하지 않는다. 이번 소스/문서는 codex/plan-task-fields에서 관리한다.
+[현재 상태](CURRENT_STATE.md) · [새 배포 기록](deployment/SCHEDULE-RELEASE-2026-09-18.md) · [구현/검증 한계](implementation/SCHEDULE-USABILITY-2026-09-18.md). 별도 기기·활성 기록 실제 시작 줄 확인·제출 증거·main 통합·백업/재부팅 복원은 후속이다.

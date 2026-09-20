@@ -11,7 +11,7 @@ export interface Plan {
   success_text: string; estimated_minutes: number; priority: Priority; history: PlanRevision[];
 }
 export interface Task {
-  id: string; plan_id: string; title: string; description: string;
+  id: string; plan_id: string; title: string; description: string; created_at?:string;
   due_date: string | null; estimated_minutes: number; priority: Priority;
   complete: boolean; tags: Tag[]; routine_id?:string|null;occurrence_date?:string|null;routine_exception?:boolean;skipped?:boolean;cancelled_at?:string|null;
 }
@@ -20,13 +20,13 @@ export interface Segment { id:string; kind:'work'|'pause'|'break'|'interrupt'; s
 export interface Run { task_title?:string;plan_title?:string;id:string; task_id:string; started_at:string; ended_at:string|null; source:'live'|'manual'; blocked_reason:string; work_seconds:number|null; segments:Segment[] }
 export interface Thought {id:string;task_id:string;local_date:string;body:string}
 export interface Reflection {id:string;local_date:string;body:string;bookmarked:boolean;imported_thoughts:{id:string;body:string}[]}
-export interface Improvement {id:string;source_plan_id:string;target_plan_id:string;source_text:string}
+export interface Improvement {id:string;source_plan_id:string;target_plan_id:string;source_text:string;source_plan_title?:string;body?:string;history?:{id:number;changed_at:string;previous_value:{body:string}}[]}
 export interface TrashEntry {id:string;entity_type:'plan'|'task'|'run'|'placement'|'reflection'|'routine';entity_id:string;title:string;deleted_at:string;placement_conflict?:boolean}
 export interface Routine {id:string;plan_id:string;title:string;description:string;start_date:string;end_date:string;estimated_minutes:number;priority:Priority;tags:string[];timing:'flex'|'fixed';start_time:string|null;stopped_from:string|null;occurrences:{id:string;date:string;reason:string}[]}
-export interface Snapshot { schemaVersion: 6; routines?:Routine[]; retainedTasks?:Task[]; thoughts:Thought[]; reflections:Reflection[]; closures:{local_date:string;closed_at:string}[]; improvements:Improvement[]; trash:TrashEntry[]; placements:Placement[]; runs:Run[]; diaryId: string; timezone: string; revision: number; plans: Plan[]; tasks: Task[] }
+export interface Snapshot { schemaVersion: 6; improvementEditing?:boolean; routines?:Routine[]; retainedTasks?:Task[]; thoughts:Thought[]; reflections:Reflection[]; closures:{local_date:string;closed_at:string}[]; improvements:Improvement[]; trash:TrashEntry[]; placements:Placement[]; runs:Run[]; diaryId: string; timezone: string; revision: number; plans: Plan[]; tasks: Task[] }
 export interface Command {
   requestId: string; expectedRevision: number;
-  command: 'create_routine'|'update_routine'|'skip_occurrence'|'stop_routine'|'create_plan' | 'update_plan' | 'create_task' | 'update_task' | 'set_task_complete' | 'create_placement' | 'update_placement' | 'start_run' | 'switch_segment' | 'stop_run' | 'create_run' | 'update_run' | 'save_thought' | 'save_reflection' | 'close_day' | 'bookmark_reflection' | 'send_improvement' | 'delete_entity' | 'restore_entity';
+  command: 'create_routine'|'update_routine'|'skip_occurrence'|'stop_routine'|'create_plan' | 'update_plan' | 'create_task' | 'update_task' | 'set_task_complete' | 'create_placement' | 'update_placement' | 'start_run' | 'switch_segment' | 'stop_run' | 'create_run' | 'update_run' | 'save_thought' | 'save_reflection' | 'close_day' | 'bookmark_reflection' | 'send_improvement' | 'update_improvement' | 'delete_entity' | 'restore_entity';
   payload: Record<string, unknown>;
 }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -80,6 +80,8 @@ export function parseCommand(input: unknown): Command {
     if(p.imports!==undefined && (!Array.isArray(p.imports) || p.imports.length>500 || p.imports.some(x=>!object(x)||typeof x.id!=='string'||!uuid.test(x.id)||typeof x.body!=='string'||x.body.length>4000))) throw Error('가져올 단상을 확인해 주세요.');
   } else if(c==='bookmark_reflection') {
     id('reflectionId'); if(typeof p.bookmarked!=='boolean')throw Error('책갈피 상태를 확인해 주세요.');
+  } else if(c==='update_improvement') {
+    id('improvementId');text('body',500,true);
   } else if(c==='send_improvement') {
     id('sourcePlanId');id('targetPlanId');text('body',500,true);if(p.sourcePlanId===p.targetPlanId)throw Error('다음 계획을 선택해 주세요.');
   } else if(c==='delete_entity') {

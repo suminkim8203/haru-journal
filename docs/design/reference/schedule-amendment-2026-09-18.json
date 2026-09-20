@@ -1,0 +1,47 @@
+{
+  "approvedChanges": "User requested all seven schedule amendments and deployment; baseline frozen separately",
+  "files": [
+    {
+      "path": "web/src/components/schedule.tsx",
+      "name": "web__src__components__schedule.tsx",
+      "before": "49479bee0adacda719609c184989b4ffd54110fc7232d713c56f4e5a2c465e33",
+      "after": "583ee3fa46fe4fc0844b92251414a2854688c5ba64e06d1b1fe449840de8d619"
+    },
+    {
+      "path": "web/src/components/journal-app.tsx",
+      "name": "web__src__components__journal-app.tsx",
+      "before": "7f144a7287da3f3b9386f4d52a126b004eeae104b26e69597a78c437df6415e6",
+      "after": "2e8b2732fc4a05fb7c8e45e07a410dc8e12fcbedd0522219498ad62ecedc2843"
+    },
+    {
+      "path": "web/src/components/timeline.tsx",
+      "name": "web__src__components__timeline.tsx",
+      "before": null,
+      "after": "04b630aeb3a4070b3a7e9cbcce21c200df487c6ac69565c8f3de5d5fe8877560"
+    },
+    {
+      "path": "web/src/components/monthly.tsx",
+      "name": "web__src__components__monthly.tsx",
+      "before": null,
+      "after": "02f76e0791341d02d624c3bfa804db859a9ebd3a697706f1d5d3bd77067e58ad"
+    },
+    {
+      "path": "web/src/lib/month-preview.ts",
+      "name": "web__src__lib__month-preview.ts",
+      "before": null,
+      "after": "426e9e83d6713a6160e2af000587524f4a0d436930fc1f73637180bde85ed486"
+    },
+    {
+      "path": "web/src/app/globals.css",
+      "name": "web__src__app__globals.css",
+      "before": "87e003c954776e3340ac7f1f4389b973c1253854ad44f74825095015023919eb",
+      "after": "9042b4493318d2bec52f00f25b17180f1bbe250c9c2ae445de76cb862a1f61e5"
+    },
+    {
+      "path": "web/tests/month-preview.test.ts",
+      "name": "web__tests__month-preview.test.ts",
+      "before": null,
+      "after": "478ec63b10b8a7730fca08bd3c2988a0a5a9c3b7cbc63683f11071f3d036866d"
+    }
+  ]
+}

@@ -3,7 +3,7 @@ import {createContext,useContext,useEffect,useRef,useState,type ReactNode} from 
 import type {Command,Snapshot} from '@/lib/contracts';
 import {snapshot,execute,StorageError} from '@/lib/storage';
 type Result={entityId:string|null;revision:number};
-type Store={data:Snapshot|null;locked:boolean;blocked:boolean;send:(command:Command['command'],payload:Record<string,unknown>)=>Promise<Result|null>};
+type Store={saveError:string;data:Snapshot|null;locked:boolean;blocked:boolean;send:(command:Command['command'],payload:Record<string,unknown>)=>Promise<Result|null>};
 const Context=createContext<Store|null>(null);
 export function useJournal(){const value=useContext(Context);if(!value)throw Error('Journal provider missing');return value;}
 export function JournalProvider({initial,issue,children}:{initial:Snapshot|null;issue:string|null;children:ReactNode}){
@@ -32,7 +32,7 @@ export function JournalProvider({initial,issue,children}:{initial:Snapshot|null;
   finally{inFlight.current=false;setBusy(false);}
  }
  async function reload(){if(inFlight.current)return;inFlight.current=true;setBusy(true);try{await refresh();setConflict(false);setError('');setMessage('최신 자료를 불러왔습니다. 입력한 내용은 유지됩니다.');}catch(e){setError(e instanceof Error?e.message:'연결을 확인해 주세요.');}finally{inFlight.current=false;setBusy(false);}}
- return <Context.Provider value={{data,locked:busy||conflict||uncertain,blocked:conflict||uncertain,send}}>
+ return <Context.Provider value={{saveError:error,data,locked:busy||conflict||uncertain,blocked:conflict||uncertain,send}}>
   {error&&<div className="notice" role="alert">{error}<button disabled={busy} onClick={reload}>최신 자료 확인</button>{uncertain&&<button disabled={busy||conflict} onClick={()=>{const p=pending.current;if(p)void send(p.envelope.command,p.payload);}}>이전 저장 결과 확인</button>}</div>}
   <p className="save-status" role="status">{message}</p>{children}
  </Context.Provider>;

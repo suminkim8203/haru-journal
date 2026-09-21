@@ -22,3 +22,10 @@ export function manualSegments(start:string,end:string,pauses:PauseDraft[]){
  for(const p of sorted){if(!Number.isFinite(p.a)||!Number.isFinite(p.b)||p.a<previous||p.b<=p.a||p.b>to)throw Error('휴식·중단은 시작·종료 시간 안에서 서로 겹치지 않게 입력해 주세요.');if(p.a>previous)segments.push({kind:'work',startedAt:new Date(previous).toISOString(),endedAt:p.start});segments.push({kind:p.kind,startedAt:p.start,endedAt:p.end});previous=p.b;}
  if(previous<to)segments.push({kind:'work',startedAt:new Date(previous).toISOString(),endedAt:end});return segments;
 }
+
+// A manual entry is one working interval; existing pauses remain exact on edit.
+export function manualRunSegments(start:string,end:string,run?:Run,now=Date.now()){
+ if(Date.parse(end)>now||Date.parse(start)>now)throw Error('현재 시간을 넘겨 기록할 수 없습니다. 실제로 작업한 시간까지 입력해 주세요.');
+ const pauses=(run?.segments||[]).filter(s=>s.kind!=='work'&&s.ended_at).map(s=>({kind:s.kind==='break'?'break' as const:'interrupt' as const,start:s.started_at,end:s.ended_at!}));
+ return manualSegments(start,end,pauses).map(s=>({...s,kind:run?.segments.find(old=>old.kind!=='work'&&Date.parse(old.started_at)===Date.parse(s.startedAt)&&Date.parse(old.ended_at!)===Date.parse(s.endedAt))?.kind||s.kind,startedAt:new Date(s.startedAt).toISOString(),endedAt:new Date(s.endedAt).toISOString()}));
+}

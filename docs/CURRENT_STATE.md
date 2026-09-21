@@ -1,12 +1,12 @@
 # 현재 프로젝트 상태
 
-요약: 승인된 Haru 디자인과 일정 사용성 수정을 구현·배포했고 2026-09-21 사용자 화면 확인을 받았다. 현재 공개 release는 approved-1cd31cf9a6ff이며 제출·운영 검증을 마무리하는 단계다.
+요약: 승인 소스를 GitHub main에 통합했고 공개 배포·집계 근거·휴대폰 조회·제출문 사용자 확인을 완료했다. 운영 백업/복구 점검은 현재 PC의 Tailscale 로그인 복원 대기다.
 
 ## 실제 구현
 
 - [승인 일정 수정](implementation/SCHEDULE-USABILITY-2026-09-18.md) 구현·배포. 상세/배치 선택·계획명/실제 시작 배치·구간 정리·툴팁·월간 간략 목록. 53개 검사/타입/정적 빌드·23개 공개 파일 해시 확인. 이번 검증은 실제 DB 읽기 전용이며 실행 중 시작 줄의 이번 브라우저 재현은 아직이다.
 
-- 기본 폴더 D:/workspace/haru-journal, GitHub suminkim8203/haru-journal, 작업 브랜치 codex/plan-task-fields. main 통합은 아직이다.
+- 기본 폴더 D:/workspace/haru-journal, GitHub suminkim8203/haru-journal, main 통합 및 GitHub 반영 완료(commit 0a98d3b).
 - 일반/루틴 계획·할 일/태그·일간/주간/월간 일정·실행 타이머/수기 입력·배치/실행 편집·삭제/복원·단상/회고/책갈피·하루 마무리·집계/근거/개선점·내보내기 실제 코드.
 - 브라우저 공개 anon SDK→고정 단일 다이어리 DB 함수. 서버 저장 API/관리 키 중계 없음. 기존 NAS SQL 0001~0010 적용, 테이블 16개, snapshot schemaVersion 6, 앱 공개 함수 3개. 관리자 인증과 내부 접근 차단 유지.
 - 승인 공개 예시 계획 1·할 일 5·종료 실행 3·단상 1·회고 1의 영속 저장·앱 새로고침·집계·내보내기를 검증했다. 새 루틴 운영 자료는 추가하지 않았다.
@@ -15,7 +15,7 @@
 
 ## 미완료·검증 대기
 
-- 별도 기기 복원·최종 제출 증거 및 main 통합. 이번 승인 일정 피드백 구현/배포는 완료했다.
+- main 통합·별도 휴대폰 조회·제출문 사용자 확인 완료. 전체 쓰기 조작의 공개 브라우저 전수 검증과 운영 복구 시험은 남아 있다.
 - Supabase 전체 플랫폼/최신 루틴 백업 복구, 정기 백업·VM 재부팅 복원·장비 부하·대량 반복 성능.
 - 배치/실행 삭제의 기본 브라우저 확인 창 승인 경로, 모든 시간 입력/실패 복원의 브라우저 전수 검사. SQL 검증 결과로 화면 전수 검증을 대신하지 않는다.
 
@@ -25,8 +25,10 @@ Supabase Auth·Realtime·Storage·Edge Functions는 앱에 사용하지 않는�
 
 ## 불확실한 부분
 
-공개 사이트에는 approved-1cd31cf9a6ff를 반영했다. 과거 상태는 archive/pre-finalization-2026-09-21/docs/CURRENT_STATE.md에 보존했다. 같은 PC의 재접속은 별도 기기 증거가 아니다. 적용 전 프로젝트 복구 시험은 전체 플랫폼과 최신 루틴 백업의 복구 보장이 아니다. main/과거 HTML 시안/이전 인계는 현행 구현으로 판정하지 않는다.
+공개 사이트에는 approved-1cd31cf9a6ff를 반영했다. 과거 상태는 archive/pre-finalization-2026-09-21/docs/CURRENT_STATE.md에 보존했다. 2026-09-21 사용자가 별도 휴대폰에서 같은 자료 조회를 확인했다. 적용 전 프로젝트 복구 시험은 전체 플랫폼과 최신 루틴 백업의 복구 보장이 아니다. main/과거 HTML 시안/이전 인계는 현행 구현으로 판정하지 않는다.
 
 다음 작업과 사용자 확인: [진행 계획](implementation/NEXT-STEPS.md), [공개 배포 검토안](deployment/WEB-RELEASE-REVIEW-2026-09-18.md).
 
 
+
+최신 완료 근거: [최종 확인](submission/FINAL-CHECK-2026-09-21.md).

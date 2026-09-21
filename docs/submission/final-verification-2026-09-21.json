@@ -1,0 +1,23 @@
+{
+  "checkedAt": "2026-09-21T00:02:01.331Z",
+  "revision": 32,
+  "publicRepository": true,
+  "defaultBranch": "main",
+  "sourceCommit": "0a98d3beec76e95222b4f49bf98059d48ccb27d9",
+  "gitHistoryBlobCount": 316,
+  "secretPatternFindings": 0,
+  "example": {
+    "tasks": 5,
+    "completed": 2,
+    "delayed": 2,
+    "blocked": 1,
+    "closedRuns": 4,
+    "expectedSeconds": 6300,
+    "actualSeconds": 5598.472,
+    "differenceSeconds": -701.5280000000002
+  },
+  "exportAvailable": true,
+  "readOnly": true,
+  "mobileUserConfirmed": true,
+  "judgementTextUserApproved": true
+}

@@ -1,7 +1,9 @@
 # 현재 상태 요약
 
-요약: 승인한 일정 사용성 수정과 월간 간략 목록을 https://haruleaf.com/ 에 배포했다. release approved-1cd31cf9a6ff, 정적 파일 23개 해시 일치·53개 기능 검사·빌드·공개 조회/내보내기 검증을 통과했다.
+요약: 승인 소스를 GitHub main에 통합했고 공개 배포·집계 근거·휴대폰 조회·제출문 사용자 확인을 완료했다. 운영 백업/복구 점검은 현재 PC의 Tailscale 로그인 복원 대기다.
 
-NAS SQL 0001–0010·snapshot 6·공개 RPC 3개·실제 Supabase 저장 구조를 유지한다. 이번 배포는 웹 표시/이동만 변경했다. 기존 디자인을 기준으로 승인한 수정만 적용했다.
-
-[현재 상태](CURRENT_STATE.md) · [새 배포 기록](deployment/SCHEDULE-RELEASE-2026-09-18.md) · [구현/검증 한계](implementation/SCHEDULE-USABILITY-2026-09-18.md). 별도 기기·활성 기록 실제 시작 줄 확인·제출 증거·main 통합·백업/재부팅 복원은 후속이다.
+- 공개: https://haruleaf.com/ · release approved-1cd31cf9a6ff.
+- 소스: main에 0a98d3b 통합·원격 반영.
+- 실제 DB: NAS SQL 0001–0010·snapshot 6·공개 RPC 3개.
+- [제출문](submission/T06-SUBMISSION.md) · [최종 확인과 한계](submission/FINAL-CHECK-2026-09-21.md).
+- 남은 운영 단계: Tailscale 로그인 복원 → 현행 백업 상태 확인 → 제한된 백업 생성·격리 복구 시험 → 재부팅 시험의 서비스 중단 시간 확인.

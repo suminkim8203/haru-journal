@@ -270,7 +270,8 @@
     "automaticDeletion": false,
     "minimumFreeGiB": 5
   },
-  "actualVmRebootTested": false,
+  "actualVmRebootTested": true,
   "offDeviceBackupConfigured": false,
-  "fullPlatformRecreated": false
+  "fullPlatformRecreated": false,
+  "rebootEvidence": "reboot-verification-2026-09-21.json"
 }

@@ -1,0 +1,152 @@
+{
+  "server": {
+    "test": "Ubuntu VM reboot",
+    "productionDataWritten": false,
+    "backupRoot": "/opt/supabase/backups/haru-operations/reboot-20260921",
+    "beforeAt": "2026-09-21T00:47:11.383076+00:00",
+    "afterAt": "2026-09-21T00:48:12.775096+00:00",
+    "bootChanged": true,
+    "revisionBefore": 32,
+    "revisionAfter": 32,
+    "snapshotUnchanged": true,
+    "all16TablesUnchanged": true,
+    "containers": {
+      "/haru-web-haru-web-1": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.933964017Z"
+      },
+      "/supabase-envoy": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.898948335Z"
+      },
+      "/supabase-edge-functions": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.962289341Z"
+      },
+      "/supabase-storage": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.880489896Z"
+      },
+      "/supabase-studio": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.965797421Z"
+      },
+      "/supabase-auth": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:30.783671453Z"
+      },
+      "/supabase-pooler": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.948957197Z"
+      },
+      "/realtime-dev.supabase-realtime": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.951286946Z"
+      },
+      "/supabase-meta": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.937395372Z"
+      },
+      "/supabase-rest": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.850747805Z"
+      },
+      "/supabase-db": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.924133991Z"
+      },
+      "/supabase-imgproxy": {
+        "healthy": true,
+        "restart": "unless-stopped",
+        "startedAt": "2026-09-21T00:47:28.926116289Z"
+      }
+    },
+    "services": {
+      "docker": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "tailscaled": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "haru-backup.timer": {
+        "enabled": "enabled",
+        "active": "active"
+      }
+    },
+    "backupNext": "Mon 2026-09-21 19:13:42 UTC",
+    "passed": true
+  },
+  "public": {
+    "url": "https://haruleaf.com/",
+    "releaseId": "approved-1cd31cf9a6ff",
+    "checkedAt": "2026-09-21T00:48:19.757Z",
+    "allStaticFilesMatched": true,
+    "staticFiles": 23,
+    "protectedPathsPassed": true,
+    "exportAvailable": true,
+    "schemaVersion": 6,
+    "revision": 32,
+    "counts": {
+      "plans": 2,
+      "tasks": 6,
+      "placements": 3,
+      "runs": 5,
+      "thoughts": 1,
+      "reflections": 1
+    },
+    "readOnly": true,
+    "databaseMigrationApplied": false
+  },
+  "httpSamples": [
+    {
+      "at": "2026-09-21T00:47:34.898Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:47:40.071Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:47:45.137Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:47:50.196Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:47:55.257Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:48:00.310Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:48:05.386Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:48:10.459Z",
+      "status": 200
+    },
+    {
+      "at": "2026-09-21T00:48:15.539Z",
+      "status": 200
+    }
+  ],
+  "note": "HTTP observation began after the initial reboot interval; exact outage duration was not measured."
+}

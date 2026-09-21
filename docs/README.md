@@ -18,7 +18,7 @@
 | [요구사항](requirements/README.md) | 과제 RULE·원문·필수 기능 보정 |
 | [디자인](design/README.md) | 브랜드·승인 디자인·서체·기록 표시·비교 이력 |
 | [구현](implementation/README.md) | 구현 결정·데이터 계약·소스 브랜치·검증 한계 |
-| [배포와 운영](deployment/README.md) | PC/NAS 방향·설치 상태·연결/배포 미완료·운영 후속 |
+| [배포와 운영](deployment/README.md) | 실제 공개 배포·NAS 설치·백업/격리 복구·운영 후속 |
 | [과거 기록](archive/README.md) | 최초 설계·인계·과제 감사·변경 로그·시안 검증 |
 | [전체 문서 목록](DOCUMENT-INVENTORY.md) | 보존한 문서와 원래 위치 |
 | [시안·이미지 등 자료 목록](ARTIFACT-CATALOG.md) | Markdown 외 자료의 경로·크기·해시·검토 상태 |
@@ -33,3 +33,5 @@
 - 실제 키·비밀번호·인증 링크·개인 접속정보는 공개 문서에 넣지 않습니다.
 
 문서 이관 기준일: 2026-09-18. 기본 작업 폴더: D:/workspace/haru-journal.
+
+최신 운영 근거: [백업·복구 검증과 복구 방법](deployment/BACKUP-RESTORE-2026-09-21.md).

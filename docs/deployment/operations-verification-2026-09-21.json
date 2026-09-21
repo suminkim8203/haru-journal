@@ -1,0 +1,276 @@
+{
+  "checkedAt": "2026-09-21T00:41:15.399Z",
+  "audit": {
+    "backup": "/opt/supabase/backups/haru-operations/20260921T003409Z",
+    "allBackupHashesMatch": true,
+    "configurationArchiveReadable": true,
+    "backupDirectoryMode": "0o700",
+    "backupFileModesRestricted": true,
+    "databases": [
+      "postgres",
+      "_supabase"
+    ],
+    "backupBytes": 9558640,
+    "storageObjects": 0,
+    "authUsers": 0,
+    "internalDatabaseTables": [
+      {
+        "schema": "_supavisor",
+        "table": "cluster_tenants",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "schema": "_supavisor",
+        "table": "clusters",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "schema": "_supavisor",
+        "table": "schema_migrations",
+        "rows": 22,
+        "match": true
+      },
+      {
+        "schema": "_supavisor",
+        "table": "tenants",
+        "rows": 1,
+        "match": true
+      },
+      {
+        "schema": "_supavisor",
+        "table": "users",
+        "rows": 1,
+        "match": true
+      }
+    ],
+    "containers": [
+      {
+        "name": "/haru-web-haru-web-1",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-envoy",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-edge-functions",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-storage",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-studio",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-auth",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-pooler",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/realtime-dev.supabase-realtime",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-meta",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-rest",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-db",
+        "healthy": true,
+        "restart": "unless-stopped"
+      },
+      {
+        "name": "/supabase-imgproxy",
+        "healthy": true,
+        "restart": "unless-stopped"
+      }
+    ],
+    "services": {
+      "docker": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "tailscaled": {
+        "enabled": "enabled",
+        "active": "active"
+      },
+      "haru-backup.timer": {
+        "enabled": "enabled",
+        "active": "active"
+      }
+    },
+    "freeGiB": 68.2,
+    "sourceSha256": "6a0a3f26ae8420038951fd49e2e5c5672618196dc1480a016d8c5e6c0b759848",
+    "liveRevision": 32
+  },
+  "restore": {
+    "backup": "/opt/supabase/backups/haru-operations/20260921T003409Z",
+    "productionModified": false,
+    "bootstrapRoleMatched": true,
+    "fullDatabaseRestoreExitCode": 0,
+    "additionalDatabases": [
+      {
+        "database": "_supabase",
+        "restoreExitCode": 0
+      }
+    ],
+    "differentPaths": [
+      "/tasks/0/tags/0/id",
+      "/tasks/0/tags/0/name",
+      "/tasks/0/tags/1/id",
+      "/tasks/0/tags/1/name",
+      "/tasks/1/tags/0/id",
+      "/tasks/1/tags/0/name",
+      "/tasks/1/tags/1/id",
+      "/tasks/1/tags/1/name",
+      "/tasks/2/tags/0/id",
+      "/tasks/2/tags/0/name",
+      "/tasks/2/tags/1/id",
+      "/tasks/2/tags/1/name",
+      "/tasks/3/tags/0/id",
+      "/tasks/3/tags/0/name",
+      "/tasks/3/tags/1/id",
+      "/tasks/3/tags/1/name",
+      "/tasks/4/tags/0/id",
+      "/tasks/4/tags/0/name",
+      "/tasks/4/tags/1/id",
+      "/tasks/4/tags/1/name"
+    ],
+    "snapshotExactMatch": false,
+    "snapshotEqualIgnoringTagOrder": true,
+    "revision": 32,
+    "counts": {
+      "plans": 2,
+      "tasks": 6,
+      "placements": 3,
+      "runs": 5,
+      "thoughts": 1,
+      "reflections": 1,
+      "improvements": 0
+    },
+    "permissionBoundary": true,
+    "tableChecks": [
+      {
+        "table": "command_receipts",
+        "rows": 32,
+        "match": true
+      },
+      {
+        "table": "day_closures",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "table": "diaries",
+        "rows": 1,
+        "match": true
+      },
+      {
+        "table": "improvements",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "table": "placements",
+        "rows": 3,
+        "match": true
+      },
+      {
+        "table": "plans",
+        "rows": 2,
+        "match": true
+      },
+      {
+        "table": "reflections",
+        "rows": 1,
+        "match": true
+      },
+      {
+        "table": "revisions",
+        "rows": 8,
+        "match": true
+      },
+      {
+        "table": "routine_rules",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "table": "runs",
+        "rows": 5,
+        "match": true
+      },
+      {
+        "table": "segments",
+        "rows": 8,
+        "match": true
+      },
+      {
+        "table": "tags",
+        "rows": 2,
+        "match": true
+      },
+      {
+        "table": "task_tags",
+        "rows": 10,
+        "match": true
+      },
+      {
+        "table": "tasks",
+        "rows": 6,
+        "match": true
+      },
+      {
+        "table": "thoughts",
+        "rows": 1,
+        "match": true
+      },
+      {
+        "table": "trash",
+        "rows": 0,
+        "match": true
+      }
+    ],
+    "allJournalTablesExact": true,
+    "journalTables": 16,
+    "network": "none",
+    "publicPorts": false,
+    "container": "haru-restore-20260921003713",
+    "errorSummary": "",
+    "containerStopped": true
+  },
+  "schedule": {
+    "timerEnabled": "enabled",
+    "timerActive": "active",
+    "serviceResult": "success",
+    "nextRun": "Mon 2026-09-21 19:10:49 UTC",
+    "schedule": "04:10 Asia/Seoul + 0-5 minutes",
+    "automaticDeletion": false,
+    "minimumFreeGiB": 5
+  },
+  "actualVmRebootTested": false,
+  "offDeviceBackupConfigured": false,
+  "fullPlatformRecreated": false
+}

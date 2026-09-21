@@ -1,0 +1,182 @@
+{
+  "migration": {
+    "mount": "/backup",
+    "separateFromOperatingFilesystem": true,
+    "formatPerformed": false,
+    "previousBackupsRetained": true,
+    "copiedFilesVerified": 36,
+    "existingFstabPreserved": true,
+    "wrongDiskBlocked": true,
+    "missingMountBlockedBeforeWrite": true,
+    "backupResult": "success",
+    "newBackup": "/backup/haru-operations/20260921T010929Z",
+    "newBackupHashesMatch": true,
+    "revision": 32,
+    "snapshotUnchanged": true,
+    "newBackupBytes": 9575014,
+    "freeGiB": 96.8,
+    "directoryMode": "0o700",
+    "sourceSha256": "8efe413f69a5f71348ac1ff09f083a6ce16f9b6046c1dbd6a6ef655b69c54e41",
+    "timerActive": "active",
+    "nextBackup": "Mon 2026-09-21 19:10:01 UTC"
+  },
+  "restore": {
+    "backup": "/backup/haru-operations/20260921T010929Z",
+    "productionModified": false,
+    "bootstrapRoleMatched": true,
+    "fullDatabaseRestoreExitCode": 0,
+    "additionalDatabases": [
+      {
+        "database": "_supabase",
+        "restoreExitCode": 0
+      }
+    ],
+    "differentPaths": [
+      "/tasks/0/tags/0/name",
+      "/tasks/0/tags/0/id",
+      "/tasks/0/tags/1/name",
+      "/tasks/0/tags/1/id",
+      "/tasks/1/tags/0/name",
+      "/tasks/1/tags/0/id",
+      "/tasks/1/tags/1/name",
+      "/tasks/1/tags/1/id",
+      "/tasks/2/tags/0/name",
+      "/tasks/2/tags/0/id",
+      "/tasks/2/tags/1/name",
+      "/tasks/2/tags/1/id",
+      "/tasks/3/tags/0/name",
+      "/tasks/3/tags/0/id",
+      "/tasks/3/tags/1/name",
+      "/tasks/3/tags/1/id",
+      "/tasks/4/tags/0/name",
+      "/tasks/4/tags/0/id",
+      "/tasks/4/tags/1/name",
+      "/tasks/4/tags/1/id"
+    ],
+    "snapshotExactMatch": false,
+    "snapshotEqualIgnoringTagOrder": true,
+    "revision": 32,
+    "counts": {
+      "plans": 2,
+      "tasks": 6,
+      "placements": 3,
+      "runs": 5,
+      "thoughts": 1,
+      "reflections": 1,
+      "improvements": 0
+    },
+    "permissionBoundary": true,
+    "tableChecks": [
+      {
+        "table": "command_receipts",
+        "rows": 32,
+        "match": true
+      },
+      {
+        "table": "day_closures",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "table": "diaries",
+        "rows": 1,
+        "match": true
+      },
+      {
+        "table": "improvements",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "table": "placements",
+        "rows": 3,
+        "match": true
+      },
+      {
+        "table": "plans",
+        "rows": 2,
+        "match": true
+      },
+      {
+        "table": "reflections",
+        "rows": 1,
+        "match": true
+      },
+      {
+        "table": "revisions",
+        "rows": 8,
+        "match": true
+      },
+      {
+        "table": "routine_rules",
+        "rows": 0,
+        "match": true
+      },
+      {
+        "table": "runs",
+        "rows": 5,
+        "match": true
+      },
+      {
+        "table": "segments",
+        "rows": 8,
+        "match": true
+      },
+      {
+        "table": "tags",
+        "rows": 2,
+        "match": true
+      },
+      {
+        "table": "task_tags",
+        "rows": 10,
+        "match": true
+      },
+      {
+        "table": "tasks",
+        "rows": 6,
+        "match": true
+      },
+      {
+        "table": "thoughts",
+        "rows": 1,
+        "match": true
+      },
+      {
+        "table": "trash",
+        "rows": 0,
+        "match": true
+      }
+    ],
+    "allJournalTablesExact": true,
+    "journalTables": 16,
+    "network": "none",
+    "publicPorts": false,
+    "container": "haru-restore-20260921011041",
+    "errorSummary": "",
+    "containerStopped": true
+  },
+  "public": {
+    "url": "https://haruleaf.com/",
+    "releaseId": "approved-1cd31cf9a6ff",
+    "checkedAt": "2026-09-21T01:11:11.677Z",
+    "allStaticFilesMatched": true,
+    "staticFiles": 23,
+    "protectedPathsPassed": true,
+    "exportAvailable": true,
+    "schemaVersion": 6,
+    "revision": 32,
+    "counts": {
+      "plans": 2,
+      "tasks": 6,
+      "placements": 3,
+      "runs": 5,
+      "thoughts": 1,
+      "reflections": 1
+    },
+    "readOnly": true,
+    "databaseMigrationApplied": false
+  },
+  "physicalDisconnectTested": false,
+  "rebootAfterPathChangeTested": false
+}

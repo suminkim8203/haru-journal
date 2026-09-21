@@ -1,5 +1,7 @@
 # NAS Supabase 설치와 운영 기록 — 공개용
 
+> 현재 백업 저장소: 사용자 할당 HDD의 /backup/haru-operations. [HDD 적용 결과](HDD-BACKUP-2026-09-21.md). 아래 이전 /opt 경로와 당시 스크립트 해시는 이관 전 검증 이력이다.
+
 > 2026-09-21 현행 안내: 승인 앱 배포 완료, release approved-1cd31cf9a6ff, NAS SQL 0001–0010/snapshot 6. 공개 anon 직접 호출이며 서버 비밀키 이전은 취소됐다. 아래 날짜별 설치·미완료 문장은 당시 이력이다. 최신 완료/미확인은 [현재 상태](../CURRENT_STATE.md)를 따른다.
 
 

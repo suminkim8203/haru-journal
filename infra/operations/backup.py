@@ -1,6 +1,17 @@
 import subprocess,json,pathlib,os,datetime,hashlib,tarfile,shutil
 os.umask(0o077)
-base=pathlib.Path('/opt/supabase/backups/haru-operations')
+import sys
+config_path=pathlib.Path(os.environ.get('HARU_BACKUP_CONFIG','/etc/haru-backup.json'))
+config=json.loads(config_path.read_text())
+mount=pathlib.Path(config['mount']).resolve()
+base=pathlib.Path(config['directory']).resolve()
+if not mount.is_mount() or mount.stat().st_dev==pathlib.Path('/').stat().st_dev: raise RuntimeError('Backup disk is not mounted separately; refusing operating-disk fallback')
+actual_uuid=subprocess.check_output(['findmnt','-rn','-M',str(mount),'-o','UUID'],text=True).strip()
+if actual_uuid!=config['uuid']: raise RuntimeError('Backup disk UUID mismatch; refusing wrong destination')
+if not base.is_relative_to(mount) or base==mount: raise RuntimeError('Invalid backup directory')
+if '--check-destination' in sys.argv:
+ print('BACKUP_DESTINATION_OK '+str(base))
+ raise SystemExit(0)
 base.mkdir(parents=True,exist_ok=True,mode=0o700)
 if shutil.disk_usage(base).free < 5*2**30: raise RuntimeError('Less than 5 GiB free; backup skipped without deleting existing backups')
 root=base/datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
@@ -37,7 +48,7 @@ def filt(info):
  return info
 with tarfile.open(root/'config-storage-web.tar.gz','w:gz') as t:
  for p in paths:t.add(p,arcname=str(p).lstrip('/'),filter=filt)
- for p in [pathlib.Path('/etc/caddy'),pathlib.Path('/etc/systemd/system')]:
+ for p in [pathlib.Path('/etc/caddy'),pathlib.Path('/etc/systemd/system'),pathlib.Path('/etc/haru-backup.json'),pathlib.Path('/etc/fstab')]:
   if p.exists():t.add(p,arcname=str(p).lstrip('/'))
  for c in containers:
   for m in c.get('Mounts',[]):

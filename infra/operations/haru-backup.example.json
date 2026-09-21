@@ -1,0 +1,5 @@
+{
+  "mount": "/backup",
+  "uuid": "REPLACE_WITH_BACKUP_FILESYSTEM_UUID",
+  "directory": "/backup/haru-operations"
+}

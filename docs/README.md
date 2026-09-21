@@ -35,3 +35,5 @@
 문서 이관 기준일: 2026-09-18. 기본 작업 폴더: D:/workspace/haru-journal.
 
 최신 운영 근거: [백업·복구 검증과 복구 방법](deployment/BACKUP-RESTORE-2026-09-21.md).
+
+현재 백업 위치: [HDD 100GB 적용 및 검증](deployment/HDD-BACKUP-2026-09-21.md).

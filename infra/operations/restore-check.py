@@ -1,8 +1,8 @@
 import subprocess,json,pathlib,os,time,datetime,re,hashlib,sys
 os.umask(0o077)
-if len(sys.argv)!=2: raise SystemExit('Usage: sudo python3 restore-check.py /opt/supabase/backups/haru-operations/BACKUP_DIRECTORY')
+if len(sys.argv)!=2: raise SystemExit('Usage: sudo python3 restore-check.py /backup/haru-operations/BACKUP_DIRECTORY')
 root=pathlib.Path(sys.argv[1]).resolve()
-assert root.is_relative_to(pathlib.Path('/opt/supabase/backups/haru-operations')) and (root/'backup-report.json').is_file()
+assert any(root.is_relative_to(pathlib.Path(parent)) for parent in ['/backup/haru-operations','/opt/supabase/backups/haru-operations']) and (root/'backup-report.json').is_file()
 report={'backup':str(root),'productionModified':False}
 name='haru-restore-'+datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%d%H%M%S')
 def run(a,data=None,check=True):

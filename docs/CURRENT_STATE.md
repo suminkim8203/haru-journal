@@ -57,3 +57,8 @@ Supabase Auth·Realtime·Storage·Edge Functions는 앱에 사용하지 않는�
 ## 2026-09-21 수기 입력 보정 배포
 
 approved-239429c65e97이 현행 공개 버전이다. 입력창 위치·미래/겹침 오류·수기 구간 단순화 반영, 기존 휴식/중단 보존. [상세](implementation/MANUAL-ENTRY-2026-09-21.md). DB schema 6 유지. 전체 55개 검사 및 최종 집중 2개/정적 빌드·공개 23파일 검증 통과.
+
+
+## 제출문 현재 자료 동기화 — 2026-09-21
+
+revision 67: 종료 실행 3건, 열린 실행 0건, 할 일 5개인 사후 정리 계획 확인. 제출 확인 경로를 실제 막힘 근거가 있는 계획으로 갱신했다. 외부 제출은 사용자 진행. [제출문](submission/T06-SUBMISSION.md) · [최종 자료 점검](submission/SUBMISSION-CHECK-2026-09-21.md).

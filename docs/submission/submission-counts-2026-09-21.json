@@ -1,0 +1,40 @@
+{
+  "checkedAt": "2026-09-21T03:58:57.132Z",
+  "revision": 67,
+  "plans": [
+    {
+      "title": "Haru 기능 사용 기록",
+      "tasks": 1,
+      "complete": 0,
+      "closedRuns": 1,
+      "blocked": 1,
+      "actualSeconds": 1098.472
+    },
+    {
+      "title": "계획 생성 테스트",
+      "tasks": 1,
+      "complete": 1,
+      "closedRuns": 1,
+      "blocked": 0,
+      "actualSeconds": 1325.297
+    },
+    {
+      "title": "Haru — 6번 과제 구현과 제출 준비",
+      "tasks": 5,
+      "complete": 5,
+      "closedRuns": 0,
+      "blocked": 0,
+      "actualSeconds": 0
+    },
+    {
+      "title": "SKT ALEPH",
+      "tasks": 1,
+      "complete": 1,
+      "closedRuns": 1,
+      "blocked": 0,
+      "actualSeconds": 12963.128
+    }
+  ],
+  "closedRuns": 3,
+  "openRuns": 0
+}

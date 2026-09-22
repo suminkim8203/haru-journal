@@ -1,0 +1,141 @@
+{
+  "checkedAt": "2026-09-22T02:00:46.350Z",
+  "releaseId": "approved-50c0038302f8",
+  "checks": [
+    {
+      "file": "__next.__PAGE__.txt",
+      "status": 200,
+      "sha256": "70c2786db2e2e850f9e8e24cebbfde468b8964239ca2b640a3eda80184a05781"
+    },
+    {
+      "file": "__next._full.txt",
+      "status": 200,
+      "sha256": "3bcf3b8ecc4d8d8df2b607ba84c9807e3d88cc5e00dd32245bb2c2778d35fcde"
+    },
+    {
+      "file": "__next._tree.txt",
+      "status": 200,
+      "sha256": "fde55890aad7f9cecdd99d934d3042ec47f903d2ffa3953d0eaa4ec2019faa08"
+    },
+    {
+      "file": "_next/static/chunks/0cz1d0mv5g_q7.js",
+      "status": 200,
+      "sha256": "0973c1d64c88adc8e3c950410cb58b288f72118d5965b78049438deb8f2f9683"
+    },
+    {
+      "file": "_next/static/chunks/1-ypvvcc240cq.css",
+      "status": 200,
+      "sha256": "c719da46cf7600dc53547c2ec0f706ecd2316728029baec3799ce81c4bf4a3f5"
+    },
+    {
+      "file": "_next/static/chunks/1inwntv0b4r-7.js",
+      "status": 200,
+      "sha256": "16e13d0688dd3bd6daf7e4720d6cce666bc08886ab3e3ba1064bad8cee967b4c"
+    },
+    {
+      "file": "_next/static/chunks/27oqluy-hndk_.js",
+      "status": 200,
+      "sha256": "f5c135072e989d6eb68999135d2b17d895e1bffdea68004a87c01c507e02dd8a"
+    },
+    {
+      "file": "_next/static/chunks/27t_qfc-3_lzs.js",
+      "status": 200,
+      "sha256": "f71552684e86daa3e94faad9002fb69d4e8d308a997ca88fdde74e54b5191870"
+    },
+    {
+      "file": "_next/static/chunks/2lun0g4yshb3n.css",
+      "status": 200,
+      "sha256": "9b29d63f6ff8e2b447030558160a54a5b54dacf5f17989d800ea56642491414c"
+    },
+    {
+      "file": "_next/static/chunks/3fntmmi971322.js",
+      "status": 200,
+      "sha256": "34ed6abf4c6d0d1bb3dc56d3f133d2a5dbc3a3c89c791deab314e27143ac14ce"
+    },
+    {
+      "file": "_next/static/chunks/4488eyyxm5ldy.js",
+      "status": 200,
+      "sha256": "8e5e3d6b18edacb7d2dd0b39a6365f56853138697396dedc707bd1ca9ca4c98c"
+    },
+    {
+      "file": "_next/static/chunks/turbopack-1sm8smf5df_95.js",
+      "status": 200,
+      "sha256": "f3646e4474660c625c06d88747b8529713f7f38bb65c41d4d4665b551b690dc4"
+    },
+    {
+      "file": "_next/static/mTQH3nmhi6O7Fasnru1qY/_buildManifest.js",
+      "status": 200,
+      "sha256": "9476e0afd3f9da68a64e6ec58631191fd3eaca62c9f5a377e7517fe9a89e59ea"
+    },
+    {
+      "file": "_next/static/mTQH3nmhi6O7Fasnru1qY/_clientMiddlewareManifest.js",
+      "status": 200,
+      "sha256": "5483e3295dc35dfe29ea932efc85341c916f10ff78ff5b0e965e003710893a4a"
+    },
+    {
+      "file": "_next/static/mTQH3nmhi6O7Fasnru1qY/_ssgManifest.js",
+      "status": 200,
+      "sha256": "678f6ce2cb80b1fe72fc67e7412be6e2ab6ada083111b64f7c40d35e3cba5e00"
+    },
+    {
+      "file": "_not-found/__next._full.txt",
+      "status": 200,
+      "sha256": "b2117aa9663aaf331f249fb3003408f72bfb68b4834ed1bbca448d93bf346929"
+    },
+    {
+      "file": "_not-found/__next._not-found/__PAGE__.txt",
+      "status": 200,
+      "sha256": "1a8a173e711614714981df2da348d14a10592359203f3a0f9bb07aaaa59c1acd"
+    },
+    {
+      "file": "_not-found/__next._tree.txt",
+      "status": 200,
+      "sha256": "9a885750ae135bba05d8b5f4733080de85a5c6c3b016614b1f440c2cfb7ff156"
+    },
+    {
+      "file": "_not-found.html",
+      "status": 200,
+      "sha256": "c170032de129a05d826ea0443f636256ae9bf8ecb9600599d109f8d8961fee86"
+    },
+    {
+      "file": "_not-found.txt",
+      "status": 200,
+      "sha256": "b2117aa9663aaf331f249fb3003408f72bfb68b4834ed1bbca448d93bf346929"
+    },
+    {
+      "file": "404.html",
+      "status": 200,
+      "sha256": "c170032de129a05d826ea0443f636256ae9bf8ecb9600599d109f8d8961fee86"
+    },
+    {
+      "file": "guide/assets/blue-ink-circle-b.png",
+      "status": 200,
+      "sha256": "4bf828e1fb10a8a46ecfd07111d530f2a55660c3efcb08d009988cd5b6ac9d1e"
+    },
+    {
+      "file": "guide/assets/original-ink-circle.png",
+      "status": 200,
+      "sha256": "1e4a856f49b845221e88b1707246363b3d5b73cfeafdef64ec36fb25532e44c6"
+    },
+    {
+      "file": "guide/assets/reference-underline.png",
+      "status": 200,
+      "sha256": "7d7421e1f82045c74daff6564bf9ad37e64af39fda60802c9cc2a49a9fbb2843"
+    },
+    {
+      "file": "guide/index.html",
+      "status": 200,
+      "sha256": "3f60cb75115c90076162147f82afa19f53de2d3e194f3d67cf9aa0188a88aed7"
+    },
+    {
+      "file": "index.html",
+      "status": 200,
+      "sha256": "89e47bdf5d4aca7a6d625092e3be0b7a3d4fc798e499e987adbc37a87f32995b"
+    },
+    {
+      "file": "index.txt",
+      "status": 200,
+      "sha256": "3bcf3b8ecc4d8d8df2b607ba84c9807e3d88cc5e00dd32245bb2c2778d35fcde"
+    }
+  ]
+}

@@ -12,3 +12,7 @@
 
 - [승인 정책·예외 계약](AUTH-FLOW-CONTRACT.md)
 - [독립 인증 시안 01](studies/Haru-auth-study-01.html) — 실제 인증 없음, 시각 검토 대기
+
+- [코치마크 시안과 범위](ONBOARDING-COACHMARK-STUDY.md) — 2026-09-22, 독립 검토용
+
+- [승인 안내 실제 적용](../implementation/APPROVED-GUIDE-2026-09-22.md) — 공개 앱 수동 안내, 가입 후 자동 실행은 후속

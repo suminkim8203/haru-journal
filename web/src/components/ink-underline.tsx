@@ -1,0 +1,2 @@
+import {useId} from 'react';
+export function InkUnderline(){const id=useId();return <svg className="metric-ink" viewBox="38 182 676 151" preserveAspectRatio="none" aria-hidden="true"><defs><filter id={id} colorInterpolationFilters="sRGB"><feColorMatrix type="matrix" values="0 0 0 0 .68  0 0 0 0 .16  0 0 0 0 .23  -1 -1 -1 0 1"/><feComposite in2="SourceGraphic" operator="in"/></filter></defs><image href="/guide/assets/reference-underline.png" width="740" height="493" filter={'url(#'+id+')'}/></svg>;}

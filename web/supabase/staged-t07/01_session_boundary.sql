@@ -7,7 +7,7 @@ create table journal.account_diaries (
  created_at timestamptz not null default now()
 );
 revoke all on journal.account_diaries from public,anon,authenticated,service_role;
-create function journal.require_account_diary() returns uuid
+create function journal.require_account_user() returns uuid
 language plpgsql stable security definer set search_path='' as $$
 declare u uuid:=auth.uid(); sid uuid; d uuid; claims jsonb:=auth.jwt();
 begin
@@ -24,6 +24,13 @@ begin
  -- Signup OTP/recovery sessions are not implicitly granted diary access.
  if not exists(select 1 from jsonb_array_elements(case when jsonb_typeof(claims->'amr')='array' then claims->'amr' else '[]'::jsonb end) m where m->>'method'='password')
  then raise exception 'Password authentication required' using errcode='PT403';end if;
+ return u;
+end $$;
+revoke all on function journal.require_account_user() from public,anon,authenticated,service_role;
+create function journal.require_account_diary() returns uuid
+language plpgsql stable security definer set search_path='' as $$
+declare u uuid:=journal.require_account_user(); d uuid;
+begin
  select diary_id into d from journal.account_diaries where user_id=u;
  if d is null then raise exception 'Account setup required' using errcode='PT403';end if;
  return d;

@@ -1,0 +1,10 @@
+[Unit]
+Description=Haru seven-day account deletion
+Requires=docker.service
+After=docker.service
+RequiresMountsFor=/backup
+[Service]
+Type=oneshot
+ExecStartPre=/usr/bin/mountpoint -q /backup
+ExecStart=/usr/bin/python3 /usr/local/lib/haru-operations/account-purge.py
+UMask=0077

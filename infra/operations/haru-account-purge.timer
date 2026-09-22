@@ -1,0 +1,7 @@
+[Unit]
+Description=Check expired Haru account deletion requests
+[Timer]
+OnCalendar=*-*-* *:*:00
+Persistent=true
+[Install]
+WantedBy=timers.target

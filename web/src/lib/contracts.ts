@@ -31,8 +31,8 @@ export interface Command {
 }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
 function object(x: unknown): x is Record<string, unknown> { return !!x && typeof x === 'object' && !Array.isArray(x) }
-export function compatibleSnapshot(input: unknown): input is Snapshot {
-  return object(input) && input.schemaVersion === 6 && input.diaryId === DIARY_ID
+export function compatibleSnapshot(input: unknown, expectedDiaryId: string = DIARY_ID): input is Snapshot {
+  return object(input) && input.schemaVersion === 6 && input.diaryId === expectedDiaryId
     && input.timezone === 'Asia/Seoul' && Number.isSafeInteger(input.revision) && Number(input.revision) >= 0
     && Array.isArray(input.plans) && Array.isArray(input.tasks) && Array.isArray(input.placements) && Array.isArray(input.runs) && Array.isArray(input.thoughts) && Array.isArray(input.reflections) && Array.isArray(input.closures) && Array.isArray(input.improvements) && Array.isArray(input.trash);
 }

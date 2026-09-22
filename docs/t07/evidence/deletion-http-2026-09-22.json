@@ -1,0 +1,116 @@
+{
+  "checkedAt": "2026-09-22T06:31:09Z",
+  "requests": [
+    {
+      "case": "deletion request",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_request_deletion",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 200,
+      "response": {
+        "state": "pending",
+        "deleteAfter": "2026-09-29T06:31:10.246812+00:00"
+      }
+    },
+    {
+      "case": "old session after request",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_snapshot",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 401,
+      "response": {
+        "code": "PT401",
+        "details": null,
+        "hint": null,
+        "message": "Session expired"
+      }
+    },
+    {
+      "case": "login preserves pending state",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_account_status",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 200,
+      "response": {
+        "state": "pending",
+        "deleteAfter": "2026-09-29T06:31:10.246812+00:00"
+      }
+    },
+    {
+      "case": "pending blocks haru_snapshot",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_snapshot",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 423,
+      "response": {
+        "code": "PT423",
+        "details": null,
+        "hint": null,
+        "message": "Account deletion pending"
+      }
+    },
+    {
+      "case": "pending blocks haru_export",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_export",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 423,
+      "response": {
+        "code": "PT423",
+        "details": null,
+        "hint": null,
+        "message": "Account deletion pending"
+      }
+    },
+    {
+      "case": "pending blocks haru_setup_account",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_setup_account",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 423,
+      "response": {
+        "code": "PT423",
+        "details": null,
+        "hint": null,
+        "message": "Account deletion pending"
+      }
+    },
+    {
+      "case": "explicit cancellation",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_cancel_deletion",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 204,
+      "response": null
+    }
+  ],
+  "recordsUnchangedAfterCancellation": true
+}

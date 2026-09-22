@@ -1,0 +1,282 @@
+{
+  "checkedAt": "2026-09-22T06:07:19Z",
+  "requests": [
+    {
+      "case": "A own read",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_resource",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_kind": "plan",
+        "p_id": "4c7cf9bb-48d4-4316-9c87-9d7f06435dad"
+      },
+      "status": 200,
+      "response": {
+        "id": "4c7cf9bb-48d4-4316-9c87-9d7f06435dad",
+        "kind": "general",
+        "title": "검증 계정 A",
+        "history": [],
+        "diary_id": "d78e58ce-0352-457b-92da-b7333fe02b2c",
+        "end_date": "2026-09-26",
+        "priority": "normal",
+        "created_at": "2026-09-22T06:07:19.423661+00:00",
+        "deleted_at": null,
+        "start_date": "2026-09-22",
+        "updated_at": "2026-09-22T06:07:19.423661+00:00",
+        "success_text": "",
+        "estimated_minutes": 0
+      }
+    },
+    {
+      "case": "A -> B read",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_resource",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_kind": "plan",
+        "p_id": "e4097c5e-155c-430e-8a78-fda4761069ec"
+      },
+      "status": 404,
+      "response": {
+        "code": "PT404",
+        "details": null,
+        "hint": null,
+        "message": "Resource not found"
+      }
+    },
+    {
+      "case": "A -> B update",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_command",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_request_id": "693ec282-989f-4bf3-8322-b1df90767bad",
+        "p_expected_revision": 1,
+        "p_command": "update_plan",
+        "p_payload": {
+          "planId": "e4097c5e-155c-430e-8a78-fda4761069ec",
+          "title": "변경 시도",
+          "startDate": "2026-09-22",
+          "endDate": "2026-09-26"
+        }
+      },
+      "status": 404,
+      "response": {
+        "code": "PT404",
+        "details": null,
+        "hint": null,
+        "message": "Resource not found"
+      }
+    },
+    {
+      "case": "A -> B delete",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_command",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_request_id": "e0b95e11-1bd7-455a-b7c9-ebfe0431b1f7",
+        "p_expected_revision": 1,
+        "p_command": "delete_entity",
+        "p_payload": {
+          "entityType": "plan",
+          "entityId": "e4097c5e-155c-430e-8a78-fda4761069ec"
+        }
+      },
+      "status": 404,
+      "response": {
+        "code": "PT404",
+        "details": null,
+        "hint": null,
+        "message": "Resource not found"
+      }
+    },
+    {
+      "case": "A list isolation / opposite unchanged",
+      "status": 200,
+      "planCount": 1,
+      "foreignCount": 0,
+      "oppositeSnapshotUnchanged": true
+    },
+    {
+      "case": "B own read",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_resource",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_kind": "plan",
+        "p_id": "e4097c5e-155c-430e-8a78-fda4761069ec"
+      },
+      "status": 200,
+      "response": {
+        "id": "e4097c5e-155c-430e-8a78-fda4761069ec",
+        "kind": "general",
+        "title": "검증 계정 B",
+        "history": [],
+        "diary_id": "1ade4c76-fd00-4a92-902b-d73d80019d25",
+        "end_date": "2026-09-26",
+        "priority": "normal",
+        "created_at": "2026-09-22T06:07:19.644341+00:00",
+        "deleted_at": null,
+        "start_date": "2026-09-22",
+        "updated_at": "2026-09-22T06:07:19.644341+00:00",
+        "success_text": "",
+        "estimated_minutes": 0
+      }
+    },
+    {
+      "case": "B -> A read",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_resource",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_kind": "plan",
+        "p_id": "4c7cf9bb-48d4-4316-9c87-9d7f06435dad"
+      },
+      "status": 404,
+      "response": {
+        "code": "PT404",
+        "details": null,
+        "hint": null,
+        "message": "Resource not found"
+      }
+    },
+    {
+      "case": "B -> A update",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_command",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_request_id": "d4016625-c193-4ebd-819e-c445954ceb98",
+        "p_expected_revision": 1,
+        "p_command": "update_plan",
+        "p_payload": {
+          "planId": "4c7cf9bb-48d4-4316-9c87-9d7f06435dad",
+          "title": "변경 시도",
+          "startDate": "2026-09-22",
+          "endDate": "2026-09-26"
+        }
+      },
+      "status": 404,
+      "response": {
+        "code": "PT404",
+        "details": null,
+        "hint": null,
+        "message": "Resource not found"
+      }
+    },
+    {
+      "case": "B -> A delete",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_command",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {
+        "p_request_id": "3a714ba4-f00b-4c93-9397-5fc415acfed8",
+        "p_expected_revision": 1,
+        "p_command": "delete_entity",
+        "p_payload": {
+          "entityType": "plan",
+          "entityId": "4c7cf9bb-48d4-4316-9c87-9d7f06435dad"
+        }
+      },
+      "status": 404,
+      "response": {
+        "code": "PT404",
+        "details": null,
+        "hint": null,
+        "message": "Resource not found"
+      }
+    },
+    {
+      "case": "B list isolation / opposite unchanged",
+      "status": 200,
+      "planCount": 1,
+      "foreignCount": 0,
+      "oppositeSnapshotUnchanged": true
+    },
+    {
+      "case": "before logout",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_snapshot",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 200,
+      "response": {
+        "diaryId": "d78e58ce-0352-457b-92da-b7333fe02b2c",
+        "planCount": 1
+      }
+    },
+    {
+      "case": "same token after logout",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_snapshot",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 401,
+      "response": {
+        "code": "PT401",
+        "details": null,
+        "hint": null,
+        "message": "Session expired"
+      }
+    },
+    {
+      "case": "anonymous",
+      "method": "POST",
+      "url": "https://haruleaf.com/rest/v1/rpc/haru_snapshot",
+      "headers": {
+        "Authorization": "Bearer [REDACTED]",
+        "apikey": "[REDACTED]"
+      },
+      "body": {},
+      "status": 401,
+      "response": {
+        "code": "42501",
+        "details": null,
+        "hint": null,
+        "message": "permission denied for function haru_snapshot"
+      }
+    }
+  ],
+  "accounts": [
+    {
+      "alias": "A",
+      "id": "8d1040a5-9fab-427b-b79b-7ecf2ce55e1c",
+      "testOnly": true
+    },
+    {
+      "alias": "B",
+      "id": "8591e1c9-d13c-4867-b89e-20466687c733",
+      "testOnly": true
+    }
+  ]
+}

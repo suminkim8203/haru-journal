@@ -1,0 +1,4 @@
+import test from 'node:test';import assert from 'node:assert/strict';import {passwordResetFeedback} from '../src/lib/auth-feedback.ts';
+test('same password is correctable without discarding recovery authorization',()=>{const f=passwordResetFeedback({code:'same_password'});assert.equal(f.restart,false);assert.match(f.message,/다른 새 비밀번호/);assert.doesNotMatch(f.message,/인증/)});
+test('only known authorization failures request fresh identity verification',()=>{for(const code of ['session_expired','session_not_found','bad_jwt','reauthentication_needed'])assert.equal(passwordResetFeedback({code}).restart,true);assert.equal(passwordResetFeedback({name:'AuthSessionMissingError'}).restart,true)});
+test('weak password, throttling and unknown failures do not claim verification expired',()=>{for(const code of ['weak_password','validation_failed','over_request_rate_limit','unexpected_failure','request_timeout'])assert.equal(passwordResetFeedback({code}).restart,false)});

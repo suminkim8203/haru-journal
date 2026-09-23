@@ -7,7 +7,7 @@
 - [실제 Auth 설정 조회](auth-readonly-2026-09-21.json): 버전 및 비밀이 아닌 설정만 기록. 메일 발송 확인은 미완료.
 - [T06 기준](T06-BASELINE.md): 제출 당시 소스 이력 보존.
 
-다음: 남은 보안 증거·계정 관리 기능 → 실제 5일 사용과 규칙 변경 → 최종 제출 대조. [최신 진행 기록](IMPLEMENTATION-PROGRESS.md), [실제 HTTP 증거](evidence/private-http-2026-09-22.json)를 기준으로 판단한다. 아래 시안 링크는 설계 이력이다.
+다음: 남은 보안 증거·실제 5일 사용과 규칙 변경 → 최종 제출 대조. 2026-09-23 [관찰 기준](FIVE-DAY-STUDY.md)을 승인했으며 사용자 실제 1일차는 미확정이다. [최신 진행 기록](IMPLEMENTATION-PROGRESS.md), [실제 HTTP 증거](evidence/private-http-2026-09-22.json)를 기준으로 판단한다. 아래 시안 링크는 설계 이력이다.
 
 
 - [승인 정책·예외 계약](AUTH-FLOW-CONTRACT.md)
@@ -18,3 +18,8 @@
 - [승인 안내 실제 적용](../implementation/APPROVED-GUIDE-2026-09-22.md) — 공개 앱 수동 안내, 가입 후 자동 실행은 후속
 
 - [7일 탈퇴 정책·실제 적용](ACCOUNT-DELETION.md)
+
+- [인증 구현 설명서 초안](AUTH-IMPLEMENTATION-DRAFT.md) — 과제의 여섯 항목, 실제 증거와 미검증 항목 구분
+- [실제 5일 관찰 기준](FIVE-DAY-STUDY.md) — 사용자 실제 활동만 관찰표에 포함
+- [시험 계정 저장 해시 확인](PASSWORD-HASH-READONLY.md)
+- [공개 파일·이력·빌드의 제한된 비밀 형식 검사](evidence/public-secret-scan.json)

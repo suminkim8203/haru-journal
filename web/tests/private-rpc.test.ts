@@ -8,7 +8,7 @@ test('staged private RPC separates both accounts and rejects foreign mutations w
  create function auth.jwt() returns jsonb language sql as $$select coalesce(nullif(current_setting('request.jwt.claims',true),''),'{}')::jsonb$$;
  create function auth.uid() returns uuid language sql as $$select (auth.jwt()->>'sub')::uuid$$;`);
  for(const f of (await readdir(new URL('../supabase/migrations/',import.meta.url))).filter(f=>f.endsWith('.sql')).sort()) await db.exec(await readFile(new URL('../supabase/migrations/'+f,import.meta.url),'utf8'));
- for(const f of ['01_session_boundary.sql','02_private_rpc_cutover.sql','03_private_read.sql','04_account_setup.sql','05_password_revocation.sql'])await db.exec(await readFile(new URL('../supabase/staged-t07/'+f,import.meta.url),'utf8'));
+ for(const f of ['01_session_boundary.sql','02_private_rpc_cutover.sql','03_private_read.sql','04_account_setup.sql','05_password_revocation.sql','07_account_deletion.sql','08_account_purge.sql'])await db.exec(await readFile(new URL('../supabase/staged-t07/'+f,import.meta.url),'utf8'));
  for(const n of [1,2]){
  await db.query('insert into auth.users(id,email_confirmed_at) values ($1,now())',[id(n)]);await db.query('insert into auth.sessions values ($1,$2,now(),null)',[id(n+10),id(n)]);
  await db.query('insert into journal.diaries(id) values ($1)',[id(n+20)]);await db.query('insert into journal.account_diaries(user_id,diary_id) values ($1,$2)',[id(n),id(n+20)]);
@@ -30,6 +30,21 @@ test('staged private RPC separates both accounts and rejects foreign mutations w
  await assert.rejects(command(n+7,1,'create_task',{planId:foreign,title:'침범'}),{code:'PT404'});
  assert.deepEqual(await snapshot(),own);
  const exported=(await db.query<{v:{diaryId:string}}>('select public.haru_export() v')).rows[0].v;assert.equal(exported.diaryId,id(n+20));
+ // Untrusted ownership hints cannot override the identity established by verified JWT claims.
+ // This is SQL-boundary coverage, not a real HTTP/PostgREST URL or header test.
+ const other=3-n;
+ await db.query("select set_config('request.headers',$1,false)",[JSON.stringify({'x-user-id':id(other),'x-owner-id':id(other),'x-diary-id':id(other+20)})]);
+ assert.deepEqual(await snapshot(),own);
+ await assert.rejects(read(foreign),{code:'PT404'});
+ await assert.rejects(db.query('select * from journal.plans'),{code:'42501'});
+ await db.exec('begin');
+ try{
+  await command(n+30,own.revision,'update_plan',{planId:plans[n-1],title:'본인 계획 수정',startDate:'2026-09-22',endDate:'2026-09-30',userId:id(other),user_id:id(other),ownerId:id(other),diaryId:id(other+20),diary_id:id(other+20)});
+  const changed=await snapshot();assert.equal(changed.diaryId,own.diaryId);assert.equal(changed.plans.length,1);assert.equal(changed.plans[0].id,plans[n-1]);assert.equal(changed.plans[0].title,'본인 계획 수정');
+  await login(other);const otherData=await snapshot();assert.equal(otherData.plans.length,1);assert.equal(otherData.plans[0].id,foreign);assert.equal(otherData.plans[0].title,'계획 '+other);
+ }finally{await db.exec('rollback');}
+ await login(n);assert.deepEqual(await snapshot(),own);
+ await db.query("select set_config('request.headers','{}',false)");
  }
  await db.exec('reset role');await db.query('delete from auth.sessions where id=$1',[id(12)]);await db.exec('set role authenticated');await assert.rejects(snapshot(),{code:'PT401'});
  await db.exec('reset role');

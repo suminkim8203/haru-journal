@@ -1,0 +1,111 @@
+{
+  "checked": 21,
+  "allMatch": true,
+  "files": [
+    {
+      "name": "account/deletion.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/3-tonyj0boihv.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/27t_qfc-3_lzs.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/1-ypvvcc240cq.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/4488eyyxm5ldy.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "guide/index.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/V1ysi8ky6bkNQTMuMS-lA/_clientMiddlewareManifest.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "auth.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/3fntmmi971322.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/V1ysi8ky6bkNQTMuMS-lA/_buildManifest.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "account.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/0cz1d0mv5g_q7.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/V1ysi8ky6bkNQTMuMS-lA/_ssgManifest.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/2lun0g4yshb3n.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "index.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/1qdzeu2n_yxwp.css",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/2_pfnhhf4ui42.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/turbopack-1sm8smf5df_95.js",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "404.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_not-found.html",
+      "status": 200,
+      "match": true
+    },
+    {
+      "name": "_next/static/chunks/1inwntv0b4r-7.js",
+      "status": 200,
+      "match": true
+    }
+  ]
+}

@@ -5,3 +5,16 @@
 .auth-input-error{color:#79343d}.auth-field input[aria-invalid="true"]{border-bottom-color:#79343d}
 
 .account-panel{max-width:620px;margin:32px auto;padding:24px;font:14px/1.8 Pretendard,sans-serif}.account-panel h2{font:400 28px/1.5 var(--role-serif)}.account-actions{display:flex;align-items:center;justify-content:space-between;gap:24px}.account-confirm{display:flex;align-items:flex-start;gap:10px;margin:24px 0}.account-confirm input{margin-top:6px}.account-tools{display:flex;justify-content:flex-end;gap:20px;padding:12px 24px}
+
+/* Account actions have their own page; only a small entry remains beside the diary navigation. */
+.account-nav-link{align-self:center;margin-left:12px;padding:8px 0;color:var(--ink);font:12px/1.6 Pretendard,sans-serif;text-decoration:underline;text-underline-offset:5px;white-space:nowrap}
+.account-page{width:min(760px,100%);margin:auto;padding:55px 30px 90px;color:var(--ink)}
+.account-page>h1{font:400 36px/1.4 var(--role-serif);margin:16px 0 7px}
+.account-return{font:12px/1.8 Pretendard,sans-serif;color:var(--muted);text-decoration:underline;text-underline-offset:4px}
+.account-intro,.account-item p,.account-page>p{font:13px/1.8 Pretendard,sans-serif;color:var(--muted)}
+.account-item{display:flex;justify-content:space-between;align-items:center;gap:25px;padding:26px 0;border-top:1px solid var(--line)}
+.account-item:first-of-type{margin-top:45px}.account-item h2{font:400 21px/1.55 var(--role-serif);margin:0 0 7px}.account-item p{margin:0}
+.account-item button,.account-item>a{background:none;border:0;padding:8px 0;white-space:nowrap;color:var(--ink);font:13px/1.6 Pretendard,sans-serif;text-decoration:underline;text-underline-offset:5px}
+.account-danger{margin-top:25px;border-top-color:var(--line-dark)}.account-page .account-panel{margin:25px 0 0;padding:0;max-width:none}
+@media(max-width:740px){.account-page{padding:37px 24px 65px}.account-item{align-items:flex-start;flex-direction:column;gap:10px}.account-page>h1{font-size:30px}.account-nav-link{font-size:11px}}
+@media(max-width:500px){nav[aria-label="주요 메뉴"]{gap:8px;padding-inline:12px}.account-nav-link{margin-left:0;font-size:10px}}

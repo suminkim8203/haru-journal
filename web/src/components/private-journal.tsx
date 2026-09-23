@@ -2,18 +2,19 @@
 import {useCallback,useEffect,useRef,useState} from 'react';
 import {authClient} from '@/lib/auth-client';
 import {clearAccountDiary,prepareAccount} from '@/lib/storage';
-import {PasswordChange} from './password-change';
 import {AuthForm} from './auth-form';
 import {JournalApp} from './journal-app';
+import {AccountHome} from './account-home';
 import {AccountDeletion,DeletionPending,type DeletionStatus,deletionDate} from './account-deletion';
-export function PrivateJournal(){
+
+export function PrivateJournal({screen='journal'}:{screen?:'journal'|'account'|'deletion'}){
  const [account,setAccount]=useState(''),[checking,setChecking]=useState(true),[message,setMessage]=useState('');
- const [deletion,setDeletion]=useState<DeletionStatus|null>(null),[deleting,setDeleting]=useState(false);
- const [changingPassword,setChangingPassword]=useState(false);
+ const [deletion,setDeletion]=useState<DeletionStatus|null>(null);
+ const [withdrawalDone,setWithdrawalDone]=useState('');
  const generation=useRef(0),user=useRef('');
- const lock=useCallback(()=>{generation.current++;user.current='';clearAccountDiary();setAccount('');setDeletion(null);setDeleting(false);setChangingPassword(false);setChecking(false);},[]);
+ const lock=useCallback(()=>{generation.current++;user.current='';clearAccountDiary();setAccount('');setDeletion(null);setChecking(false);},[]);
  const enter=useCallback(async()=>{
-  const ticket=++generation.current;clearAccountDiary();setAccount('');setChecking(true);setMessage('');setDeletion(null);setDeleting(false);setChangingPassword(false);
+  const ticket=++generation.current;clearAccountDiary();setAccount('');setChecking(true);setMessage('');setDeletion(null);
   try{const {data:{session}}=await authClient().auth.getSession();if(!session)return;user.current=session.user.id;
    const {data:status,error:statusError}=await authClient().rpc('haru_account_status');if(statusError)throw statusError;
    if(ticket!==generation.current)return;
@@ -32,7 +33,13 @@ export function PrivateJournal(){
   window.addEventListener('haru-auth-required',expired);
   return()=>{generation.current++;subscription.unsubscribe();window.removeEventListener('haru-auth-required',expired);clearAccountDiary();};
  },[enter,lock]);
- async function logout(){setMessage('');try{const {error}=await authClient().auth.signOut({scope:'local'});if(error)throw error;lock();}catch{setMessage('로그아웃을 확인하지 못했습니다. 다시 시도해 주세요.');}}
- function requested(status:DeletionStatus){lock();setMessage(status.deleteAfter ? `탈퇴가 신청되었습니다. ${deletionDate(status.deleteAfter)}까지 다시 로그인해 취소할 수 있습니다.` : "");}
- return <>{message&&<p className="auth-feedback" role="status">{message}</p>}{checking?<p className="auth-check-notice" role="status">로그인 상태를 확인하고 있습니다.</p>:deletion?<DeletionPending status={deletion} onCancel={enter} onLogout={logout}/>:account?<><div className="account-tools"><button onClick={()=>{setChangingPassword(!changingPassword);setDeleting(false);}}>비밀번호 변경</button><button onClick={()=>{setDeleting(!deleting);setChangingPassword(false);}}>계정 탈퇴</button><button onClick={logout}>로그아웃</button></div>{changingPassword&&<PasswordChange onClose={()=>setChangingPassword(false)} onChanged={text=>{lock();setMessage(text);}}/>}{deleting&&<AccountDeletion onClose={()=>setDeleting(false)} onRequested={requested}/>}<JournalApp key={account} initial={null} issue={null}/></>:<AuthForm onSignedIn={enter}/>}</>;
+ async function logout(){setMessage('');try{const {error}=await authClient().auth.signOut({scope:'local'});if(error)throw error;lock();if(screen!=='journal')window.location.assign('/');}catch{setMessage('로그아웃을 확인하지 못했습니다. 다시 시도해 주세요.');}}
+ function requested(status:DeletionStatus){lock();setWithdrawalDone(status.deleteAfter ? `탈퇴가 신청되었습니다. ${deletionDate(status.deleteAfter)}까지 다시 로그인해 취소할 수 있습니다.` : '탈퇴 신청을 확인했습니다.');}
+ if(checking)return <p className="auth-check-notice" role="status">로그인 상태를 확인하고 있습니다.</p>;
+ if(withdrawalDone)return <main className="account-page" role="status"><h1>탈퇴 신청 완료</h1><p>{withdrawalDone}</p><a href="/">로그인 화면으로</a></main>;
+ if(deletion)return <DeletionPending status={deletion} onCancel={async()=>{await enter();window.location.assign('/');}} onLogout={logout}/>;
+ if(!account)return <>{message&&<p className="auth-feedback" role="status">{message}</p>}<AuthForm onSignedIn={async()=>{await enter();if(screen==='deletion')window.location.assign('/account.html');}}/></>;
+ if(screen==='account')return <>{message&&<p className="auth-feedback" role="status">{message}</p>}<AccountHome onLogout={logout}/></>;
+ if(screen==='deletion')return <main className="account-page"><a className="account-return" href="/account.html">계정</a><AccountDeletion onClose={()=>window.location.assign('/account.html')} onRequested={requested}/></main>;
+ return <JournalApp key={account} initial={null} issue={null}/>;
 }

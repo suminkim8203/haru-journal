@@ -1,6 +1,9 @@
 import subprocess,json,pathlib,os,datetime,hashlib,tarfile,shutil
 os.umask(0o077)
 import sys
+from backup_state import journal_state
+import fcntl
+
 config_path=pathlib.Path(os.environ.get('HARU_BACKUP_CONFIG','/etc/haru-backup.json'))
 config=json.loads(config_path.read_text())
 mount=pathlib.Path(config['mount']).resolve()
@@ -13,6 +16,9 @@ if '--check-destination' in sys.argv:
  print('BACKUP_DESTINATION_OK '+str(base))
  raise SystemExit(0)
 base.mkdir(parents=True,exist_ok=True,mode=0o700)
+# Shared with account cleanup: no new backup may race with erasure.
+backup_lock=open('/backup/haru-backup-mutation.lock','a')
+fcntl.flock(backup_lock,fcntl.LOCK_EX)
 if shutil.disk_usage(base).free < 5*2**30: raise RuntimeError('Less than 5 GiB free; backup skipped without deleting existing backups')
 root=base/datetime.datetime.now(datetime.timezone.utc).strftime('%Y%m%dT%H%M%SZ')
 root.mkdir(mode=0o700)
@@ -28,7 +34,7 @@ def dump(args,name):
   r=subprocess.run(args,stdout=f,stderr=subprocess.PIPE)
  if r.returncode:
   (root/'failure.log').write_bytes(r.stderr);raise RuntimeError('Backup failed '+name)
-before=json.loads(sql('select public.haru_snapshot();'))
+before=journal_state(sql)
 (root/'snapshot-before.json').write_text(json.dumps(before))
 dump(['docker','exec','supabase-db','pg_dumpall','-U','postgres','--roles-only'],'roles.sql')
 dump(['docker','exec','supabase-db','pg_dump','-U','postgres','-d','postgres','-Fc'],'postgres.dump')
@@ -54,9 +60,9 @@ with tarfile.open(root/'config-storage-web.tar.gz','w:gz') as t:
   for m in c.get('Mounts',[]):
    if m['Destination']=='/etc/postgresql-custom':
     p=pathlib.Path(m['Source']);t.add(p,arcname='postgres-custom')
-after=json.loads(sql('select public.haru_snapshot();'))
+after=journal_state(sql)
 (root/'snapshot-after.json').write_text(json.dumps(after))
-report={'backup':str(root),'snapshotUnchanged':before==after,'revision':after['revision'],'counts':{k:len(after.get(k,[])) for k in ['plans','tasks','placements','runs','thoughts','reflections','improvements']},'storageObjects':int(sql('select count(*) from storage.objects;')),'authUsers':int(sql('select count(*) from auth.users;')),'files':{p.name:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in root.iterdir() if p.is_file()},'containers':[{'name':c['Name'],'image':c['Config']['Image'],'imageId':c['Image'],'status':c['State']['Status'],'health':c['State'].get('Health',{}).get('Status'),'restart':c['HostConfig']['RestartPolicy']['Name']} for c in containers],'freeGiB':round(shutil.disk_usage(root).free/2**30,1)}
+report={'backup':str(root),'snapshotUnchanged':before==after,'revision':after.get('revision'),'counts':{k:v['rows'] for k,v in after['tables'].items()},'storageObjects':int(sql('select count(*) from storage.objects;')),'authUsers':int(sql('select count(*) from auth.users;')),'files':{p.name:{'bytes':p.stat().st_size,'sha256':hashlib.sha256(p.read_bytes()).hexdigest()} for p in root.iterdir() if p.is_file()},'containers':[{'name':c['Name'],'image':c['Config']['Image'],'imageId':c['Image'],'status':c['State']['Status'],'health':c['State'].get('Health',{}).get('Status'),'restart':c['HostConfig']['RestartPolicy']['Name']} for c in containers],'freeGiB':round(shutil.disk_usage(root).free/2**30,1)}
 (root/'backup-report.json').write_text(json.dumps(report,indent=2))
 pathlib.Path('/tmp/haru-backup-result.json').write_text(json.dumps(report,indent=2))
-print(json.dumps({'backup':str(root),'snapshotUnchanged':before==after,'revision':after['revision'],'bytes':sum(x['bytes'] for x in report['files'].values())}))
+print(json.dumps({'backup':str(root),'snapshotUnchanged':before==after,'revision':after.get('revision'),'bytes':sum(x['bytes'] for x in report['files'].values())}))

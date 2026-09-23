@@ -1,4 +1,4 @@
-"""Run as root on NAS. No credentials in args/logs. Never deletes backups.
+"""Run as root on NAS. No credentials in args/logs. Backup erasure runs after the live purge.
 Restore protocol: keep app offline; merge latest external deletion ledger before
 opening restored DB. Do not restore this ledger from an older database backup.
 """
@@ -26,4 +26,6 @@ def main():
    target="'%s'::uuid"%diary if diary else 'null::uuid'
    if sql("select journal.purge_due_account('%s'::uuid,%s);"%(user,target))=='t':count+=1
   print(json.dumps({'due':len(rows),'deleted':count}))
-if __name__=='__main__':main()
+if __name__=='__main__':
+ main()
+ subprocess.run(['python3',str(Path(__file__).with_name('backup-erasure.py')),'--apply'],check=True)

@@ -5,6 +5,7 @@ After=docker.service
 RequiresMountsFor=/backup
 [Service]
 Type=oneshot
+TimeoutStartSec=30min
 ExecStartPre=/usr/bin/mountpoint -q /backup
 ExecStart=/usr/bin/python3 /usr/local/lib/haru-operations/account-purge.py
 UMask=0077

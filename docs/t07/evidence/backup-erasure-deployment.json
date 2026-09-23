@@ -1,0 +1,19 @@
+{
+  "workerInstalled": true,
+  "timer": "active",
+  "firstRun": "success",
+  "expiredAccountsAtActivation": 0,
+  "originalBackupReplacementAtActivation": false,
+  "sourceHashes": {
+    "account-purge.py": "793fe5b440846f4188954fd2d6096b409c283ad9a7246515b24a5de558d15b99",
+    "backup-erasure.py": "da8e98127a83644f6833f7f3d81310555c727d4b1d6963b0f297ba834d4e815d",
+    "archive_database.py": "2936fc2b5c775d03a9ab4f1d2ef6cc31fe386aa298443f3961a65047f0ee8d71",
+    "backup_snapshot.py": "9c9b8cee9fade6e583bd91c00b033aa5c2bb8bc11521b67cd639e59c33fe64ef",
+    "backup_state.py": "83cc847ddf42c25c1fd014b2f6182999d3e9252b4238c7bf24c5cfe56555b44f",
+    "backup.py": "fbd9856734fe28ca8c4fba8cd076afac0694146f4d8e0fe438e848ba1b3dc4ad",
+    "restore-check.py": "038fe13971e0f4dc87e87c942e739abe68ee590846b7013f8a46bc5107267d85",
+    "prepare-sanitized-backup.py": "a474c41fd0dae14b711a2bbcaa4f4fe2a96e96c442745f6f7358b8f1f6bf8096",
+    "erase-offline-account.sql": "3332262984039096bcaf3c82f9d68a1dd52b1a00dca5f643e8f0b08e7e1fdfd9",
+    "haru-account-purge.service": "e70b6ffed9d5332aa93dbf6f0f2acb22e49fbbe8ee0b90911703c0b2c19dd477"
+  }
+}

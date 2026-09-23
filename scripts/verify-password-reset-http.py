@@ -54,7 +54,8 @@ def main(output):
     def evidence(label, method, path, status, response, body, credential):
         report['requests'].append({
             'case': label, 'method': method, 'url': BASE + path,
-            'headers': {'Authorization': 'Bearer [REDACTED]', 'apikey': '[REDACTED]'},
+            'headers': ({'apikey': '[REDACTED]'} if credential == 'none' else
+                        {'Authorization': 'Bearer [REDACTED]', 'apikey': '[REDACTED]'}),
             'credentialAlias': credential, 'body': body, 'status': status, 'response': response,
         })
 

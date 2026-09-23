@@ -17,3 +17,7 @@
 - release t07-password-dbacc4f168cc 배포, 공개 파일 19개 빌드 일치. DB 변경 없음. 근거 evidence/password-change-http.json.
 - 실제 사용자가 입력하는 변경 성공, 변경 이전 인증값 재사용 HTTP 거절은 아직 확인 전이다. 자동 검사 통과로 이 증거를 대신하지 않는다.
 - 소스: web/src/components/password-change.tsx, private-journal.tsx. 이메일 복구 화면은 auth-form.tsx로 별도 유지.
+
+## 후속 검증 — 2026-09-23
+
+현행 이메일 복구 기반 재설정 API로 이전 토큰의 실제 차단을 확인했다. 같은 snapshot 요청이 재설정 전 200, 로그아웃 전 재설정 직후 401이었다. [HTTP 증거](evidence/password-reset-http-2026-09-23.json), [검사 범위](PASSWORD-RESET-HTTP-PLAN.md). 위 미확인 문장은 이전 구현 당시 상태이며 별도 로그인 중 변경 UI를 복구한 것은 아니다.

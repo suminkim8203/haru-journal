@@ -43,7 +43,7 @@
 | 로그아웃 후 재사용 | 같은 `POST /rest/v1/rpc/haru_snapshot`, 같은 토큰·본문: 로그아웃 전 200 / 후 401 | 위 파일 `before logout`, `same token after logout` |
 | 다른 계정 자료 | A/B 자신의 조회 각 200 / A→B와 B→A 조회·수정·삭제 모두 404 | 위 파일에 6개 거절. 목록 foreignCount=0, 반대편 snapshot 불변. 수정·삭제의 정상 성공 요청과 나란히 정리할 추가 증거는 남아 있음 |
 | 소유자 위조 | 로컬 DB 검사에서 헤더·본문에 상대 소유자 ID를 넣어도 상대 자료 불변 | `web/tests/private-rpc.test.ts`. 실제 HTTP URL·헤더·본문 위조 증거를 대체하지 않음 |
-| 비밀번호 재설정 후 재사용 | DB 차단 로직과 로컬 검사는 있음 | 이전 토큰의 실제 HTTP 성공/거절 쌍은 아직 필요. `password-change-http.json`은 배포 파일 해시이며 이 검증의 증거가 아님 |
+| 비밀번호 재설정 후 재사용 | 같은 토큰·POST snapshot·본문으로 재설정 전 200 / 후 401. 로그아웃 호출 이전에 검사 | [2026-09-23 실제 HTTP 증거](evidence/password-reset-http-2026-09-23.json). 이전 비밀번호 로그인 400, 새 비밀번호 세션 조회 200. 복구 코드는 시험용 관리자 API로 생성했으므로 메일 전달 검증은 아님 |
 
 추가 확인:
 

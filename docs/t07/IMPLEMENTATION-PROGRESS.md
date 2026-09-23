@@ -124,3 +124,6 @@ Resend auth.haruleaf.com 도메인 검증 완료를 관리 화면에서 확인. 
 한계: Proxmox 스냅샷·외부 장비 사본의 존재와 삭제 연동은 현재 확인되지 않음. 새로운 이름/형식의 백업을 자동으로 모두 식별한다는 보장은 없다. 운영 감사 로그나 물리 디스크 잔존 영역의 완전 삭제를 검증한 것이 아니다. 임의의 수동 복구는 서비스 재개 전 외부 삭제 이력을 재적용해야 한다. 실제 7일 관찰은 아직이며 T07 전체 완료로 판정하지 않는다.
 
 근거: evidence/backup-erasure-deployment.json, evidence/backup-erasure-drill-report.json, evidence/backup-policy-web-report.json, evidence/backup-policy-http.json.
+
+## 로그인 중 비밀번호 변경 추가 — 2026-09-23
+구현·배포·19개 파일 일치 확인. 실제 비밀번호 입력과 새 비밀번호 재로그인은 사용자에게 확인 요청했다. 이메일 재설정과 구분하며 상세는 PASSWORD-CHANGE.md를 따른다. T07의 5일 실제 기록과 나머지 보안 증거는 아직 미완료다.

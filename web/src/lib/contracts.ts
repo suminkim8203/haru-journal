@@ -13,7 +13,7 @@ export interface Plan {
 export interface Task {
   id: string; plan_id: string; title: string; description: string; created_at?:string;
   due_date: string | null; estimated_minutes: number; priority: Priority;
-  complete: boolean; tags: Tag[]; routine_id?:string|null;occurrence_date?:string|null;routine_exception?:boolean;skipped?:boolean;cancelled_at?:string|null;
+  complete: boolean; completed_at?:string|null; tags: Tag[]; routine_id?:string|null;occurrence_date?:string|null;routine_exception?:boolean;skipped?:boolean;cancelled_at?:string|null;
 }
 export interface Placement { id:string; task_id:string; started_at:string; ended_at:string }
 export interface Segment { id:string; kind:'work'|'pause'|'break'|'interrupt'; started_at:string; ended_at:string|null }

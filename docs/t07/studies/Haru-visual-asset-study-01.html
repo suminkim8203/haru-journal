@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Haru · 지면과 필기 자산 검토 01</title>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap');
+@font-face{font-family:Chosun;src:url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/Chosunilbo_myungjo.woff') format('woff');font-weight:400;font-display:swap}
+@font-face{font-family:Pretendard;src:url('https://cdn.jsdelivr.net/gh/Project-Noonnu/noonfonts_2107@1.1/Pretendard-Regular.woff') format('woff');font-weight:400;font-display:swap}
+:root{--paper:#f5f5f5;--ink:#252525;--muted:#666;--line:#c8c8c8;--red:#a04040;--select:#fee85c}*{box-sizing:border-box}html{scroll-behavior:smooth}body{margin:0;background:#e7e7e7;color:var(--ink);font:14px/1.7 Pretendard,Arial,sans-serif}.page{max-width:1160px;margin:25px auto;background:var(--paper);min-height:100vh;padding:38px clamp(22px,5vw,72px) 80px}.mast{border-bottom:1px solid #777;padding-bottom:26px}.eyebrow{font-size:11px;letter-spacing:.12em;color:var(--muted)}.brand{font:500 50px/1 'Cormorant Garamond',Georgia,serif;margin:10px 0}.sub{font-size:12px;color:var(--muted)}nav{display:flex;gap:25px;margin:22px 0 0}.nav{border:0;background:none;padding:6px 0;color:var(--ink);font:16px Chosun,serif}.nav.active{border-bottom:2px solid var(--ink)}.notice{margin:28px 0 42px;padding:12px 14px;border-left:2px solid var(--red);font-size:12px;color:#555}.section{margin:52px 0 0;max-width:1000px}.kicker{font-size:11px;color:var(--muted);letter-spacing:.08em}.section h2{font:30px/1.4 Chosun,serif;margin:4px 0 4px}.desc{font-size:13px;color:var(--muted);margin:0 0 26px}.panel{border-top:1px solid #777;padding-top:20px}.two{display:grid;grid-template-columns:1fr 1fr;gap:38px}.plan-name{font:20px/1.5 Chosun,serif;margin:0}.plan-meta{font-size:12px;color:var(--muted);margin:2px 0 18px}.task{display:grid;grid-template-columns:10px 1fr auto;gap:9px;align-items:baseline;padding:8px 0;border-bottom:1px solid #ddd}.task-title{font:17px/1.5 Chosun,serif}.task-mark{width:5px;height:5px;border-radius:50%;background:transparent;display:block;align-self:center}.task.high .task-mark{background:var(--red)}.task-meta{font-size:11px;color:var(--muted)}.task-priority{font-size:11px;color:#7d3434}.plan-fold{font-size:12px;color:var(--muted);border:0;background:none;padding:8px 0;text-decoration:underline;text-underline-offset:4px}.week{display:grid;grid-template-columns:repeat(7,1fr);border-top:1px solid var(--line);border-left:1px solid var(--line)}.week>div{min-width:0;padding:11px 9px 20px;border-right:1px solid var(--line);border-bottom:1px solid var(--line);min-height:115px}.week time{font-size:12px;color:var(--muted)}.week strong{display:block;font:15px/1.5 Chosun,serif;margin-top:13px;overflow-wrap:anywhere}.week small{display:block;color:var(--muted);font-size:11px}.calendar{width:100%;border-collapse:collapse;table-layout:fixed}.calendar th{font-size:12px;font-weight:400;color:var(--muted);padding:8px}.calendar td{width:14.285%;height:105px;vertical-align:top;padding:0;border:1px solid var(--line);position:relative}.date{position:relative;display:block;width:100%;height:100%;border:0;background:transparent;text-align:left;color:var(--ink);padding:8px;cursor:pointer;font:14px Pretendard,Arial,sans-serif}.date:hover{background:#eaeaea}.date:focus-visible{outline:2px solid var(--red);outline-offset:-3px}.date.selected{background:#eee}.day-num{display:inline-block;position:relative;z-index:2}.date.selected .day-num{background:var(--select);padding:0 3px}.band{display:block;position:absolute;left:0;right:0;top:40px;height:31px;background:#e3e3e3;border-top:1px solid #8b8b8b;border-bottom:1px solid #8b8b8b;white-space:nowrap;overflow:hidden;z-index:1}.band.start{left:8px;border-left:1px solid #8b8b8b}.band.end{right:8px;border-right:1px solid #8b8b8b}.band b{font-weight:400;font-size:11px;line-height:29px;padding:0 5px;display:block;overflow:hidden;text-overflow:ellipsis}.band.focus{background:#dedcda;border-top-color:#8b5555;border-bottom-color:#8b5555}.band.focus.start{border-left-color:#8b5555}.band.focus.end{border-right-color:#8b5555}.band.second{top:75px;height:24px;background:#ececec}.band.second b{line-height:22px}.calendar td:has(.second){height:118px}.cal-note{font-size:11px;color:var(--muted);margin:12px 0 0}.detail{margin-top:38px;scroll-margin-top:24px;border-top:1px solid #666;padding-top:21px;outline:none}.detail-head{display:flex;justify-content:space-between;gap:15px;align-items:baseline}.detail h3{font:24px/1.5 Chosun,serif;margin:0}.summary{border-top:1px solid var(--line);padding:16px 0}.summary:first-of-type{margin-top:16px}.summary>summary{list-style:none;cursor:pointer;display:flex;justify-content:space-between;gap:15px}.summary>summary::-webkit-details-marker{display:none}.summary-title{font:19px/1.5 Chosun,serif}.summary-meta{font-size:12px;color:var(--muted)}.summary ul{margin:10px 0 0 20px;padding:0}.summary li{padding:4px 0}.tag{font-size:11px;color:var(--muted);margin-left:8px}.swatch{display:inline-block;width:6px;height:6px;background:var(--red);border-radius:50%;vertical-align:middle;margin-right:5px}.legend{display:flex;gap:20px;flex-wrap:wrap;font-size:11px;color:var(--muted);margin-bottom:14px}.review{display:flex;gap:18px;padding:20px 0;border-bottom:1px solid var(--line);align-items:center}.metric{min-width:115px}.metric-label{font-size:12px;color:var(--muted)}.metric-value{font:31px/1.25 Chosun,serif;display:block;position:relative;width:max-content}.metric:first-child .metric-value:after{content:'';position:absolute;left:0;right:0;bottom:-1px;height:7px;background:var(--red);clip-path:polygon(0 43%,15% 32%,40% 25%,66% 34%,100% 50%,100% 75%,68% 56%,40% 49%,15% 58%,0 75%);opacity:.86}.evidence h3{font:20px Chosun,serif;margin:23px 0 0}.evidence ul{margin:6px 0 0;padding-left:20px}.evidence li{padding:4px 0}.hint{margin-top:10px;font-size:11px;color:var(--muted)}@media(max-width:700px){.page{margin:0;padding:22px 15px 55px}.brand{font-size:40px}.two{grid-template-columns:1fr}.week{grid-template-columns:repeat(7,minmax(0,1fr))}.week>div{padding:6px 4px;min-height:115px}.week strong{font-size:11px}.week small,.week time{font-size:9px}.calendar td{height:93px}.calendar td:has(.second){height:112px}.date{padding:5px;font-size:11px}.band{top:32px;height:28px}.band b{font-size:9px;line-height:26px;padding:0 2px}.band.second{top:64px}.band.second b{line-height:21px}.band.start{left:3px}.band.end{right:3px}.detail-head{display:block}.summary>summary{display:block}.summary-meta{display:block}.section h2{font-size:25px}}
+/* 검토 02: 날짜는 상단 왼쪽에 고정하고, 계획 기간은 잉크 윤곽 없는 반투명 형광펜 자국으로 표시한다. */
+.calendar td,.calendar td:has(.second){height:132px}
+.date{position:relative;overflow:visible}
+.day-num{position:absolute;top:6px;left:8px;line-height:1.25;z-index:4}
+.date.selected .day-num{background:none;padding:0;box-shadow:inset 0 -5px var(--select)}
+.band,.band.focus,.band.second{left:0;right:0;top:49px;height:31px;background:none;border:0;overflow:hidden;z-index:1;color:var(--ink)}
+.band.start{left:7px}.band.end{right:7px}
+.band.second{top:86px;height:29px}
+.band::before,.band::after{content:"";position:absolute;left:0;right:0;pointer-events:none}
+.band::before{top:4px;bottom:4px;background:rgba(235,158,77,.43);clip-path:polygon(0 22%,5% 12%,14% 17%,24% 8%,35% 13%,47% 6%,59% 14%,71% 8%,83% 17%,94% 10%,100% 20%,100% 85%,90% 91%,78% 87%,66% 96%,52% 88%,39% 95%,26% 86%,13% 93%,0 82%)}
+.band::after{top:9px;bottom:8px;background:rgba(231,137,67,.12);clip-path:polygon(0 12%,17% 4%,34% 14%,51% 2%,68% 10%,84% 3%,100% 12%,100% 89%,79% 94%,58% 85%,36% 97%,19% 87%,0 94%)}
+.band.second::before{background:rgba(175,144,190,.31)}
+.band.second::after{background:rgba(168,131,183,.1)}
+.band b,.band.second b{position:relative;z-index:2;font:400 12px/31px Pretendard,Arial,sans-serif;padding:0 6px}
+.band.second b{line-height:29px}
+.task.done .task-title,.done .item-title{text-decoration:line-through;text-decoration-color:#5e5e5e;text-decoration-thickness:1px;color:#777}
+.sr-only{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+@media(max-width:700px){.calendar td,.calendar td:has(.second){height:119px}.day-num{top:5px;left:5px}.band,.band.focus{top:36px;height:31px}.band.second{top:75px;height:29px}.band b,.band.second b{font-size:10px;line-height:31px;padding:0 3px}.band.second b{line-height:29px}.band.start{left:3px}.band.end{right:3px}}
+/* 원본 투명 PNG 한 장을 기간의 시작·중간·끝에서 다르게 잘라 이어 붙인다. */
+.band::before,.band.second::before{top:0;bottom:0;background:url('assets/highlight-amber-01.png') center / 130% 360% no-repeat;clip-path:none;opacity:.52}
+.band::after{display:none}
+.band.start::before{background-size:115% 360%;background-position:left center}
+.band.end::before{background-size:115% 360%;background-position:right center}
+.band.second::before{filter:hue-rotate(240deg) saturate(.58);opacity:.45}
+/* 검토 03: 7칸을 가로지르는 획을 계획당 한 번만 그린다. */
+.month-calendar{border-right:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cal-weekdays,.cal-week{display:grid;grid-template-columns:repeat(7,minmax(0,1fr))}
+.cal-weekdays{border-top:1px solid var(--line);text-align:center;font-size:12px;color:var(--muted)}
+.cal-weekdays span{padding:8px 0}
+.cal-week{position:relative;min-height:132px}
+.cal-week .date,.cal-week .empty-date{position:relative;width:100%;height:132px;min-width:0;border:0;border-top:1px solid var(--line);border-left:1px solid var(--line);background:transparent}
+.cal-week .date.selected{background:transparent}
+.cal-week .date:hover{background:#eaeaea}
+.cal-week .date:focus-visible{outline:2px solid var(--red);outline-offset:-2px;z-index:4}
+.cal-week .day-num{position:absolute;top:7px;left:9px;z-index:4}
+.calendar-band{position:absolute;height:31px;pointer-events:none;z-index:2;color:var(--ink);isolation:isolate}
+.calendar-band::before,.calendar-band::after{content:"";position:absolute;inset:0;mask:url('assets/highlight-amber-01.png') center / 106% 360% no-repeat;-webkit-mask:url('assets/highlight-amber-01.png') center / 106% 360% no-repeat}
+.calendar-band::before{z-index:-2;background:var(--paper);opacity:.68}
+.calendar-band::after{z-index:-1;background:linear-gradient(90deg,color-mix(in srgb,var(--marker) var(--edge-strength,56%),transparent) 0%,color-mix(in srgb,var(--marker) var(--edge-strength,56%),transparent) 2%,color-mix(in srgb,var(--marker) var(--shoulder-strength,46%),transparent) 7%,color-mix(in srgb,var(--marker) var(--marker-strength,38%),transparent) 14%,color-mix(in srgb,var(--marker) var(--marker-strength,38%),transparent) 84%,color-mix(in srgb,var(--marker) var(--shoulder-strength,46%),transparent) 93%,color-mix(in srgb,var(--marker) var(--edge-strength,56%),transparent) 98%,color-mix(in srgb,var(--marker) var(--edge-strength,56%),transparent) 100%)}
+.calendar-band span{position:absolute;left:5%;top:0;z-index:2;isolation:isolate;white-space:nowrap;font:400 14px/31px Chosun,'Batang',serif}
+.calendar-band span::before{content:"";position:absolute;inset:4px -5px 3px;z-index:-1;background:var(--paper);opacity:.82;mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent);-webkit-mask-image:linear-gradient(90deg,transparent,#000 8%,#000 92%,transparent)}
+.range-primary{left:calc(28.571% + 3px);width:calc(57.143% - 6px);top:49px;--marker:#C79E8C}
+.range-secondary{left:calc(57.143% + 3px);width:calc(42.857% - 6px);top:87px;--marker:#8EAFC3}
+@media(max-width:700px){.cal-week{min-height:124px}.cal-week .date,.cal-week .empty-date{height:124px}.cal-week .day-num{top:6px;left:5px}.calendar-band{height:29px}.calendar-band span{font-size:12px;line-height:29px}.range-primary{top:39px}.range-secondary{top:79px}}
+.study-opacity{display:flex;align-items:center;gap:12px;flex-wrap:wrap;margin:0 0 14px;font:12px/1.5 Pretendard,Arial,sans-serif;color:var(--muted)}
+.study-opacity input{width:180px;accent-color:#8EAFC3}
+.study-opacity output{min-width:38px;color:var(--ink)}
+.stage-switch{margin:0 0 42px;padding:0 0 20px;border-bottom:1px solid var(--line)}
+.stage-switch h2{font:24px/1.45 Chosun,serif;margin:0 0 4px}
+.stage-switch p{font-size:12px;color:var(--muted);margin:0 0 15px}
+.stage-options{display:flex;gap:8px;flex-wrap:wrap}
+.stage-options button{border:1px solid #888;background:transparent;color:var(--ink);padding:8px 13px;min-height:42px;font:12px/1.5 Pretendard,Arial,sans-serif;cursor:pointer}
+.stage-options button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.stage-options button:focus-visible{outline:2px solid #355c89;outline-offset:3px}
+#stage-explain{margin:12px 0 0;color:var(--ink)}
+body[data-stage="1"] .page{background:#f5f5f5;box-shadow:none}
+body[data-stage="2"] .page,body[data-stage="3"] .page{background-color:#f5f5f5;background-image:linear-gradient(#f5f5f5ed,#f5f5f5ed),url('assets/paper-fiber-subtle.webp');background-size:auto,860px 860px;box-shadow:0 12px 34px #00000012,inset 0 0 0 1px #00000010}
+body[data-stage="2"] .mast,body[data-stage="3"] .mast{border-bottom:3px double #777}
+body[data-stage="1"] .calendar-band,body[data-stage="2"] .calendar-band{border-bottom:1px solid #aaa}
+body[data-stage="1"] .calendar-band::before,body[data-stage="2"] .calendar-band::before{mask:none;-webkit-mask:none;opacity:1}
+body[data-stage="1"] .calendar-band::before{background:#e6e6e6}
+body[data-stage="2"] .calendar-band::before{background:#ebeae8}
+body[data-stage="1"] .calendar-band::after,body[data-stage="2"] .calendar-band::after{display:none}
+body[data-stage="1"] .calendar-band span::before,body[data-stage="2"] .calendar-band span::before{display:none}
+body[data-stage="1"] .metric:first-child .metric-value::after,body[data-stage="2"] .metric:first-child .metric-value::after{display:none}
+body[data-stage="3"] .calendar-band::before{mask:none;-webkit-mask:none;background:url('assets/highlight-felt-02.webp') center / 106% 420% no-repeat;opacity:var(--raster-strength,.38)}
+body[data-stage="3"] .calendar-band::after{display:none}
+body[data-stage="3"] .range-primary::before{filter:saturate(.46) hue-rotate(338deg)}
+body[data-stage="3"] .range-secondary::before{filter:hue-rotate(185deg) saturate(.61)}
+body[data-stage="3"] .metric:first-child .metric-value::after{display:block;bottom:-5px;height:10px;background:url('assets/burgundy-ink-underline.webp') center / 115% 420% no-repeat;clip-path:none;opacity:.85}
+body[data-stage="3"] .date.selected .day-num::after{content:"";position:absolute;left:-8px;top:-7px;width:42px;height:31px;background:url('assets/blue-ink-circle-a.webp') center / 100% 100% no-repeat;opacity:.62;pointer-events:none}
+body[data-stage="1"] .study-opacity,body[data-stage="2"] .study-opacity{display:none}
+@media(max-width:700px){.stage-switch{margin-bottom:30px}.stage-options button{flex:1 1 100%;text-align:left}.stage-switch h2{font-size:21px}}
+</style>
+</head>
+<body data-stage="3"><div class="page"><header class="mast"><div class="eyebrow">PLAN · DO · SEE</div><div class="brand">HaruLeaf</div><div class="sub">지면과 필기 자산 검토 · 예시 자료이며 실제 기록이 아닙니다</div><nav aria-label="시안 구역"><button class="nav active" onclick="document.getElementById('day').scrollIntoView()">일간</button><button class="nav" onclick="document.getElementById('weekly').scrollIntoView()">주간</button><button class="nav" onclick="document.getElementById('monthly').scrollIntoView()">월간</button><button class="nav" onclick="document.getElementById('review').scrollIntoView()">돌아보기</button></nav></header>
+<p class="notice">독립 검토 시안입니다. 실제 HaruLeaf 화면이나 저장 자료는 변경하지 않았습니다. 세 단계 모두 같은 내용과 클릭 영역을 사용합니다.</p>
+<section class="stage-switch" aria-label="지면 표현 단계"><h2>같은 화면, 세 단계</h2><p>월간의 계획 획과 돌아보기의 숫자 밑줄을 중심으로 비교합니다.</p><div class="stage-options"><button type="button" data-stage-option="1" aria-pressed="false" onclick="setStage(1)">1 · 기본 인쇄 지면</button><button type="button" data-stage-option="2" aria-pressed="false" onclick="setStage(2)">2 · 종이와 인쇄 깊이</button><button type="button" data-stage-option="3" aria-pressed="true" onclick="setStage(3)">3 · 펜과 형광펜 자국</button></div><p id="stage-explain" role="status">기존 배치를 유지하고 실제 질감의 형광펜 획, 선택 날짜의 펜 표시, 계획 결과의 펜 밑줄을 필요한 곳에만 더했습니다.</p></section>
+<section class="section" id="day"><div class="kicker">01 / 일정</div><h2>일간 할 일</h2><p class="desc">우선순위는 제목 옆 작은 붉은 점과 ‘높음’ 글자를 함께 표시합니다. 완료된 할 일은 제목에 취소선을 긋습니다.</p><div class="panel two"><div><h3 class="plan-name">서비스 화면 정리</h3><p class="plan-meta">진행 중 · 할 일 2/4 완료</p><div class="task high"><span class="task-mark"></span><span class="task-title">로그인 화면 점검</span><span class="task-priority">높음</span></div><div class="task done"><span class="task-mark"></span><span class="task-title">안내 문구 정리</span><span class="task-meta sr-only">완료</span></div></div><div><h3 class="plan-name">지난 계획</h3><p class="plan-meta">어제 모든 할 일을 마친 일반 계획</p><button class="plan-fold" id="completed-toggle" type="button" aria-expanded="false" onclick="toggleCompleted()">완료한 계획 1개 보기 ＋</button><div id="completed-content" hidden><div class="task done"><span class="task-mark"></span><span class="task-title">자료 구조 확인</span><span class="task-meta sr-only">완료</span></div></div></div></div></section>
+<section class="section" id="weekly"><div class="kicker">02 / 일정</div><h2>주간</h2><p class="desc">날짜별 긴 할 일 목록 대신 계획명과 일반 할 일 완료율을 먼저 봅니다. 작업 시간과 배치 정보는 일간 상세에서 확인합니다.</p><div class="week"><div><time>20 일</time><strong>기록 정리</strong><small>1/2 완료</small></div><div><time>21 월</time><strong>기록 정리</strong><small>1/2 완료</small></div><div><time>22 화</time><strong>서비스 화면 정리</strong><small>2/4 완료</small></div><div><time>23 수</time><strong>서비스 화면 정리</strong><small>2/4 완료</small></div><div><time>24 목</time><strong>서비스 화면 정리</strong><small>2/4 완료</small></div><div><time>25 금</time><strong>서비스 화면 정리</strong><small>2/4 완료</small></div><div><time>26 토</time><strong>독서 계획</strong><small>1/2 완료</small></div></div></section>
+<section class="section" id="monthly"><div class="kicker">03 / 일정</div><h2>월간</h2><p class="desc">같은 계획 기간과 선택 날짜를 세 표현 단계에서 비교합니다. 날짜를 누르면 아래 상세로 이동하며, 완료율은 상세에서만 확인합니다.</p><div class="legend"><span>푸른 주석 1색 · 서비스 화면 정리</span><span>푸른 주석 4색 · 독서 계획</span><span>완료율은 아래 날짜 상세에서 확인</span></div><div class="study-opacity"><label for="marker-opacity">형광펜 농도 · 시안 비교</label><input id="marker-opacity" type="range" min="25" max="65" value="38"><output id="marker-opacity-value" for="marker-opacity">38%</output><span>실제 서비스에는 표시되지 않는 조절기</span></div><div class="month-calendar" role="grid" aria-label="2026년 9월 검토용 달력">
+  <div class="cal-weekdays" aria-hidden="true"><span>일</span><span>월</span><span>화</span><span>수</span><span>목</span><span>금</span><span>토</span></div>
+  <div class="cal-week" role="row">
+    <button class="date" data-day="20" onclick="chooseDay(20)" aria-label="9월 20일"><span class="day-num">20</span></button>
+    <button class="date" data-day="21" onclick="chooseDay(21)" aria-label="9월 21일"><span class="day-num">21</span></button>
+    <button class="date" data-day="22" onclick="chooseDay(22)" aria-label="9월 22일, 서비스 화면 정리 계획"><span class="day-num">22</span></button>
+    <button class="date" data-day="23" onclick="chooseDay(23)" aria-label="9월 23일, 서비스 화면 정리 계획"><span class="day-num">23</span></button>
+    <button class="date selected" data-day="24" onclick="chooseDay(24)" aria-label="9월 24일, 서비스 화면 정리와 독서 계획"><span class="day-num">24</span></button>
+    <button class="date" data-day="25" onclick="chooseDay(25)" aria-label="9월 25일, 서비스 화면 정리와 독서 계획"><span class="day-num">25</span></button>
+    <button class="date" data-day="26" onclick="chooseDay(26)" aria-label="9월 26일, 독서 계획"><span class="day-num">26</span></button>
+    <div class="calendar-band range-primary" aria-hidden="true"><span>서비스 화면 정리</span></div>
+    <div class="calendar-band range-secondary" aria-hidden="true"><span>독서 계획</span></div>
+  </div>
+  <div class="cal-week" role="row">
+    <button class="date" data-day="27" onclick="chooseDay(27)" aria-label="9월 27일"><span class="day-num">27</span></button>
+    <button class="date" data-day="28" onclick="chooseDay(28)" aria-label="9월 28일"><span class="day-num">28</span></button>
+    <button class="date" data-day="29" onclick="chooseDay(29)" aria-label="9월 29일"><span class="day-num">29</span></button>
+    <button class="date" data-day="30" onclick="chooseDay(30)" aria-label="9월 30일"><span class="day-num">30</span></button>
+    <span class="empty-date" aria-hidden="true"></span><span class="empty-date" aria-hidden="true"></span><span class="empty-date" aria-hidden="true"></span>
+  </div>
+</div><p class="cal-note">계획마다 시작점에 이름을 한 번만 표시합니다. 실제 구현 전에는 달·주 경계와 여러 계획이 겹치는 화면을 확인해야 합니다.</p><div class="detail" id="month-detail" tabindex="-1"><div class="detail-head"><h3 id="detail-title">9월 24일의 계획과 할 일</h3><span class="sub">계획명을 누르면 펼침 · 일간 상세로 이동 가능</span></div><div id="detail-content"></div></div></section>
+<section class="section" id="review"><div class="kicker">04 / 돌아보기</div><h2>계획 결과</h2><p class="desc">숫자의 내용과 계산 방식은 그대로 두고, 세 번째 단계에서만 실제 펜 밑줄 자산을 적용합니다. 근거는 계획별로 묶었습니다.</p><div class="panel"><div class="review"><div class="metric"><div class="metric-label">계획한 할 일</div><strong class="metric-value">6</strong></div><div class="metric"><div class="metric-label">완료</div><strong class="metric-value">3</strong></div></div><div class="evidence"><h3>서비스 화면 정리 <span class="tag">2/4 완료</span></h3><ul><li><span class="item-title">로그인 화면 점검</span><span class="tag">높음</span></li><li class="done"><span class="item-title">안내 문구 정리</span><span class="tag">보통</span><span class="sr-only">완료한 할 일</span></li><li class="done"><span class="item-title">계정 화면 검토</span><span class="tag">보통</span><span class="sr-only">완료한 할 일</span></li><li><span class="item-title">반응형 화면 확인</span><span class="tag">보통</span></li></ul><h3>독서 계획 <span class="tag">1/2 완료</span></h3><ul><li class="done"><span class="item-title">책 20쪽 읽기</span><span class="tag">보통</span><span class="sr-only">완료한 할 일</span></li><li><span class="item-title">읽은 내용 정리</span><span class="tag">보통</span></li></ul><p class="hint">표시한 6개 근거가 위의 계획한 할 일 6개와 일치합니다. 실제 앱에서는 각 근거를 눌러 상세로 이동하는 기능을 유지합니다.</p></div></div></section></div>
+<script>
+const detail=document.getElementById('month-detail');
+function toggleCompleted(){const b=document.getElementById('completed-toggle'),c=document.getElementById('completed-content');const v=b.getAttribute('aria-expanded')==='true';b.setAttribute('aria-expanded',String(!v));c.hidden=v;b.textContent=v?'완료한 계획 1개 보기 ＋':'완료한 계획 접기 −'}
+function taskRow(title,meta,done=false,high=false){
+ return `<li class="${done?'done':''}">${high?'<span class="swatch" aria-hidden="true"></span>':''}<span class="item-title">${title}</span><span class="tag">${meta}</span>${done?'<span class="sr-only">완료한 할 일</span>':''}</li>`;
+}
+function chooseDay(n,scroll=true){
+ document.querySelectorAll('.date').forEach(b=>b.classList.toggle('selected',Number(b.dataset.day)===n));
+ document.getElementById('detail-title').textContent='9월 '+n+'일의 계획과 할 일';
+ let content='';
+ if(n>=22&&n<=25)content+='<details class="summary" open><summary><span class="summary-title">서비스 화면 정리</span><span class="summary-meta">일반 할 일 2/4 완료 · 50% · 접기/펴기</span></summary><ul>'+
+  taskRow('로그인 화면 점검','높음 · 10:00–11:00 배치',false,true)+
+  taskRow('안내 문구 정리','보통 · 시간 미배치',true)+
+  taskRow('계정 화면 검토','보통 · 시간 미배치',true)+
+  taskRow('반응형 화면 확인','보통 · 시간 미배치')+'</ul></details>';
+ if(n>=24&&n<=26)content+='<details class="summary"><summary><span class="summary-title">독서 계획</span><span class="summary-meta">일반 할 일 1/2 완료 · 50% · 접기/펴기</span></summary><ul>'+
+  taskRow('책 20쪽 읽기','시간 미배치',true)+
+  taskRow('읽은 내용 정리','시간 미배치')+'</ul></details>';
+ document.getElementById('detail-content').innerHTML=content||'<p class="sub">이 날짜에 진행 중인 예시 계획이 없습니다.</p>';
+ if(scroll){detail.scrollIntoView({behavior:'smooth',block:'start'});setTimeout(()=>detail.focus({preventScroll:true}),350)}
+}
+chooseDay(24,false);
+const opacityInput=document.getElementById('marker-opacity');
+function updateMarkerStrength(){const strength=Number(opacityInput.value);document.documentElement.style.setProperty('--marker-strength',strength+'%');document.documentElement.style.setProperty('--shoulder-strength',Math.min(73,strength+8)+'%');document.documentElement.style.setProperty('--edge-strength',Math.min(78,strength+18)+'%');document.documentElement.style.setProperty('--raster-strength',strength/100);document.getElementById('marker-opacity-value').textContent=strength+'%'}
+opacityInput.addEventListener('input',updateMarkerStrength);
+updateMarkerStrength();
+const stageDescriptions={1:'균일한 종이색과 가는 구획선만 사용합니다. 장식 없이 정보 위계를 확인하는 기준 화면입니다.',2:'아주 옅은 종이 섬유 질감과 인쇄물의 이중 구획선·약한 지면 그림자를 더했습니다.',3:'기존 배치를 유지하고 실제 질감의 형광펜 획, 선택 날짜의 펜 표시, 계획 결과의 펜 밑줄을 필요한 곳에만 더했습니다.'};
+function setStage(stage){document.body.dataset.stage=String(stage);document.querySelectorAll('[data-stage-option]').forEach(button=>button.setAttribute('aria-pressed',String(Number(button.dataset.stageOption)===stage)));document.getElementById('stage-explain').textContent=stageDescriptions[stage]}
+</script></body></html>

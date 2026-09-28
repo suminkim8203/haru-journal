@@ -23,3 +23,5 @@
 - [실제 5일 관찰 기준](FIVE-DAY-STUDY.md) — 사용자 실제 활동만 관찰표에 포함
 - [시험 계정 저장 해시 확인](PASSWORD-HASH-READONLY.md)
 - [공개 파일·이력·빌드의 제한된 비밀 형식 검사](evidence/public-secret-scan.json)
+
+- [시각 자산 전략과 3단계 비교](VISUAL-ASSET-STRATEGY.md) — 종이·형광펜·펜 자국 검토용, 실제 앱 미적용

@@ -5,6 +5,10 @@ if(process.env.NEXT_PUBLIC_HARU_PRIVATE!=='1'){
   console.error('T07 static release requires NEXT_PUBLIC_HARU_PRIVATE=1.');
   process.exit(2);
 }
+if(!process.env.NEXT_PUBLIC_SUPABASE_URL||!process.env.NEXT_PUBLIC_SUPABASE_ANON_KEY){
+  console.error('T07 static release requires both public Supabase client settings.');
+  process.exit(2);
+}
 
 const child=spawn(process.execPath,['node_modules/next/dist/bin/next','build'],{
   cwd:process.cwd(),env:{...process.env,HARU_STATIC_EXPORT:'1'},stdio:'inherit',windowsHide:true

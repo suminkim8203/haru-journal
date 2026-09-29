@@ -67,9 +67,9 @@ form label{min-width:0}
 .month-plan-band{height:29px;position:absolute;z-index:2;pointer-events:none;isolation:isolate;color:var(--ink);white-space:nowrap;overflow:hidden}
 .month-plan-band::before,.month-plan-band::after{content:'';position:absolute;inset:0;pointer-events:none}
 .month-plan-band::before{z-index:-2;background:var(--paper);mask:url('/visual/highlight-felt-02.webp') center/106% 420% no-repeat;-webkit-mask:url('/visual/highlight-felt-02.webp') center/106% 420% no-repeat;opacity:.65}
-.month-plan-band::after{z-index:-1;background:url('/visual/highlight-felt-02.webp') center/106% 420% no-repeat;opacity:.46;filter:var(--marker-filter)}
+.month-plan-band::after{z-index:-1;background:var(--marker-color);mask:url('/visual/highlight-felt-02.webp') center/106% 420% no-repeat;-webkit-mask:url('/visual/highlight-felt-02.webp') center/106% 420% no-repeat;opacity:.46}
 .month-plan-band>span{display:block;position:relative;z-index:1;max-width:100%;padding:1px 9px;overflow:hidden;text-overflow:ellipsis;font:400 13px/27px var(--serif)}
-.marker-warm{--marker-filter:saturate(.6)}.marker-gold{--marker-filter:hue-rotate(35deg) saturate(.66)}.marker-mint{--marker-filter:hue-rotate(110deg) saturate(.55)}.marker-blue{--marker-filter:hue-rotate(175deg) saturate(.55)}.marker-violet{--marker-filter:hue-rotate(215deg) saturate(.52)}
+.marker-warm{--marker-color:#C79E8C}.marker-gold{--marker-color:#BDB77E}.marker-mint{--marker-color:#9FBBAF}.marker-blue{--marker-color:#8EAFC3}.marker-violet{--marker-color:#AAA9C5}
 .month-detail{margin-top:34px;padding-top:21px;border-top:1px solid var(--line-dark);scroll-margin-top:24px;outline:none}.month-detail h2{font-size:23px}.month-detail>p{margin:8px 0 20px}
 .month-plan-detail{border-top:1px solid var(--line)}.month-plan-detail:last-child{border-bottom:1px solid var(--line)}
 .month-plan-detail>summary{list-style:none;display:flex;gap:20px;align-items:baseline;justify-content:space-between;padding:17px 2px;cursor:pointer}.month-plan-detail>summary::-webkit-details-marker{display:none}.month-plan-detail>summary:focus-visible{outline:2px solid #75444b;outline-offset:2px}

@@ -7,8 +7,8 @@ import {addDays} from '@/lib/schedule';
 import {dateText,priorityText} from './presentation';
 
 const weekdays=['일','월','화','수','목','금','토'];
-const palette=['warm','gold','mint','blue','violet'];
-function colorFor(plan:Plan){let code=0;for(const char of plan.id)code=(code*31+char.charCodeAt(0))%palette.length;return palette[code];}
+const palette=['warm','gold','mint','blue','violet'] as const;
+function colorFor(plan:Plan,plans:Plan[]){return plan.marker_color||palette[Math.max(0,plans.findIndex(item=>item.id===plan.id))%palette.length];}
 function column(day:string,weekStart:string){return Math.round((Date.parse(day+'T12:00:00Z')-Date.parse(weekStart+'T12:00:00Z'))/86400000);}
 
 export function Monthly({data,day,today,selectDay,openDay}:{data:Snapshot;day:string;today:string;selectDay:(d:string)=>void;openDay:(d:string,id?:string)=>void}){
@@ -23,7 +23,8 @@ export function Monthly({data,day,today,selectDay,openDay}:{data:Snapshot;day:st
    return <div className="month-week" key={weekStart} style={{minHeight:Math.max(98,48+segments.length*31)+'px'}}>
     {Array.from({length:7},(_,col)=>{const d=addDays(weekStart,col),inMonth=d>=first&&d<=monthLast,dayPlans=inMonth?plansOnDay(data,d):[];return inMonth?<button type="button" className={'month-date-button'+(d===today?' current':'')+(d===day?' selected-date':'')} key={d} aria-pressed={d===day} aria-label={dateText(d,true)+(dayPlans.length?' · 계획 '+dayPlans.map(p=>p.title).join(', '):' · 계획 없음')} onClick={()=>select(d)}><span className="date-number" data-typo-role="number">{Number(d.slice(8))}</span>{d===today&&<span className="month-today">오늘</span>}</button>:<span className="month-empty-date" key={d} aria-hidden="true"/>;})}
     {segments.map(({plan,start,end,label},lane)=>{const startColumn=column(start,weekStart),length=column(end,weekStart)-startColumn+1;
-     return <span className={'month-plan-band marker-'+colorFor(plan)} key={plan.id} aria-hidden="true" style={{left:`calc(${startColumn/7*100}% + 3px)`,width:`calc(${length/7*100}% - 6px)`,top:39+lane*31+'px'}}>{label&&<span>{plan.title}</span>}</span>;
+     const progress=planCompletion(data,plan);
+     return <span className={'month-plan-band marker-'+colorFor(plan,data.plans)} key={plan.id} aria-hidden="true" style={{left:`calc(${startColumn/7*100}% + 3px)`,width:`calc(${length/7*100}% - 6px)`,top:39+lane*31+'px'}}>{label&&<span className="month-band-label"><span>{plan.title}</span><b>{progress.done}/{progress.total}</b></span>}</span>;
     })}
    </div>;
   })}

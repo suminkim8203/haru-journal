@@ -8,6 +8,8 @@ export interface PlanRevision {
 export interface Plan {
   id: string; title: string; kind: 'general' | 'routine';
   start_date: string | null; end_date: string | null;
+  marker_color?: 'warm' | 'gold' | 'mint' | 'blue' | 'violet' | null;
+  closed_at?: string | null;
   success_text: string; estimated_minutes: number; priority: Priority; history: PlanRevision[];
 }
 export interface Task {
@@ -26,7 +28,7 @@ export interface Routine {id:string;plan_id:string;title:string;description:stri
 export interface Snapshot { schemaVersion: 6; improvementEditing?:boolean; routines?:Routine[]; retainedTasks?:Task[]; thoughts:Thought[]; reflections:Reflection[]; closures:{local_date:string;closed_at:string}[]; improvements:Improvement[]; trash:TrashEntry[]; placements:Placement[]; runs:Run[]; diaryId: string; timezone: string; revision: number; plans: Plan[]; tasks: Task[] }
 export interface Command {
   requestId: string; expectedRevision: number;
-  command: 'create_routine'|'update_routine'|'skip_occurrence'|'stop_routine'|'create_plan' | 'update_plan' | 'create_task' | 'update_task' | 'set_task_complete' | 'create_placement' | 'update_placement' | 'start_run' | 'switch_segment' | 'stop_run' | 'create_run' | 'update_run' | 'save_thought' | 'save_reflection' | 'close_day' | 'bookmark_reflection' | 'send_improvement' | 'update_improvement' | 'delete_entity' | 'restore_entity';
+  command: 'create_routine'|'update_routine'|'skip_occurrence'|'stop_routine'|'create_plan' | 'update_plan' | 'set_plan_marker' | 'close_plan' | 'reopen_plan' | 'create_task' | 'update_task' | 'set_task_complete' | 'create_placement' | 'update_placement' | 'start_run' | 'switch_segment' | 'stop_run' | 'create_run' | 'update_run' | 'save_thought' | 'save_reflection' | 'close_day' | 'bookmark_reflection' | 'send_improvement' | 'update_improvement' | 'delete_entity' | 'restore_entity';
   payload: Record<string, unknown>;
 }
 const uuid = /^[0-9a-f]{8}-[0-9a-f]{4}-[1-8][0-9a-f]{3}-[89ab][0-9a-f]{3}-[0-9a-f]{12}$/i;
@@ -108,6 +110,9 @@ export function parseCommand(input: unknown): Command {
   } else if (c === 'start_run' || c === 'switch_segment' || c === 'stop_run') {
     id(c === 'start_run' ? 'taskId' : 'runId'); instant('at'); text('blockedReason',2000);
     if (c === 'switch_segment' && !['work','pause','break','interrupt'].includes(String(p.kind))) throw Error('기록 유형을 확인해 주세요.');
+  } else if (c === 'set_plan_marker' || c === 'close_plan' || c === 'reopen_plan') {
+    id('planId');
+    if (c === 'set_plan_marker' && !['warm','gold','mint','blue','violet'].includes(String(p.markerColor))) throw Error('형광펜 색을 확인해 주세요.');
   } else if (c === 'create_plan' || c === 'update_plan') {
     text('title', 120, true); text('successText', 4000); estimate(525600); priority();
     if(c==='create_plan' && p.sourcePlanId!==undefined){id('sourcePlanId');text('improvementText',500,true);}

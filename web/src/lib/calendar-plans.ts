@@ -17,6 +17,24 @@ export function planCompletion(data:Snapshot,plan:Plan,day?:string){
  return {done,total:tasks.length,percent:tasks.length?Math.round(done/tasks.length*100):0};
 }
 
+export type PlanStatus = 'active' | 'overdue' | 'completed' | 'closed';
+
+/** Status is derived from the actual task count; explicit closure never changes completion. */
+export function planStatus(data:Snapshot,plan:Plan,day:string):PlanStatus{
+ if(plan.kind==='routine')return 'active';
+ if(plan.closed_at&&seoulDate(new Date(plan.closed_at))<=day)return 'closed';
+ const tasks=tasksInPlan(data,plan);
+ if(tasks.length&&tasks.every(task=>task.complete&&task.completed_at)){
+  const finished=tasks.map(task=>seoulDate(new Date(task.completed_at!))).sort().at(-1)!;
+  if(finished<=day)return 'completed';
+ }
+ return plan.end_date&&plan.end_date<day?'overdue':'active';
+}
+
+export function planStatusLabel(status:PlanStatus):string{
+ return {active:'진행 중',overdue:'기한 경과 · 미완료',completed:'할 일 완료',closed:'계획 종료'}[status];
+}
+
 export function planWeekSegments(plans:Plan[],weekStart:string,weekEnd:string,monthFirst:string,monthLast:string){
  return plans.filter(plan=>plan.start_date&&plan.end_date).map(plan=>{
   const start=[plan.start_date!,weekStart,monthFirst].sort().at(-1)!;
@@ -28,8 +46,8 @@ export function planWeekSegments(plans:Plan[],weekStart:string,weekEnd:string,mo
 /** Hide only after a known completion date; old snapshots without it stay visible. */
 export function completedPlanHidden(data:Snapshot,plan:Plan,day:string):boolean{
  if(plan.kind!=='general')return false;
+ if(plan.closed_at&&day>seoulDate(new Date(plan.closed_at)))return true;
  const tasks=tasksInPlan(data,plan);
  if(!tasks.length||tasks.some(task=>!task.complete||!task.completed_at))return false;
- const finished=tasks.map(task=>seoulDate(new Date(task.completed_at!))).sort().at(-1)!;
- return day>finished;
+ return day>tasks.map(task=>seoulDate(new Date(task.completed_at!))).sort().at(-1)!;
 }

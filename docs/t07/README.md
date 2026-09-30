@@ -6,6 +6,7 @@
 - [인증·화면·온보딩 제안](AUTH-AND-ONBOARDING-PROPOSAL.md): 확정된 방향과 이번 승인 대기 세부안을 구분한다.
 - [실제 Auth 설정 조회](auth-readonly-2026-09-21.json): 버전 및 비밀이 아닌 설정만 기록. 메일 발송 확인은 미완료.
 - [T06 기준](T06-BASELINE.md): 제출 당시 소스 이력 보존.
+- [T07 제출 자료](../submission/T07-SUBMISSION.md): 결과 URL·인증 설명·마스킹된 증거·5일 자료·남은 확인을 한 문서에 묶었다.
 - [제출 이후 다시 다룰 일](AFTER-SUBMISSION.md): PDF 출력과 출시용 제품 확장. 제출 완료가 확인되면 PDF 건을 다시 언급한다.
 - [선택 메뉴 바깥 클릭 점검](DROPDOWN-DISMISSAL-AUDIT-2026-09-30.md): 검색형 계획 선택기 두 곳의 닫힘 누락과 수정 순서. 수정 전 점검 기록이다.
 

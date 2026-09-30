@@ -7,6 +7,15 @@ export function plansOnDay(data:Snapshot,day:string):Plan[]{
   .sort((a,b)=>a.start_date!.localeCompare(b.start_date!)||a.title.localeCompare(b.title,'ko')||a.id.localeCompare(b.id));
 }
 
+/** Daily task rail includes a plan from its start onward, including overdue unfinished days. */
+export function tasksForDailyList(data:Snapshot,day:string):Task[]{
+ const plans=new Map(data.plans.map(plan=>[plan.id,plan]));
+ return data.tasks.filter(task=>{
+  const plan=plans.get(task.plan_id);
+  return !!plan?.start_date&&plan.start_date<=day&&!task.cancelled_at&&(!task.routine_id||task.occurrence_date===day);
+ });
+}
+
 export function tasksInPlan(data:Snapshot,plan:Plan,day?:string):Task[]{
  return data.tasks.filter(task=>task.plan_id===plan.id&&!task.skipped&&!task.cancelled_at&&(!day||plan.kind==='general'||task.occurrence_date===day))
   .sort((a,b)=>(a.due_date||'9999').localeCompare(b.due_date||'9999')||a.title.localeCompare(b.title,'ko')||a.id.localeCompare(b.id));

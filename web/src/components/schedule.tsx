@@ -16,7 +16,7 @@ import {Timeline,type TimelineSelection} from './timeline';
 import {Monthly} from './monthly';
 import {Weekly} from './weekly';
 import {dateButtonText,dateText,priorityText} from './presentation';
-import {completedPlanHidden,planStatus} from '@/lib/calendar-plans';
+import {completedPlanHidden,planStatus,tasksForDailyList} from '@/lib/calendar-plans';
 const weekdays=['일','월','화','수','목','금','토'];
 const allTasks=(data:Snapshot)=>[...data.tasks,...(data.retainedTasks||[])];
 function monthShift(day:string,delta:number){const [y,m,d]=day.split('-').map(Number),last=new Date(Date.UTC(y,m+delta,0)).getUTCDate();return new Date(Date.UTC(y,m-1+delta,Math.min(d,last))).toISOString().slice(0,10);}
@@ -38,7 +38,7 @@ export function Schedule({day,setDay,selectedId,setSelectedId,now,openRequest,on
  function chooseTimeline(value:TimelineSelection){choose(value.taskId);setSelection(value);setPlacementOpen(value.kind==='placement');setHistoryOpen(value.kind==='run');}
  function openDay(d:string,id=''){setView('daily');setDay(d);choose(id);}
  function shift(delta:number){setDay(view==='monthly'?monthShift(day,delta):addDays(day,delta*(view==='weekly'?7:1)));setSelectedId('');setEditor(null);}
- const listed=(data?.tasks.filter(t=>!t.cancelled_at&&(!t.routine_id||t.occurrence_date===day))||[]),eligible=listed.filter(t=>!t.skipped),search=query.trim().toLocaleLowerCase('ko'),hiddenPlans=data?.plans.filter(p=>listed.some(t=>t.plan_id===p.id)&&completedPlanHidden(data,p,day))||[],overduePlans=data?.plans.filter(p=>listed.some(t=>t.plan_id===p.id)&&planStatus(data,p,day)==='overdue')||[];
+ const listed=(data?tasksForDailyList(data,day):[]),eligible=listed.filter(t=>!t.skipped),search=query.trim().toLocaleLowerCase('ko'),hiddenPlans=data?.plans.filter(p=>listed.some(t=>t.plan_id===p.id)&&completedPlanHidden(data,p,day))||[],overduePlans=data?.plans.filter(p=>listed.some(t=>t.plan_id===p.id)&&planStatus(data,p,day)==='overdue')||[];
  function renderPlan(p:Plan,i:number,mobile:boolean){
   const rows=listed.filter(t=>t.plan_id===p.id&&(!search||(t.title+' '+t.description+' '+p.title).toLocaleLowerCase('ko').includes(search)));
   if(!rows.length||(!study&&!search&&selected?.plan_id!==p.id&&((hiddenPlans.some(h=>h.id===p.id)&&!showCompletedPlans)||(overduePlans.some(h=>h.id===p.id)&&!showOverduePlans))))return null;

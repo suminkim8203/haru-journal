@@ -1,6 +1,6 @@
 import test from 'node:test';
 import assert from 'node:assert/strict';
-import {completedPlanHidden,planCompletion,planWeekSegments,plansOnDay,tasksInPlan} from '../src/lib/calendar-plans.ts';
+import {completedPlanHidden,planCompletion,planWeekSegments,plansOnDay,tasksForDailyList,tasksInPlan} from '../src/lib/calendar-plans.ts';
 import type {Plan,Snapshot,Task} from '../src/lib/contracts.ts';
 
 const plan=(id:string,kind:Plan['kind']='general',start='2026-09-22',end='2026-09-25'):Plan=>({id,title:id,kind,start_date:start,end_date:end,success_text:'',estimated_minutes:0,priority:'normal',history:[]});
@@ -14,6 +14,16 @@ test('a planned span includes both boundaries without implying a work record',()
  assert.deepEqual(plansOnDay(snapshot,'2026-09-25').map(p=>p.id),['a']);
  assert.deepEqual(plansOnDay(snapshot,'2026-09-26'),[]);
  assert.equal(planCompletion(snapshot,snapshot.plans[0]).percent,0);
+});
+
+test('daily list excludes future plans, then keeps unfinished plans available after their end',()=>{
+ const snapshot=data(
+  [plan('past','general','2026-09-10','2026-09-14'),plan('trip','general','2026-09-23','2026-09-24'),plan('routine','routine','2026-09-23','2026-09-24')],
+  [task('old','past'),task('busan','trip'),task('today-routine','routine',{routine_id:'r',occurrence_date:'2026-09-23'}),task('next-routine','routine',{routine_id:'r',occurrence_date:'2026-09-24'})]
+ );
+ assert.deepEqual(tasksForDailyList(snapshot,'2026-09-15').map(t=>t.id),['old']);
+ assert.deepEqual(tasksForDailyList(snapshot,'2026-09-23').map(t=>t.id),['old','busan','today-routine']);
+ assert.deepEqual(tasksForDailyList(snapshot,'2026-09-25').map(t=>t.id),['old','busan']);
 });
 
 test('completion is based on general task count, including unplaced tasks, and hides only the following Seoul day',()=>{

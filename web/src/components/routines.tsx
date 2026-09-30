@@ -1,4 +1,5 @@
 'use client';
+import {ChoiceSelect} from './choice-select';
 import {useState} from 'react';
 import type {Plan,Routine,Task} from '@/lib/contracts';
 import {addDays,seoulDate} from '@/lib/schedule';
@@ -13,14 +14,14 @@ export function RoutineEditor({plan,rule,task,onClose}:{plan:Plan;rule?:Routine;
  function update<T extends keyof RoutineDraft>(key:T,v:RoutineDraft[T]){setDraft(d=>({...d,[key]:v,allowOverlap:false}));setReview(false);}
  return <form className="editor" onSubmit={async e=>{e.preventDefault();if(!review){setReview(true);return;}const saved=task&&scope==='one'?await send('update_task',{taskId:task.id,title:value.title,description:value.description,estimatedMinutes:value.estimatedMinutes,priority:value.priority,tags}):await send(rule?'update_routine':'create_routine',{...value,...(rule?{routineId:rule.id}:{planId:plan.id})});if(saved)onClose();}}>
  <div className="section-heading"><h2 data-typo-role="title">{rule?'반복 할 일 수정':'반복 할 일 만들기'}</h2><button type="button" className="link" aria-label="반복 입력 닫기" onClick={onClose}>×</button></div><fieldset disabled={locked}>
- {task&&<label className="field"><span>적용 범위</span><select value={scope} onChange={e=>{setScope(e.target.value);setReview(false);}}><option value="one">이 날짜만</option><option value="future">이 날짜부터 이후 반복</option></select></label>}
+ {task&&<label className="field"><span>적용 범위</span><ChoiceSelect value={scope} onChange={e=>{setScope(e.target.value);setReview(false);}}><option value="one">이 날짜만</option><option value="future">이 날짜부터 이후 반복</option></ChoiceSelect></label>}
  {!review&&<><label className="field"><span>할 일 제목</span><input required maxLength={120} value={draft.title} onChange={e=>update('title',e.target.value)}/></label>
- <div className="form-grid"><label className="field"><span>한 번의 예상 시간 · 분</span><input type="number" required min={1} max={10080} value={draft.estimatedMinutes} onChange={e=>update('estimatedMinutes',Number(e.target.value))}/></label><label className="field"><span>우선순위</span><select value={draft.priority} onChange={e=>update('priority',e.target.value as RoutineDraft['priority'])}><option value="high">높음</option><option value="normal">보통</option><option value="low">낮음</option></select></label></div>
+ <div className="form-grid"><label className="field"><span>한 번의 예상 시간 · 분</span><input type="number" required min={1} max={10080} value={draft.estimatedMinutes} onChange={e=>update('estimatedMinutes',Number(e.target.value))}/></label><label className="field"><span>우선순위</span><ChoiceSelect value={draft.priority} onChange={e=>update('priority',e.target.value as RoutineDraft['priority'])}><option value="high">높음</option><option value="normal">보통</option><option value="low">낮음</option></ChoiceSelect></label></div>
  {scope==='one'&&task?<p className="form-help">{task.occurrence_date}의 제목·예상 시간·우선순위·설명·태그만 변경합니다. 시간 배치는 할 일 상세에서 별도로 변경합니다.</p>:<>
  <p className="form-help">매일 반복하며 날짜별 완료와 실행 기록은 독립적으로 관리합니다. 계획 기간 {plan.start_date}–{plan.end_date}</p>
  {!rule&&<label className="complete-control"><input type="checkbox" checked={custom} onChange={e=>{setCustom(e.target.checked);setReview(false);if(!e.target.checked)setDraft(d=>({...d,startDate:plan.start_date!,endDate:plan.end_date!,allowOverlap:false}));}}/>이 할 일의 반복 기간 따로 설정</label>}
  {(rule||custom)&&<div className="form-grid"><DateField label={rule?'변경 적용 시작일':'반복 시작일'} required value={draft.startDate} onChange={v=>update('startDate',v)}/><DateField label="반복 종료일" required value={draft.endDate} onChange={v=>update('endDate',v)}/></div>}
- <label className="field"><span>시간 배치 방식</span><select value={draft.timing} onChange={e=>update('timing',e.target.value as 'flex'|'fixed')}><option value="flex">시각 없이 반복</option><option value="fixed">정해진 시각에 반복</option></select></label>{draft.timing==='fixed'&&<TimeField label="매일 시작 시각" value={draft.time} onChange={v=>update('time',v)}/>}
+ <label className="field"><span>시간 배치 방식</span><ChoiceSelect value={draft.timing} onChange={e=>update('timing',e.target.value as 'flex'|'fixed')}><option value="flex">시각 없이 반복</option><option value="fixed">정해진 시각에 반복</option></ChoiceSelect></label>{draft.timing==='fixed'&&<TimeField label="매일 시작 시각" value={draft.time} onChange={v=>update('time',v)}/>}
  </>}
  <label className="field"><span>태그 · 쉼표로 구분</span><input value={tagText} onChange={e=>{setTagText(e.target.value);setReview(false);}}/></label><label className="field"><span>설명</span><textarea data-typo-role="record-input" maxLength={4000} value={draft.description} onChange={e=>update('description',e.target.value)}/></label></>}
  {review&&<section aria-label="반복 적용 대상 확인"><h4 className="task-title" data-typo-role="title">{draft.title}</h4>{scope==='one'&&task?<p>선택한 날짜 1개만 변경합니다. 이후 반복·실제 실행 기록은 유지합니다.</p>:<>

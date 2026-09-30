@@ -649,6 +649,11 @@ html body input[data-typo-role=control],html body textarea[data-typo-role=contro
 :root{--journal-serif:Pretendard,"Batang","바탕",Georgia,serif}
 .page-head{margin-bottom:32px}.section-heading{margin-top:32px;margin-bottom:18px}.work-history{margin-top:28px}.plan-sections{margin-top:32px}
 .page-head h1,.diary-heading h2,.diary-card h3{font-family:var(--journal-serif);letter-spacing:-.025em}
+.haru-confirm-dialog{max-width:440px;padding:28px 30px;border:1px solid var(--line-dark);border-radius:0;background:var(--paper);box-shadow:0 18px 50px #0003}
+.haru-confirm-dialog::backdrop{background:#1b1b1b77}
+.haru-confirm-dialog h2{margin:8px 0 14px;font:500 25px/1.4 var(--journal-serif)}
+.haru-confirm-dialog p{font:13px/1.8 var(--ui);color:var(--muted);white-space:pre-line}
+.haru-confirm-dialog .actions{display:flex;justify-content:flex-end;gap:8px;margin-top:24px}
 .work-title,.task-title,.day-task-title strong{font-weight:700;line-height:1.65}
 .detail-complete{display:flex;align-items:center;gap:10px;min-height:44px;font-size:14px;margin:8px 0}.detail-complete input{width:20px;height:20px;accent-color:var(--ink)}
 .journal-notes{margin:32px 0;padding:24px;background:var(--wash);border-top:1px solid var(--line)}.journal-notes textarea{min-height:90px}.journal-notes .field{margin:16px 0}

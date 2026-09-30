@@ -6,14 +6,15 @@ type Result={entityId:string|null;revision:number};
 type Store={saveError:string;data:Snapshot|null;locked:boolean;blocked:boolean;send:(command:Command['command'],payload:Record<string,unknown>)=>Promise<Result|null>};
 const Context=createContext<Store|null>(null);
 export function useJournal(){const value=useContext(Context);if(!value)throw Error('Journal provider missing');return value;}
-export function JournalProvider({initial,issue,children}:{initial:Snapshot|null;issue:string|null;children:ReactNode}){
+export function JournalProvider({initial,issue,children,preview=false}:{initial:Snapshot|null;issue:string|null;children:ReactNode;preview?:boolean}){
  const [data,setData]=useState(initial),[error,setError]=useState(issue||''),[message,setMessage]=useState('');
  const [busy,setBusy]=useState(false),[conflict,setConflict]=useState(false),[uncertain,setUncertain]=useState(false);
  useEffect(()=>{if(!message)return;const timer=setTimeout(()=>setMessage(''),3500);return()=>clearTimeout(timer);},[message]);
  const inFlight=useRef(false),pending=useRef<{signature:string;envelope:Command;payload:Record<string,unknown>}|null>(null);
  async function refresh(){const value=await snapshot();setData(value);return value;}
- useEffect(()=>{let active=true;snapshot().then(value=>{if(active){setData(value);setError('');}}).catch(e=>{if(active)setError(e instanceof Error?e.message:'Supabase에 연결하지 못했습니다.');});return()=>{active=false;};},[]);
+ useEffect(()=>{if(preview)return;let active=true;snapshot().then(value=>{if(active){setData(value);setError('');}}).catch(e=>{if(active)setError(e instanceof Error?e.message:'Supabase에 연결하지 못했습니다.');});return()=>{active=false;};},[preview]);
  async function send(command:Command['command'],payload:Record<string,unknown>):Promise<Result|null>{
+  if(preview){setMessage('검토용 시안입니다. 실제 자료는 변경되지 않습니다.');return {entityId:null,revision:data?.revision||0};}
   if(!data||inFlight.current||conflict)return null;
   const signature=JSON.stringify({command,payload});
   if(pending.current&&pending.current.signature!==signature){setError('이전 저장 결과를 먼저 확인해 주세요. 입력한 내용은 유지됩니다.');return null;}

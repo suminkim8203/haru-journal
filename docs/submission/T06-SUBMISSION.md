@@ -5,7 +5,7 @@
 ## 주소
 
 - 결과물: https://haruleaf.com/
-- 소스: https://github.com/suminkim8203/haru-journal
+- 소스: https://github.com/suminkim8203/haru-journal/tree/a57f66a869ff22f0d1ea7e331afce733f3614d30
 
 ## 짧은 확인 방법 — 4줄
 

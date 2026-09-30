@@ -59,6 +59,8 @@
 .study-page .study-plan-editor-slot.edit,.study-page .plan-marker-editor{order:5}
 .study-page .study-plan-page>[aria-label="할 일 관리"],.study-page .study-plan-page>.welcome{order:6}
 .study-page .study-plan-page>.plan-sections{order:7}
+.study-page .study-plan-page>.plan-sections>details{border-top:0}
+.study-page .study-plan-page>.plan-sections>details[open]{border-bottom:1px solid var(--line)}
 .study-page .study-plan-page>.plan-browser{order:8;margin-top:25px}
 .study-page .study-plan-page>.plan-browser{border:0}
 .study-page .study-plan-page>.plan-browser .plan-browser-heading{font:500 22px/1.5 var(--journal-serif);margin:0 0 14px}
@@ -76,7 +78,8 @@
 .study-page .study-plan-page .plan-action-buttons{display:flex;align-items:center;gap:8px}
 .study-page .study-plan-page .study-task-delete{justify-content:flex-end;margin:4px 0 24px}
 .study-page .study-plan-page>.plan-browser .plan-browser-results{max-height:none;overflow:visible}
-.study-page .study-reflection-index{border-top:1px solid var(--line);margin:22px 0}
+.study-page .study-reflection-index{margin:22px 0}
+.study-page .trash-record-note+.trash-item{border-top:0}
 .study-page .study-reflection-preview{display:grid;grid-template-columns:165px minmax(0,1fr) 24px;align-items:center;gap:16px;width:100%;padding:17px 4px;border:0;border-bottom:1px solid var(--line);background:transparent;text-align:left;color:var(--ink)}
 .study-page .study-reflection-preview span:nth-child(2){overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--muted)}
 .study-page .study-reflection-preview[aria-expanded="true"]{background:var(--wash)}
